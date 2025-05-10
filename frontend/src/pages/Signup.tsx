@@ -18,7 +18,6 @@ const SubmitButton = (): React.JSX.Element => {
     </button>
   );
 }
-
 const Signup = (): React.JSX.Element => {
 
   const handleSubmit = async (data: FormData): Promise<void> => {
@@ -29,8 +28,12 @@ const Signup = (): React.JSX.Element => {
       confirmPassword
     } = Object.fromEntries(data.entries());
 
+    try {
+      await signup(email.toString(), password.toString());
+    } catch {
+      return
+    }
 
-    await signup(email.toString(), password.toString());
   }
 
   return (
