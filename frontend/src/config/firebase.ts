@@ -1,5 +1,9 @@
 import { type FirebaseApp, initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
+} from 'firebase/auth';
 
 const firebaseConfig: Record<string, string> = {
   apiKey: "AIzaSyCmiIpsrOiA5ZUREQ1hkZlMTqXt-T1xz9A",
@@ -12,12 +16,18 @@ const firebaseConfig: Record<string, string> = {
 };
 
 // Initialize Firebase
+
 const app: FirebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export const signup = async (email: string, password: string) => {
+// Functions
+
+export const signup = async (
+  email: string, password: string
+): Promise<void> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential =
+      await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Successfully created a new user
@@ -26,4 +36,12 @@ export const signup = async (email: string, password: string) => {
   } catch (error) {
     console.error('Error creating user:', error);
   }
+}
+
+export const getCurrentUser = (): void => {
+  onAuthStateChanged(auth, (currentUser) => {
+    if (currentUser) {
+      console.log(currentUser.uid);
+    }
+  });
 }
