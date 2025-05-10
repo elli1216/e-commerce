@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
+import Signup from './pages/Signup';
 
 const App = (): React.JSX.Element => {
-  return <h1>App</h1>;
+  return <Signup />;
 };
 
 export default App;
