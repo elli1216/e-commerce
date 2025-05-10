@@ -1,44 +1,74 @@
-import * as React from "react";
-import { useFormStatus } from "react-dom";
-import { signup } from "../config/firebase";
+import * as React from 'react';
+import { signup } from '../config/firebase';
+import { FirebaseError } from 'firebase/app';
+import { axiosInstance } from '../config/axios';
 
-const SubmitButton = (): React.JSX.Element => {
-  const { pending } = useFormStatus();
+interface FormData {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
-  return (
-    <button type="submit" disabled={pending} className="btn btn-primary">
-      {pending ? (
-        <span className="loading loading-spinner text-accent"></span>
-      ) : (
-        "Signup"
-      )}
-    </button>
-  );
-};
+const initialFormData: FormData = {
+  fullName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
 
 const Signup = (): React.JSX.Element => {
-  const handleSubmit = async (data: FormData): Promise<void> => {
-    const { fullName, email, password, confirmPassword } = Object.fromEntries(
-      data.entries()
-    );
 
-    // Simulate loading with a promise that resolves after 2 seconds
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const [formData, setFormData] = React.useState<FormData>(initialFormData);
 
-    await signup(email.toString(), password.toString());
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
+
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+
+    const { email, password, confirmPassword } = formData;
+
+    if (password !== confirmPassword) {
+      alert('Password does not match!');
+      return;
+    };
+
+    // store the user in firebase
+    try {
+      await signup(email.toString(), password.toString());
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        alert(error.message);
+      }
+      return;
+    }
+
+    // send the user to the backend
+    try {
+      await axiosInstance.post('auth/signup', formData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
       <form
-        action={handleSubmit}
-        className="flex flex-col gap-4 max-w-md w-full border-2 border-base-300 p-10 rounded-lg shadow-lg bg-base-100"
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-xs w-full"
       >
         <h1 className="text-5xl mb-5">Signup</h1>
 
         <label className={`floating-label`}>
           <span>Full name</span>
           <input
+            onChange={handleChange}
             required
             type="text"
             name="fullName"
@@ -50,6 +80,7 @@ const Signup = (): React.JSX.Element => {
         <label className="floating-label">
           <span>Email</span>
           <input
+            onChange={handleChange}
             required
             type="text"
             name="email"
@@ -61,6 +92,7 @@ const Signup = (): React.JSX.Element => {
         <label className="floating-label">
           <span>Password</span>
           <input
+            onChange={handleChange}
             required
             type="password"
             name="password"
@@ -72,6 +104,7 @@ const Signup = (): React.JSX.Element => {
         <label className="floating-label">
           <span>Confirm password</span>
           <input
+            onChange={handleChange}
             required
             type="password"
             name="confirmPassword"
@@ -80,7 +113,13 @@ const Signup = (): React.JSX.Element => {
           />
         </label>
 
-        <SubmitButton />
+        <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          Signup
+        </button>
+
       </form>
     </div>
   );

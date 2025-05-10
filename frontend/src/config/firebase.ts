@@ -35,6 +35,7 @@ export const signup = async (
 
   } catch (error) {
     console.error('Error creating user:', error);
+    throw error;
   }
 }
 
