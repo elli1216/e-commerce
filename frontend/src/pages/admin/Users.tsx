@@ -3,8 +3,9 @@ import { UserX as DeleteIcon } from "lucide-react";
 import { CircleUser as UserIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
 import { SearchInput } from "../../components/SearchInput";
+import { type User } from '../../types/user'
 
-const renderUserList = (user: { name: string; email: string }) => {
+const renderUserList = (user: User): React.JSX.Element => {
   return (
     <div
       key={user.email}
