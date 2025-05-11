@@ -1,6 +1,10 @@
 import * as React from "react";
 
-export const searchInput = ({ placeholder }: { placeholder: string }): React.JSX.Element => {
+interface SearchInputProps {
+  placeholder: string;
+}
+
+export const SearchInput = ({ placeholder }: SearchInputProps): React.JSX.Element => {
   return (
     <label className="input w-[20vw]">
       <svg

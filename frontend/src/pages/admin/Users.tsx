@@ -2,7 +2,7 @@ import * as React from "react";
 import { UserX as DeleteIcon } from "lucide-react";
 import { CircleUser as UserIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
-import { searchInput } from "../../components/SearchInput";
+import { SearchInput } from "../../components/SearchInput";
 
 const renderUserList = (user: { name: string; email: string }) => {
   return (
@@ -26,7 +26,9 @@ const Users = (): React.JSX.Element => {
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
-        <div className="self-start">{searchInput({ placeholder: "Search Name" })}</div>
+        <div className="self-start">
+          <SearchInput placeholder="Search Name" />
+        </div>
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 border border-[#D9D9D9] rounded-lg p-4">
           {userData.map(renderUserList)}
         </div>

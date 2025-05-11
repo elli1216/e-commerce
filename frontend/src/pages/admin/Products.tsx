@@ -1,10 +1,10 @@
 import React from "react";
-import { searchInput } from "../../components/SearchInput";
+import { SearchInput } from "../../components/SearchInput";
 
 const Products = (): React.JSX.Element => {
   return (
     <div>
-      {searchInput({ placeholder: "Search Products" })}
+      <SearchInput placeholder="Search Products" />
       <div>Products</div>
     </div>
   );
