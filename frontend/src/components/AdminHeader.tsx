@@ -1,21 +1,32 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const AdminHeader = (): React.JSX.Element => {
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
     navigate('/login');
   };
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">Shop Name</a>
+        <Link
+          to="/admin/users"
+          className="btn btn-ghost text-xl"
+        >
+          Shop Name
+        </Link>
       </div>
       {/* Nav Menu */}
       <ul className="menu menu-horizontal bg-base-200 navbar-center">
-        <li><a href="/admin/users">Users</a></li>
-        <li><a href="/admin/products">Products</a></li>
+        <li>
+          <Link to="/admin/users">Users</Link>
+        </li>
+        <li>
+          <Link to="/admin/products">Products</Link>
+        </li>
       </ul>
       {/* Profile */}
       <div className="navbar-end">
@@ -38,7 +49,7 @@ const AdminHeader = (): React.JSX.Element => {
                 Profile
               </a>
             </li>
-            <li><a href="" onClick={handleLogout}>Logout</a></li>
+            <li><a onClick={handleLogout}>Logout</a></li>
           </ul>
         </div>
       </div>
