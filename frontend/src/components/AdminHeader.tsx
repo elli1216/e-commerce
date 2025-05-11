@@ -1,6 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminHeader = (): React.JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/login');
+  };
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -8,8 +14,8 @@ const AdminHeader = (): React.JSX.Element => {
       </div>
       {/* Nav Menu */}
       <ul className="menu menu-horizontal bg-base-200 navbar-center">
-        <li><a>Users</a></li>
-        <li><a>Products</a></li>
+        <li><a href="/admin/users">Users</a></li>
+        <li><a href="/admin/products">Products</a></li>
       </ul>
       {/* Profile */}
       <div className="navbar-end">
@@ -32,7 +38,7 @@ const AdminHeader = (): React.JSX.Element => {
                 Profile
               </a>
             </li>
-            <li><a href="">Logout</a></li>
+            <li><a href="" onClick={handleLogout}>Logout</a></li>
           </ul>
         </div>
       </div>

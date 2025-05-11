@@ -1,4 +1,5 @@
 import { type FirebaseApp, initializeApp } from 'firebase/app';
+import Cookies from "js-cookie";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -55,6 +56,8 @@ export const login = async (
     const userCredential =
       await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    const token = await user.getIdToken();
+    Cookies.set('token', token, { expires: 30 });
 
     console.log('User logged in:', user);
 
