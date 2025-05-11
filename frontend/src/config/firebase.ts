@@ -2,7 +2,8 @@ import { type FirebaseApp, initializeApp } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 
 const firebaseConfig: Record<string, string> = {
@@ -45,4 +46,20 @@ export const getCurrentUser = (): void => {
       console.log(currentUser.uid);
     }
   });
+}
+
+export const login = async (
+  email: string, password: string
+): Promise<void> => {
+  try {
+    const userCredential =
+      await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    console.log('User logged in:', user);
+
+  } catch (error) {
+    console.error('Error logging in:', error);
+    throw error;
+  }
 }

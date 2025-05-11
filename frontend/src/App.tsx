@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Signup from './pages/Signup';
+import Login from './pages/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App = (): React.JSX.Element => {
@@ -9,6 +10,7 @@ const App = (): React.JSX.Element => {
       <Routes>
         <Route path="/" element={<Signup />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
