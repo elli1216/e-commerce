@@ -6,14 +6,16 @@ import AdminLayout from './layouts/AdminLayout';
 import Users from './pages/admin/Users';
 import Products from './pages/admin/Products';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 
 const App = (): React.JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signup />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
