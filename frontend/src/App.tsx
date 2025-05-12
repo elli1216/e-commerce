@@ -7,6 +7,7 @@ import Users from './pages/admin/Users';
 import Products from './pages/admin/Products';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import ProductDetail from './pages/ProductDetail';
 
 const App = (): React.JSX.Element => {
   return (
@@ -16,6 +17,7 @@ const App = (): React.JSX.Element => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
