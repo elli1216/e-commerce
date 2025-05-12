@@ -3,12 +3,35 @@ import { UserX as DeleteIcon } from "lucide-react";
 import { CircleUser as UserIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
 import { SearchInput } from "../../components/SearchInput";
-import { type User } from '../../types/user'
+import { type User } from "../../types/user";
+
+const confirmDeleteModal = (): React.JSX.Element => {
+  return (
+    <>
+      <input type="checkbox" id="deleteModal" className="modal-toggle" />
+      <div className="modal" role="dialog">
+        <div className="modal-box">
+          <h3 className="text-lg font-bold">
+            Are you sure you want to delete this user?
+          </h3>
+          <div className="modal-action">
+            <label htmlFor="deleteModal" className="btn">
+              Delete
+            </label>
+            <label htmlFor="deleteModal" className="btn">
+              Cancel
+            </label>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const renderUserList = (user: User): React.JSX.Element => {
   return (
     <div
-      key={user.email}
+      key={user.id}
       className="flex items-center justify-between w-full p-2 border-b border-gray-300"
     >
       <div className="flex items-center gap-2">

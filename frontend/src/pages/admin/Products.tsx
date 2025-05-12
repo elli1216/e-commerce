@@ -2,18 +2,27 @@ import React from "react";
 import { SearchInput } from "../../components/SearchInput";
 import { mockProductData } from "../../data/mockData";
 import { type Product } from "../../types/product";
-import { addButton } from "../../components/addProductButton";
 import { ChevronLeft, ChevronRight, EllipsisVertical } from "lucide-react";
 
 const renderProductList = (product: Product): React.JSX.Element => {
   return (
-    <tr>
+    <tr key={product.id}>
       <td>{product.name}</td>
       <td>{product.category}</td>
       <td>{product.quantity}</td>
       <td>{product.price}</td>
-      <td className="px-0 self-center"><EllipsisVertical className="cursor-pointer" /></td>
+      <td className="px-0 self-center">
+        <EllipsisVertical className="cursor-pointer" />
+      </td>
     </tr>
+  );
+};
+
+const addButton = (): React.JSX.Element => {
+  return (
+    <button className="flex items-center justify-center gap-2 rounded-lg p-2 cursor-pointer">
+      <p className="text-sm font-semibold">Add Product</p>
+    </button>
   );
 };
 
@@ -40,9 +49,13 @@ const Products = (): React.JSX.Element => {
           </table>
         </div>
         <div className="flex flex-row items-center justify-center w-[20vw]">
-          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]"><ChevronLeft /></button>
+          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
+            <ChevronLeft />
+          </button>
           <h1 className="px-4">1</h1>
-          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]"><ChevronRight /></button> 
+          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
+            <ChevronRight />
+          </button>
         </div>
       </div>
     </div>
