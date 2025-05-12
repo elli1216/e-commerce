@@ -1,6 +1,5 @@
 import * as React from "react";
 import { UserX as DeleteIcon } from "lucide-react";
-import { CircleUser as UserIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
 import { SearchInput } from "../../components/SearchInput";
 import { type User } from "../../types/user";
@@ -14,6 +13,10 @@ const confirmDeleteModal = (): React.JSX.Element => {
           <h3 className="text-lg font-bold">
             Are you sure you want to delete this user?
           </h3>
+          <h3 className="text-lg">
+            To continue, please enter your admin password for confirmation.
+          </h3>
+          <input type="password" className="input input-bordered w-full mt-2" />
           <div className="modal-action">
             <label htmlFor="deleteModal" className="btn">
               Delete
@@ -35,13 +38,16 @@ const renderUserList = (user: User): React.JSX.Element => {
       className="flex items-center justify-between w-full p-2 border-b border-gray-300"
     >
       <div className="flex items-center gap-2">
-        <UserIcon className="w-12 h-12 text-gray-900" />
+        <img src="https://placehold.co/64x64" alt="User" className="w-12 h-12 rounded-full" />
         <div>
           <p className="text-lg font-semibold">{user.name}</p>
           <p className="text-sm text-gray-600">{user.email}</p>
         </div>
       </div>
-      <DeleteIcon className="w-6 h-6 cursor-pointer" />
+      <label htmlFor="deleteModal" className="cursor-pointer">
+        <DeleteIcon className="w-6 h-6" />
+      </label>
+      {confirmDeleteModal()}
     </div>
   );
 };
