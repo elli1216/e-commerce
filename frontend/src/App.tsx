@@ -8,6 +8,7 @@ import Products from './pages/admin/Products';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
 
 const App = (): React.JSX.Element => {
   return (
@@ -18,6 +19,9 @@ const App = (): React.JSX.Element => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
+
+        {/* admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
