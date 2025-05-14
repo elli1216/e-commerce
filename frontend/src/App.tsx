@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
+import TrackOrder from "./pages/TrackOrder";
 
 const App = (): React.JSX.Element => {
   return (
@@ -23,6 +24,7 @@ const App = (): React.JSX.Element => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/order/:id" element={<TrackOrder />} />
 
         {/* admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
