@@ -2,7 +2,14 @@ import React from "react";
 import { SearchInput } from "../../components/SearchInput";
 import { mockProductData } from "../../data/mockData";
 import { type Product } from "../../types/product";
-import { ChevronLeft, ChevronRight, EllipsisVertical, SquarePen, PackageX as DeleteIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  ChevronLeft,
+  ChevronRight,
+  EllipsisVertical,
+  SquarePen,
+  PackageX as DeleteIcon,
+} from "lucide-react";
 
 const renderProductList = (product: Product): React.JSX.Element => {
   return (
@@ -11,18 +18,18 @@ const renderProductList = (product: Product): React.JSX.Element => {
       <td>{product.category}</td>
       <td>{product.quantity}</td>
       <td>{product.price}</td>
-      <td className="px-0 self-center">
-        {dropdownMenu()}
-      </td>
+      <td className="px-0 self-center">{dropdownMenu()}</td>
     </tr>
   );
 };
 
 const addButton = (): React.JSX.Element => {
   return (
-    <button className="flex items-center justify-center gap-2 rounded-lg p-2 cursor-pointer">
-      <p className="text-sm font-semibold">Add Product</p>
-    </button>
+    <Link to="/admin/new-product">
+      <button className="flex items-center justify-center gap-2 rounded-lg p-2 cursor-pointer">
+        <p className="text-sm font-semibold">Add Product</p>
+      </button>
+    </Link>
   );
 };
 
@@ -37,11 +44,11 @@ const dropdownMenu = (): React.JSX.Element => {
         className="dropdown-content menu bg-base-100 rounded-box z-1 w-[8vw] shadow"
       >
         <button className="btn btn-ghost self-start justify-start w-full">
-          <SquarePen className="size-4"/>
+          <SquarePen className="size-4" />
           Edit
         </button>
         <button className="btn btn-ghost self-start justify-start w-full">
-          <DeleteIcon className="size-4"/>
+          <DeleteIcon className="size-4" />
           Delete
         </button>
       </ul>

@@ -1,14 +1,15 @@
-import React from 'react';
-import './App.css';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import AdminLayout from './layouts/AdminLayout';
-import Users from './pages/admin/Users';
-import Products from './pages/admin/Products';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
+import React from "react";
+import "./App.css";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import AdminLayout from "./layouts/AdminLayout";
+import Users from "./pages/admin/Users";
+import Products from "./pages/admin/Products";
+import NewProduct from "./pages/admin/NewProduct";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 
 const App = (): React.JSX.Element => {
   return (
@@ -25,6 +26,7 @@ const App = (): React.JSX.Element => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
+          <Route path="new-product" element={<NewProduct />} />
         </Route>
       </Routes>
     </BrowserRouter>
