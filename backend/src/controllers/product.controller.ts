@@ -8,7 +8,7 @@ export const getProducts = async (req: Request, res: Response) => {
     const products = await readAndParseXml(XML_PATH);
     res.status(200).json(products);
 
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).json({
       message: 'Failed to read or parse products.xml'
     });
