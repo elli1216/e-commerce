@@ -1,8 +1,20 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React from 'react';
+import { axiosInstance } from '../config/axios';
 
 const FilterTabs = () => {
   const filtersTabRef = React.useRef<HTMLDivElement | null>(null);
+  const [categories, setCategories] = React.useState<string[] | null>(null);
+
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await axiosInstance.get<{ category: string[] }>('/categories');
+      const categories = response.data.category;
+      setCategories(categories);
+    }
+
+    fetchCategories();
+  }, []);
 
   const handleClick: React.MouseEventHandler<SVGSVGElement> = (e) => {
     // previous button
@@ -27,22 +39,9 @@ const FilterTabs = () => {
         ref={filtersTabRef}
         className="tabs tabs-box flex-nowrap scroll-smooth overflow-hidden"
       >
-        <input type="radio" name="tab" className="tab" aria-label="Laptop" />
-        <input type="radio" name="tab" className="tab" aria-label="Desktop" />
-        <input type="radio" name="tab" className="tab" aria-label="Gaming" />
-        <input type="radio" name="tab" className="tab" aria-label="Accessories" />
-        <input type="radio" name="tab" className="tab" aria-label="Audio" />
-        <input type="radio" name="tab" className="tab" aria-label="Keyboard" />
-        <input type="radio" name="tab" className="tab" aria-label="Webcam" />
-        <input type="radio" name="tab" className="tab" aria-label="Monitor" />
-        <input type="radio" name="tab" className="tab" aria-label="Printer" />
-        <input type="radio" name="tab" className="tab" aria-label="Networking" />
-        <input type="radio" name="tab" className="tab" aria-label="Storage" />
-        <input type="radio" name="tab" className="tab" aria-label="Software" />
-        <input type="radio" name="tab" className="tab" aria-label="Software" />
-        <input type="radio" name="tab" className="tab" aria-label="Software" />
-        <input type="radio" name="tab" className="tab" aria-label="Software" />
-        <input type="radio" name="tab" className="tab" aria-label="Software" />
+        {categories?.map(category =>
+          <input type="radio" name="tab" className="tab" aria-label={category} />
+        )}
       </div>
       <ChevronRight
         className="btn btn-square self-center next"
