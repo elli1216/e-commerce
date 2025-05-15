@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <products>
   <product>
+    <id>39e859e9-8f2c-49e0-a325-01cc69f3834a</id>
     <category>Keyboard</category>
     <productImage>product-image.jpg</productImage>
     <productName>Wireless Keyboard</productName>
@@ -9,7 +10,7 @@
     <productDescription>Ergonomic wireless keyboard with backlit keys and Bluetooth connectivity.</productDescription>
     <tags>
       <connectivity>
-        <wiFi>true</wiFi>
+        <wifi>true</wifi>
         <bluetooth>true</bluetooth>
         <ethernet>false</ethernet>
         <usb3>false</usb3>
@@ -33,8 +34,6 @@
         <ergonomic>true</ergonomic>
         <portable>true</portable>
         <silent>true</silent>
-        <business>false</business>
-        <student>true</student>
       </features>
       <miscellaneous>
         <newArrival>true</newArrival>
@@ -46,6 +45,7 @@
   </product>
 
   <product>
+    <id>7f98831b-1423-4791-b9df-e74eea3b2f5e</id>
     <category>Mouse</category>
     <productImage>gaming-mouse.jpg</productImage>
     <productName>Gaming Mouse</productName>
@@ -54,7 +54,7 @@
     <productDescription>High precision gaming mouse with RGB lighting and customizable buttons.</productDescription>
     <tags>
       <connectivity>
-        <wiFi>false</wiFi>
+        <wifi>false</wifi>
         <bluetooth>true</bluetooth>
         <ethernet>false</ethernet>
         <usb3>true</usb3>
@@ -78,8 +78,6 @@
         <ergonomic>true</ergonomic>
         <portable>true</portable>
         <silent>false</silent>
-        <business>false</business>
-        <student>false</student>
       </features>
       <miscellaneous>
         <newArrival>false</newArrival>
@@ -91,6 +89,7 @@
   </product>
 
   <product>
+    <id>75342c23-8cfb-41c1-ae11-2a88e768c854</id>
     <category>Laptop</category>
     <productImage>ultrabook.jpg</productImage>
     <productName>Ultrabook Laptop</productName>
@@ -99,7 +98,7 @@
     <productDescription>Lightweight and powerful ultrabook ideal for students and professionals.</productDescription>
     <tags>
       <connectivity>
-        <wiFi>true</wiFi>
+        <wifi>true</wifi>
         <bluetooth>true</bluetooth>
         <ethernet>true</ethernet>
         <usb3>true</usb3>
@@ -123,8 +122,6 @@
         <ergonomic>true</ergonomic>
         <portable>true</portable>
         <silent>true</silent>
-        <business>true</business>
-        <student>true</student>
       </features>
       <miscellaneous>
         <newArrival>true</newArrival>
