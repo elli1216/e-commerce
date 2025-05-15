@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const UserHeader = (): React.JSX.Element => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Shop Name</a>
+        <Link to="/home" className="btn btn-ghost text-xl">Shop Name</Link>
       </div>
 
       <div className="flex gap-2">
@@ -14,9 +15,9 @@ const UserHeader = (): React.JSX.Element => {
           placeholder="Search"
           className="input w-24 md:w-auto"
         />
-        {/* Orders */}
+        {/* Order */}
         <div className="flex-1">
-          <a className="btn btn-ghost">Orders</a>
+          <Link to="/order" className="btn btn-ghost">Orders</Link>
         </div>
         {/* Cart */}
         <div className="dropdown dropdown-end">
@@ -43,7 +44,7 @@ const UserHeader = (): React.JSX.Element => {
               <span className="text-lg font-bold">8 Items</span>
               <span className="text-info">Subtotal: 999</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <Link to="/cart" className="btn btn-primary btn-block">View cart</Link>
               </div>
             </div>
           </div>
@@ -73,7 +74,7 @@ const UserHeader = (): React.JSX.Element => {
           </ul>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
