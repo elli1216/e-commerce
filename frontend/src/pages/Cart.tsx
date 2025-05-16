@@ -1,48 +1,114 @@
 import React from 'react';
 import UserHeader from '../components/UserHeader';
-import CartItem from '../components/CartItem';
-import type { Cart } from '../types/cart';
+import { type Cart } from '../types/cart';
 import { axiosInstance } from '../config/axios';
-import type { IProduct } from '../types/product';
+import CartItem from '../components/CartItem';
 
 const Cart = (): React.JSX.Element => {
-  const [cartItems, setCartItems] = React.useState<IProduct | IProduct[] | null>(null);
+  const [userCart, setUserCart] = React.useState<Cart | null>(null);
   const userId: string = '437fb924-27bd-4f3e-a255-9c896c6de205';
+
+  const handleIncreaseQuantity = (productId: string) => {
+    if (!userCart) return;
+
+    const items =
+      Array.isArray(userCart.items.item)
+        ? userCart.items.item
+        : [userCart.items.item]
+
+    const updatedItems = items.map(item => {
+      if (item.productId === productId) {
+        const newQuantity = Number(item.quantity) + 1;
+        const newSubTotal = (Number(item.price) * newQuantity).toFixed(2);
+        return {
+          ...item,
+          quantity: String(newQuantity),
+          subTotal: newSubTotal
+        };
+      }
+      return item;
+    });
+
+    const cartTotal = updatedItems.reduce(
+      (sum, item) => sum + Number(item.subTotal ?? 0),
+      0
+    );
+
+    setUserCart({
+      ...userCart,
+      items: { item: updatedItems },
+      total: cartTotal.toFixed(2)
+    });
+
+
+    console.log(userCart);
+
+  }
+
+  const handleDecreaseQuantity = (productId: string) => {
+    if (!userCart) return;
+
+    const items =
+      Array.isArray(userCart.items.item)
+        ? userCart.items.item
+        : [userCart.items.item]
+
+    const updatedItems = items.map(item => {
+      if (item.productId === productId && Number(item.quantity) > 1) {
+        const newQuantity = Number(item.quantity) - 1;
+        const newSubTotal = (Number(item.subTotal) - Number(item.price)).toFixed(2);
+        return {
+          ...item,
+          quantity: String(newQuantity),
+          subTotal: newSubTotal
+        };
+      }
+      return item;
+    });
+
+    const cartTotal = updatedItems.reduce(
+      (sum, item) => sum + Number(item.subTotal ?? 0),
+      0
+    );
+
+    setUserCart({
+      ...userCart,
+      items: { item: updatedItems },
+      total: cartTotal.toFixed(2)
+    });
+  }
 
   React.useEffect(() => {
     const fetchCartItems = async () => {
       try {
-
         // Fetch from cart.xml
         const response = await axiosInstance.get<{ cart: Cart | Cart[] }>('/cart');
         const carts = response.data.cart;
 
-        // Fetch from products.xml
-        const productsResponse = await axiosInstance.get<{ product: IProduct[] }>('/products');
-        const products = productsResponse.data.product;
-
         // Save current user cart
-        const userCart = Array.isArray(carts)
-          ? carts.filter(cart => cart.userId === userId)
-          : carts && carts.userId === userId
-            ? [carts]
-            : [];
+        const [userCart] =
+          (Array.isArray(carts)
+            ? carts
+            : [carts]).filter(cart => cart && cart.userId === userId);
 
-        // Save all the carts product items
-        const productIds: string[] = userCart.flatMap(cart =>
-          Array.isArray(cart.items)
-            ? cart.items.map(item => item.productId)
-            : [cart.items.productId]
-        );
+        // Save the total amount of cart
+        if (userCart) {
+          const items = Array.isArray(userCart.items.item)
+            ? userCart.items.item
+            : [userCart.items.item];
 
+          const cartTotal = items.reduce(
+            (sum, item) => sum + Number(item.subTotal ?? 0),
+            0
+          );
 
-        // Filter products that are in the user's cart
-        const cartProducts = products.filter(product => productIds.includes(product.id));
+          setUserCart({
+            ...userCart,
+            total: cartTotal.toFixed(2),
+          });
+        }
 
-        console.log(userCart)
-        console.log(productIds)
-        console.log(productsResponse)
-        console.log(cartProducts)
+        console.log(userCart);
 
       } catch (error) {
         console.error('Failed to fetch products:', error);
@@ -51,7 +117,6 @@ const Cart = (): React.JSX.Element => {
 
     fetchCartItems();
   }, []);
-
 
   return (
     <>
@@ -62,11 +127,11 @@ const Cart = (): React.JSX.Element => {
       <div className="flex flex-col gap-5 max-w-7xl w-full mx-auto p-3 md:flex md:flex-row-reverse">
         {/* Order Summary */}
         <div className="flex flex-col gap-3 border border-base-300 p-5  h-fit md:flex-1/4">
-          <h2 className="text-2xl">Order Summary</h2>
+          <h2 className="text-2xl">{ }</h2>
           <div>
             <div className="flex flex-row justify-between">
-              <span>Items(2):</span>
-              <span>₱959</span>
+              <span>Items(1):</span>
+              <span>₱{userCart?.total}</span>
             </div>
             <div className="flex flex-row justify-between">
               <span>Shipping:</span>
@@ -76,15 +141,26 @@ const Cart = (): React.JSX.Element => {
           <div className="divider p-0 m-0" />
           <div className="flex flex-row justify-between font-semibold">
             <span>Order total:</span>
-            <span>₱999</span>
+            <span>₱{userCart?.total}</span>
           </div>
           <button className='btn btn-primary mt-5'>Place your order</button>
         </div>
 
         {/* Cart Item */}
         <div className="flex flex-col gap-5 flex-1/2">
-          <CartItem prodId='123' />
-          <CartItem prodId='321' />
+          {userCart && (
+            (Array.isArray(userCart.items.item)
+              ? userCart.items.item
+              : [userCart.items.item]
+            ).map((item) =>
+              <CartItem
+                key={item.productId}
+                {...item}
+                increaseQuantity={handleIncreaseQuantity}
+                decreaseQuantity={handleDecreaseQuantity}
+              />
+            )
+          )}
         </div>
       </div>
     </>

@@ -1,11 +1,28 @@
 import React from 'react';
 import DeliveryOption from './DeliveryOption';
+import type { IProduct } from '../types/product';
+import { axiosInstance } from '../config/axios';
+import { type Item } from '../types/cart';
 
-interface CartItemProps {
-  prodId: string;
-}
+const CartItem = (props: Item): React.JSX.Element => {
+  const [products, setProducts] = React.useState<IProduct[] | null>(null);
+  const cartProduct = products?.find((p) => p.id === props.productId);
 
-const CartItem = ({ prodId }: CartItemProps): React.JSX.Element => {
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get<{ product: IProduct[] }>('/products');
+        const products = response.data.product;
+        setProducts(products);
+
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className="flex flex-col gap-5 p-3 border border-base-300 md:flex-row md:gap">
       <div>
@@ -13,17 +30,27 @@ const CartItem = ({ prodId }: CartItemProps): React.JSX.Element => {
       </div>
 
       <div className="flex flex-col gap-2 flex-1 min-w-fit">
-        <p className="font-semibold">Product name</p>
-        <p>₱500</p>
+        <p className="font-semibold">{cartProduct?.productName}</p>
+        <p>{props.subTotal}</p>
         <div className="h-7">
-          <button className='btn btn-sm bg-base-100'>-</button>
+          <button
+            onClick={() => props.decreaseQuantity?.(props.productId)}
+            className='btn btn-sm bg-base-100'
+          >
+            -
+          </button>
           <input
             type="number"
-            value="1"
+            value={props.quantity}
             readOnly
             className="input input-sm input-ghost w-12 text-center"
           />
-          <button className='btn btn-sm bg-base-100 h-full'>+</button>
+          <button
+            onClick={() => props.increaseQuantity?.(props.productId)}
+            className='btn btn-sm bg-base-100 h-full'
+          >
+            +
+          </button>
         </div>
         <span className="link-info link-hover cursor-pointer w-fit">Delete</span>
       </div>
@@ -31,17 +58,17 @@ const CartItem = ({ prodId }: CartItemProps): React.JSX.Element => {
       <div className="flex flex-col gap-3 min-w-fit">
         <p className="font-semibold">Choose Delivery Option:</p>
         <DeliveryOption
-          prodId={`${prodId}`}
+          prodId={`${props.productId}`}
           label="Thursday, May 5"
           subLabel="Free - Shipping"
         />
         <DeliveryOption
-          prodId={`${prodId}`}
+          prodId={`${props.productId}`}
           label="Sunday, May 11"
           subLabel="₱40 - Shipping"
         />
         <DeliveryOption
-          prodId={`${prodId}`}
+          prodId={`${props.productId}`}
           label="Wednesday, May 7"
           subLabel="₱80 - Shipping"
         />

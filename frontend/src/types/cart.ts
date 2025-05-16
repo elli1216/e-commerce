@@ -1,10 +1,18 @@
-export interface ProductId {
+export interface Item {
   productId: string;
+  price: string;
+  quantity: string;
+  arrivingDate: string;
+  shippingFee: string;
+  subTotal: string
+  increaseQuantity?: (productId: string) => void;
+  decreaseQuantity?: (productId: string) => void;
 }
 
 export interface Cart {
   userId: string;
   items: {
-    productId: string | string[]
+    item: Item | Item[]
   }
+  total: string
 }
