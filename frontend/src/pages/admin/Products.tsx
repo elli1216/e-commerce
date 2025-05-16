@@ -1,7 +1,8 @@
-import React from "react";
+import * as React from "react";
 import { SearchInput } from "../../components/SearchInput";
-import { mockProductData } from "../../data/mockData";
-import { type Product } from "../../types/product";
+// import { mockProductData } from "../../data/mockData";
+import { type IProduct } from "../../types/product";
+import { axiosInstance } from "../../config/axios";
 import { Link } from "react-router-dom";
 import {
   ChevronLeft,
@@ -11,37 +12,39 @@ import {
   PackageX as DeleteIcon,
 } from "lucide-react";
 
-const renderProductList = (product: Product): React.JSX.Element => {
+const renderProductList = (product: IProduct): React.JSX.Element => {
   return (
     <tr key={product.id}>
-      <td>{product.name}</td>
+      <td>{product.productName}</td>
       <td>{product.category}</td>
-      <td>{product.quantity}</td>
-      <td>{product.price}</td>
-      <td className="px-0 self-center">{dropdownMenu()}</td>
+      <td>{product.productQuantity}</td>
+      <td>{product.productPrice}</td>
+      <td className="px-0 self-center">
+        <DropdownMenu />
+      </td>
     </tr>
   );
 };
 
-const addButton = (): React.JSX.Element => {
+const AddButton = (): React.JSX.Element => {
   return (
-    <Link to="/admin/new-product">
-      <button className="flex items-center justify-center gap-2 rounded-lg p-2 cursor-pointer">
+    <Link to="/admin/new-product">  
+      <button className="btn btn-primary">
         <p className="text-sm font-semibold">Add Product</p>
       </button>
     </Link>
   );
 };
 
-const dropdownMenu = (): React.JSX.Element => {
+const DropdownMenu = (): React.JSX.Element => {
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
-      <div tabIndex={0} role="button" className="cursor-pointer">
+      <div tabIndex={0} role="button" className="cursor-pointer p-0">
         <EllipsisVertical />
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content menu bg-base-100 rounded-box z-1 w-[8vw] shadow"
+        className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
       >
         <button className="btn btn-ghost self-start justify-start w-full">
           <SquarePen className="size-4" />
@@ -57,12 +60,28 @@ const dropdownMenu = (): React.JSX.Element => {
 };
 
 const Products = (): React.JSX.Element => {
+  const [products, setProducts] = React.useState<IProduct[]>([]);
+
+  React.useEffect(() => {
+    const fetchProducts = async (): Promise<void> => {
+      try {
+        const response = await axiosInstance.get<{ product: IProduct[] }>('/products');
+        const data = response.data.product;
+        setProducts(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
         <div className="flex flex-row items-center justify-between w-full">
           <SearchInput placeholder="Search Products" />
-          <button className="btn">{addButton()}</button>
+          <AddButton />
         </div>
         <div className="overflow-x-auto w-full h-[70vh] border border-[#D9D9D9] rounded-lg">
           <table className="table">
@@ -75,7 +94,7 @@ const Products = (): React.JSX.Element => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>{mockProductData.map(renderProductList)}</tbody>
+            <tbody>{products.map(renderProductList as any)}</tbody>
           </table>
         </div>
         <div className="flex flex-row items-center justify-center w-[20vw]">

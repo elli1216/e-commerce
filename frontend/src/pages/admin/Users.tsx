@@ -3,8 +3,9 @@ import { UserX as DeleteIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
 import { SearchInput } from "../../components/SearchInput";
 import { type User } from "../../types/user";
+// import { axiosInstance } from "../../config/axios";
 
-const confirmDeleteModal = (): React.JSX.Element => {
+const ConfirmDeleteModal = (): React.JSX.Element => {
   return (
     <>
       <input type="checkbox" id="deleteModal" className="modal-toggle" />
@@ -16,7 +17,7 @@ const confirmDeleteModal = (): React.JSX.Element => {
           <h3 className="text-lg">
             To continue, please enter your admin password for confirmation.
           </h3>
-          <input type="password" className="input input-bordered w-full mt-2" />
+          <input type="password" className="input input-bordered w-full mt-2" placeholder="****************" />
           <div className="modal-action">
             <label htmlFor="deleteModal" className="btn">
               Delete
@@ -47,12 +48,32 @@ const renderUserList = (user: User): React.JSX.Element => {
       <label htmlFor="deleteModal" className="cursor-pointer">
         <DeleteIcon className="w-6 h-6" />
       </label>
-      {confirmDeleteModal()}
+      <ConfirmDeleteModal />
     </div>
   );
 };
 
 const Users = (): React.JSX.Element => {
+  const [users, setUsers] = React.useState<User[]>([]);
+
+  React.useEffect(() => {
+    setUsers(userData);
+  }, []);
+
+  // React.useEffect(() => {
+  //   const fetchUsers = async (): Promise<void> => {
+  //     try {
+  //       const response = await axiosInstance.get<{ user: User[] }>('/users');
+  //       const data = response.data.user;
+  //       setUsers(data);
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch users:', error);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, []);
+
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
@@ -60,7 +81,7 @@ const Users = (): React.JSX.Element => {
           <SearchInput placeholder="Search Name" />
         </div>
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 border border-[#D9D9D9] rounded-lg p-4">
-          {userData.map(renderUserList)}
+          {users.map(renderUserList) as any}
         </div>
       </div>
     </div>

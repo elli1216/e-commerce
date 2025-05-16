@@ -1,5 +1,6 @@
 import * as React from "react";
 import { categoryData } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 
 const renderCheckboxes = (): React.JSX.Element => {
   return (
@@ -48,20 +49,19 @@ const renderInput = ({
       <label className="text-sm" htmlFor={name}>
         * {label}
       </label>
-      {React.createElement(
-        element || "input",
-        {
-          className: `input w-full ${className}`,
-          id: name,
-          name: name,
-          type: type,
-        }
-      )}
+      {React.createElement(element || "input", {
+        className: `input w-full ${className}`,
+        id: name,
+        name: name,
+        type: type,
+      })}
     </div>
   );
 };
 
 const NewProduct = (): React.JSX.Element => {
+  const navigate = useNavigate();
+  
   return (
     <div className="flex items-center justify-center w-full h-full">
       <form className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
@@ -104,11 +104,11 @@ const NewProduct = (): React.JSX.Element => {
           </label>
           <div className="flex flex-col gap-2">{renderCheckboxes()}</div>
         </div>
-        <div className="flex self-end">
-          <button className="btn" type="button">
+        <div className="flex self-end gap-2">
+          <button className="btn btn-secondary" onClick={() => navigate('/admin/products')}>
             Discard
           </button>
-          <button className="btn" type="submit">
+          <button className="btn btn-primary" type="submit">
             Add Product
           </button>
         </div>
