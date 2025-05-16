@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carts>
+  <cart>
+    <userId>437fb924-27bd-4f3e-a255-9c896c6de205</userId>
+    <items>
+      <productId>9e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
+      <productId>7f98831b-1423-4791-b9df-e74eea3b2f5e</productId>
+    </items>
+  </cart>
+</carts>

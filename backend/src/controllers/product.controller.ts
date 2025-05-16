@@ -27,3 +27,16 @@ export const getCategories = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getCartItems = async (req: Request, res: Response) => {
+  const XML_PATH = path.join(__dirname, '../xml/cart.xml');
+  try {
+    const cart = await readAndParseXml(XML_PATH);
+    res.status(200).json(cart);
+
+  } catch (err: unknown) {
+    res.status(500).json({
+      message: 'Failed to read or parse cart.xml'
+    });
+  }
+};
