@@ -1,8 +1,58 @@
 import React from 'react';
 import UserHeader from '../components/UserHeader';
 import CartItem from '../components/CartItem';
+import type { Cart } from '../types/cart';
+import { axiosInstance } from '../config/axios';
+import type { IProduct } from '../types/product';
 
 const Cart = (): React.JSX.Element => {
+  const [cartItems, setCartItems] = React.useState<IProduct | IProduct[] | null>(null);
+  const userId: string = '437fb924-27bd-4f3e-a255-9c896c6de205';
+
+  React.useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+
+        // Fetch from cart.xml
+        const response = await axiosInstance.get<{ cart: Cart | Cart[] }>('/cart');
+        const carts = response.data.cart;
+
+        // Fetch from products.xml
+        const productsResponse = await axiosInstance.get<{ product: IProduct[] }>('/products');
+        const products = productsResponse.data.product;
+
+        // Save current user cart
+        const userCart = Array.isArray(carts)
+          ? carts.filter(cart => cart.userId === userId)
+          : carts && carts.userId === userId
+            ? [carts]
+            : [];
+
+        // Save all the carts product items
+        const productIds: string[] = userCart.flatMap(cart =>
+          Array.isArray(cart.items)
+            ? cart.items.map(item => item.productId)
+            : [cart.items.productId]
+        );
+
+
+        // Filter products that are in the user's cart
+        const cartProducts = products.filter(product => productIds.includes(product.id));
+
+        console.log(userCart)
+        console.log(productIds)
+        console.log(productsResponse)
+        console.log(cartProducts)
+
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
+
+
   return (
     <>
       <UserHeader />
