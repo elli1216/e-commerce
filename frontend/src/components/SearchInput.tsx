@@ -2,9 +2,10 @@ import * as React from "react";
 
 interface SearchInputProps {
   placeholder: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export const SearchInput = ({ placeholder }: SearchInputProps): React.JSX.Element => {
+export const SearchInput = ({ placeholder, onChange }: SearchInputProps): React.JSX.Element => {
   return (
     <label className="input w-[20vw]">
       <svg
@@ -23,7 +24,7 @@ export const SearchInput = ({ placeholder }: SearchInputProps): React.JSX.Elemen
           <path d="m21 21-4.3-4.3"></path>
         </g>
       </svg>
-      <input type="search" className="grow" placeholder={placeholder} />
+      <input type="search" className="grow" placeholder={placeholder} onChange={onChange}/>
     </label>
   );
 };

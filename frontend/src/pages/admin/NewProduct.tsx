@@ -2,7 +2,9 @@ import * as React from "react";
 import { categoryData } from "../../data/data";
 import { useNavigate } from "react-router-dom";
 
-const renderCheckboxes = (): React.JSX.Element => {
+const renderCheckboxes = (
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+): React.JSX.Element => {
   return (
     <div className="grid grid-cols-[repeat(4,1fr)] gap-2">
       {categoryData.map((category) => (
@@ -18,6 +20,7 @@ const renderCheckboxes = (): React.JSX.Element => {
                   id={tag.name}
                   name={tag.name}
                   value={tag.name}
+                  onChange={handleChange}
                 />
                 <label className="text-sm" htmlFor={tag.name}>
                   {tag.name}
@@ -37,12 +40,14 @@ const renderInput = ({
   type,
   className,
   element,
+  onChange,
 }: {
   label: string;
   name: string;
   type: string;
   className?: string;
   element?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }): React.JSX.Element => {
   return (
     <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
@@ -54,42 +59,90 @@ const renderInput = ({
         id: name,
         name: name,
         type: type,
+        onChange,
       })}
     </div>
   );
 };
 
+interface FormData {
+  productCategory: string;
+  productImage: string;
+  productName: string;
+  productPrice: string;
+  productQuantity: string;
+  productDescription: string;
+}
+
+const initialFormData: FormData = {
+  productCategory: "",
+  productImage: "",
+  productName: "",
+  productPrice: "",
+  productQuantity: "",
+  productDescription: "",
+};
+
 const NewProduct = (): React.JSX.Element => {
+  const [formData, setFormData] = React.useState<FormData>(initialFormData);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    alert("Product added successfully");
+    console.log(formData);
+    clearForm();
+    navigate("/admin/products");
+  };
+
+  const clearForm = (): void => {
+    setFormData(initialFormData);
+  };
+
   const navigate = useNavigate();
-  
+
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <form className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
+      <form
+        className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4"
+      >
         {renderInput({
           label: "Category",
           name: "productCategory",
           type: "text",
+          onChange: handleChange,
         })}
         {renderInput({
           label: "Product Image URL",
           name: "productImage",
           type: "file",
           className: "file-input",
+          onChange: handleChange,
         })}
         {renderInput({
           label: "Product Name",
           name: "productName",
           type: "text",
+          onChange: handleChange,
         })}
         {renderInput({
           label: "Product Price",
           name: "productPrice",
           type: "number",
+          onChange: handleChange,
         })}
         {renderInput({
           label: "Product Quantity",
           name: "productQuantity",
           type: "number",
+          onChange: handleChange,
         })}
         {renderInput({
           label: "Product Description",
@@ -97,18 +150,24 @@ const NewProduct = (): React.JSX.Element => {
           type: "textarea",
           className: "textarea",
           element: "textarea",
+          onChange: handleChange,
         })}
         <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
           <label className="text-[0.8rem]" htmlFor="productTags">
             Select all relevant tags
           </label>
-          <div className="flex flex-col gap-2">{renderCheckboxes()}</div>
+          <div className="flex flex-col gap-2">
+            {renderCheckboxes(handleChange)}
+          </div>
         </div>
         <div className="flex self-end gap-2">
-          <button className="btn btn-secondary" onClick={() => navigate('/admin/products')}>
+          <button
+            className="btn btn-secondary"
+            onClick={() => navigate("/admin/products")}
+          >
             Discard
           </button>
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
             Add Product
           </button>
         </div>

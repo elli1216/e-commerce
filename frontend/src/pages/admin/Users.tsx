@@ -6,6 +6,18 @@ import { type User } from "../../types/user";
 // import { axiosInstance } from "../../config/axios";
 
 const ConfirmDeleteModal = (): React.JSX.Element => {
+  const [password, setPassword] = React.useState<string>("");
+
+  const handleDelete = (): void => {
+    if (password === "admin") {
+      alert("User deleted successfully");
+      setPassword("");
+    } else {
+      alert("Incorrect password");
+      setPassword("");
+    }
+  };
+
   return (
     <>
       <input type="checkbox" id="deleteModal" className="modal-toggle" />
@@ -17,12 +29,12 @@ const ConfirmDeleteModal = (): React.JSX.Element => {
           <h3 className="text-lg">
             To continue, please enter your admin password for confirmation.
           </h3>
-          <input type="password" className="input input-bordered w-full mt-2" placeholder="****************" />
+          <input type="password" className="input input-bordered w-full mt-2" placeholder="****************" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
           <div className="modal-action">
-            <label htmlFor="deleteModal" className="btn">
+            <label htmlFor="deleteModal" className="btn" onClick={handleDelete}>
               Delete
             </label>
-            <label htmlFor="deleteModal" className="btn">
+            <label htmlFor="deleteModal" className="btn" onClick={() => setPassword("")}>
               Cancel
             </label>
           </div>
@@ -56,6 +68,13 @@ const renderUserList = (user: User): React.JSX.Element => {
 const Users = (): React.JSX.Element => {
   const [users, setUsers] = React.useState<User[]>([]);
 
+  const handleSearch = (searchTerm: string): void => {
+    const filteredUsers = userData.filter((user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setUsers(filteredUsers);
+  };
+
   React.useEffect(() => {
     setUsers(userData);
   }, []);
@@ -78,10 +97,10 @@ const Users = (): React.JSX.Element => {
     <div className="flex items-center justify-center">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
         <div className="self-start">
-          <SearchInput placeholder="Search Name" />
+          <SearchInput placeholder="Search Name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)} />
         </div>
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 border border-[#D9D9D9] rounded-lg p-4">
-          {users.map(renderUserList) as any}
+          {users.length > 0 ? users.map(renderUserList) : <p>No users found</p>}
         </div>
       </div>
     </div>
