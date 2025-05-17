@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AuthErrorCodes } from 'firebase/auth';
 import { login } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   email: string;
@@ -17,6 +18,8 @@ const initialFormData: FormData = {
 const Login = (): React.JSX.Element => {
 
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
+  const navigate = useNavigate();
+  const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -28,12 +31,15 @@ const Login = (): React.JSX.Element => {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-
+    setIsLoggingIn(true);
     const { email, password } = formData;
 
     // fetch the user from firebase
     try {
+
       await login(email.toString(), password.toString());
+      setIsLoggingIn(false);
+      navigate('/home');
 
     } catch (error: unknown) {
       if (
@@ -81,9 +87,17 @@ const Login = (): React.JSX.Element => {
         </label>
         <button
           type="submit"
+          disabled={isLoggingIn}
           className="btn btn-primary"
         >
-          Login
+          {(isLoggingIn) ? (
+            <>
+              <span className="loading loading-spinner loading-xs"></span>
+              Loading...
+            </>
+          ) : (
+            'Login'
+          )}
         </button>
 
       </form>
