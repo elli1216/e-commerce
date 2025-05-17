@@ -1,8 +1,9 @@
 import * as React from "react";
 import { UserX as DeleteIcon } from "lucide-react";
 import { mockUserData as userData } from "../../data/mockData";
-import { SearchInput } from "../../components/SearchInput";
+import { SearchInput } from '../../components/SearchInput';
 import { type User } from "../../types/user";
+import { useDebounce } from "../../hooks/useDebounce";
 // import { axiosInstance } from "../../config/axios";
 
 const ConfirmDeleteModal = (): React.JSX.Element => {
@@ -67,16 +68,30 @@ const renderUserList = (user: User): React.JSX.Element => {
 
 const Users = (): React.JSX.Element => {
   const [users, setUsers] = React.useState<User[]>([]);
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const handleSearch = (searchTerm: string): void => {
-    const filteredUsers = userData.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setUsers(filteredUsers);
+    setSearchTerm(searchTerm);
   };
+  
+  React.useEffect(() => {
+    if (!debouncedSearchTerm.trim()) {
+      setUsers(userData);
+    } else {
+      const filteredUsers = userData.filter((user) =>
+        user.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+      setUsers(filteredUsers);
+      console.log(filteredUsers);
+    }
+  }, [debouncedSearchTerm]);
+
 
   React.useEffect(() => {
     setUsers(userData);
+    console.log(users);
   }, []);
 
   // React.useEffect(() => {

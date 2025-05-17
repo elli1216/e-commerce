@@ -4,6 +4,7 @@ import { SearchInput } from "../../components/SearchInput";
 import { type IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
 import { Link } from "react-router-dom";
+import { useDebounce } from "../../hooks/useDebounce";
 import {
   ChevronLeft,
   ChevronRight,
@@ -61,13 +62,28 @@ const DropdownMenu = (): React.JSX.Element => {
 
 const Products = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = React.useState<IProduct[]>([]);
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  
+  // Use the debounce hook to delay the search term processing
+  const debouncedSearchTerm = useDebounce<string>(searchTerm);
 
   const handleSearch = (searchTerm: string): void => {
-    const filteredProducts = products.filter((product) =>
-      product.productName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setProducts(filteredProducts);
+    setSearchTerm(searchTerm);
   };
+
+  // Effect that runs when the debounced search term changes
+  React.useEffect(() => {
+    if (!debouncedSearchTerm.trim()) {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) =>
+        product.productName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+      console.log(filtered);
+    }
+  }, [debouncedSearchTerm, products]);
 
   React.useEffect(() => {
     const fetchProducts = async (): Promise<void> => {
@@ -77,6 +93,7 @@ const Products = (): React.JSX.Element => {
         );
         const data = response.data.product;
         setProducts(data);
+        setFilteredProducts(data); // Initialize filtered products with all products
         console.log(data);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -87,30 +104,34 @@ const Products = (): React.JSX.Element => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
-        <div className="flex flex-row items-center justify-between w-full">
-          <SearchInput placeholder="Search Products" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)} />
+      <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">        <div className="flex flex-row items-center justify-between w-full">
+          <SearchInput
+            placeholder="Search Products"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleSearch(e.target.value)
+            }
+          />
           <AddButton />
         </div>
         <div className="overflow-x-auto w-full h-[70vh] border border-[#D9D9D9] rounded-lg">
-          <table className="table">
-            {products.length > 0 ? (
-              <>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>{products.map(renderProductList as any)}</tbody>
-              </>
-            ) : (
-              <p className="flex items-center justify-center w-full h-[50vh] text-lg ">No products found</p>
-            )}
-          </table>
+          {filteredProducts.length > 0 ? (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>{filteredProducts.map(renderProductList as any)}</tbody>
+            </table>
+          ) : (
+            <p className="flex items-center justify-center w-full h-[50vh] text-lg ">
+              No products found
+            </p>
+          )}
         </div>
         <div className="flex flex-row items-center justify-center w-[20vw]">
           <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
