@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AuthErrorCodes } from 'firebase/auth';
 import { login } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
 
@@ -30,15 +31,16 @@ const Login = (): React.JSX.Element => {
 
     const { email, password } = formData;
 
-   // fetch the user from firebase
+    // fetch the user from firebase
     try {
       await login(email.toString(), password.toString());
 
     } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        alert(error.message);
-      }
-      return;
+      if (
+        error instanceof FirebaseError &&
+        error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS
+      )
+        alert('Invalid Credential!');
     }
   }
 
@@ -79,7 +81,7 @@ const Login = (): React.JSX.Element => {
         </label>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded"
+          className="btn btn-primary"
         >
           Login
         </button>
