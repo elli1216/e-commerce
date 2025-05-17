@@ -13,20 +13,44 @@ import Cart from './pages/Cart';
 import Order from './pages/Order';
 import TrackOrder from './pages/TrackOrder';
 import AuthProvider from './components/AuthProvider';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = (): React.JSX.Element => {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* Auth Route */}
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/order/:id" element={<TrackOrder />} />
+
+          {/* Protected Route */}
+          <Route path="/home" element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          } />
+          <Route path="/product/:id" element={
+            <ProtectedRoute>
+              <ProductDetail />
+            </ProtectedRoute>
+          } />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          } />
+          <Route path="/order" element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          } />
+          <Route path="/order/:id" element={
+            <ProtectedRoute>
+              <TrackOrder />
+            </ProtectedRoute>
+          } />
 
           {/* admin routes */}
           <Route path="/admin" element={<AdminLayout />}>

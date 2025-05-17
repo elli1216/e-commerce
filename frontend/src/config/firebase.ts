@@ -3,8 +3,8 @@ import Cookies from "js-cookie";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth';
 
 const firebaseConfig: Record<string, string> = {
@@ -20,7 +20,7 @@ const firebaseConfig: Record<string, string> = {
 // Initialize Firebase
 
 const app: FirebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 // Functions
 
@@ -41,14 +41,6 @@ export const signup = async (
   }
 }
 
-export const getCurrentUser = (): void => {
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser) {
-      console.log(currentUser.uid);
-    }
-  });
-}
-
 export const login = async (
   email: string, password: string
 ): Promise<void> => {
@@ -56,13 +48,21 @@ export const login = async (
     const userCredential =
       await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+
+    // save the user in localstorage
+    localStorage.setItem('user', JSON.stringify(user))
+
+    // save the access token in cookie
     const token = await user.getIdToken();
     Cookies.set('token', token, { expires: 30 });
 
     console.log('User logged in:', user);
-
   } catch (error) {
     console.error('Error logging in:', error);
     throw error;
   }
+}
+
+export const logout = async () => {
+  await signOut(auth);
 }

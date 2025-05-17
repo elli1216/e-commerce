@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../config/firebase';
 
 const UserHeader = (): React.JSX.Element => {
+
+  const handleLogout = () => {
+    logout();
+  }
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
@@ -69,8 +75,9 @@ const UserHeader = (): React.JSX.Element => {
                 Profile
               </a>
             </li>
-            <li><a href="">Logout</a></li>
-
+            <li>
+              <button onClick={handleLogout}>Logout</button>
+            </li>
           </ul>
         </div>
       </div>
