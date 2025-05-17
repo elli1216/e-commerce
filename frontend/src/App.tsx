@@ -26,6 +26,11 @@ const App = (): React.JSX.Element => {
           <Route path="/login" element={<Login />} />
 
           {/* Protected Route */}
+          <Route path="*" element={
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          } />
           <Route path="/home" element={
             <ProtectedRoute>
               <Home />
