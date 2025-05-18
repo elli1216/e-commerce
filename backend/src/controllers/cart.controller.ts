@@ -135,3 +135,37 @@ export const decreaseQuantity = async (req: Request, res: Response) => {
 
   res.json({ success: true });
 };
+
+export const deleteCartItem = async (req: Request, res: Response) => {
+  const { userId, productId } = req.body;
+  const XML_PATH = path.join(__dirname, '../xml/cart.xml');
+  const xmlData = fs.readFileSync(XML_PATH, 'utf-8');
+  const json = await parseStringPromise(xmlData);
+
+  // Find the user's cart
+  const cartIndex = json.carts.cart.findIndex((c: any) => c.userId[0] === userId);
+  if (cartIndex === -1) return;
+
+  let cart = json.carts.cart[cartIndex];
+  let items = cart.items[0].item;
+  if (!Array.isArray(items)) items = [items];
+
+  // Remove the item
+  items = items.filter((i: any) => i.productId[0] !== productId);
+
+  if (items.length === 0) {
+    // Remove the whole cart if no items left
+    json.carts.cart.splice(cartIndex, 1);
+  } else {
+    // Otherwise, update the cart's items, itemCount, and subTotal
+    cart.items[0].item = items;
+    cart.itemCount = [String(items.reduce((sum: number, i: any) => sum + Number(i.quantity[0]), 0))];
+    cart.subTotal = [items.reduce((sum: number, i: any) => sum + Number(i.subTotal[0]), 0).toFixed(2)];
+  }
+
+  const builder = new Builder();
+  const updatedXml = builder.buildObject(json);
+  fs.writeFileSync(XML_PATH, updatedXml);
+
+  res.json({ success: true });
+};

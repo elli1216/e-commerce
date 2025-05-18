@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <carts>
   <cart>
-    <userId></userId>
+    <userId/>
     <items>
       <item>
-        <productId></productId>
-        <price></price>
-        <quantity></quantity>
-        <arrivingDate></arrivingDate>
-        <shippingFee></shippingFee>
-        <subTotal></subTotal>
+        <productId/>
+        <price/>
+        <quantity/>
+        <arrivingDate/>
+        <shippingFee/>
+        <subTotal/>
       </item>
     </items>
-    <subTotal></subTotal>
+    <subTotal/>
   </cart>
 </carts>
