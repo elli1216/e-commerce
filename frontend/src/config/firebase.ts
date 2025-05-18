@@ -4,7 +4,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  User
 } from 'firebase/auth';
 
 const firebaseConfig: Record<string, string> = {
@@ -26,7 +27,7 @@ export const auth = getAuth(app);
 
 export const signup = async (
   email: string, password: string
-): Promise<void> => {
+): Promise<User> => {
   try {
     const userCredential =
       await createUserWithEmailAndPassword(auth, email, password);
@@ -34,6 +35,8 @@ export const signup = async (
 
     // Successfully created a new user
     console.log('User created:', user);
+
+    return user;
 
   } catch (error) {
     console.error('Error creating user:', error);
@@ -48,9 +51,6 @@ export const login = async (
     const userCredential =
       await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-
-    // save the user in localstorage
-    localStorage.setItem('user', JSON.stringify(user))
 
     // save the access token in cookie
     const token = await user.getIdToken();

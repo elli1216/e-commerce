@@ -4,6 +4,7 @@ import { FirebaseError } from 'firebase/app';
 import { useAuth } from '../hooks/context';
 import { Navigate } from 'react-router-dom';
 import { isValidEmail } from '../utils/index';
+import { axiosInstance } from '../config/axios';
 
 interface FormData {
   id: string;
@@ -49,9 +50,15 @@ const Signup = (): React.JSX.Element => {
       return;
     }
 
-    // store the user in firebase
     try {
-      await signup(email.toString(), password.toString());
+      // store the user in firebase
+      const userCredential = await signup(email.toString(), password.toString());
+
+      const updatedFormData = { ...formData, id: userCredential.uid };
+      setFormData(updatedFormData);
+
+      // send the user to the backend
+      await axiosInstance.post('auth/signup', updatedFormData);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         alert(error.message);
