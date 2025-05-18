@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { signup } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
-import { axiosInstance } from '../config/axios';
 import { useAuth } from '../hooks/context';
 import { Navigate } from 'react-router-dom';
 import { isValidEmail } from '../utils/index';
