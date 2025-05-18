@@ -2,7 +2,8 @@ import * as React from 'react';
 import { AuthErrorCodes } from 'firebase/auth';
 import { login } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/context';
 
 interface FormData {
   email: string;
@@ -20,6 +21,7 @@ const Login = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const navigate = useNavigate();
   const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
+  const { user } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -45,10 +47,14 @@ const Login = (): React.JSX.Element => {
       if (
         error instanceof FirebaseError &&
         error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS
-      )
+      ) {
         alert('Invalid Credential!');
+        setIsLoggingIn(false);
+      }
     }
   }
+
+  if (user) return <Navigate to='/home' replace />;
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">

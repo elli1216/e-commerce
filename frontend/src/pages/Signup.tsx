@@ -2,8 +2,11 @@ import * as React from 'react';
 import { signup } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
 import { axiosInstance } from '../config/axios';
+import { useAuth } from '../hooks/context';
+import { Navigate } from 'react-router-dom';
 
 interface FormData {
+  id: string;
   fullName: string;
   email: string;
   password: string;
@@ -11,6 +14,7 @@ interface FormData {
 }
 
 const initialFormData: FormData = {
+  id: '',
   fullName: '',
   email: '',
   password: '',
@@ -20,6 +24,7 @@ const initialFormData: FormData = {
 const Signup = (): React.JSX.Element => {
 
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
+  const { user } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -56,6 +61,8 @@ const Signup = (): React.JSX.Element => {
       console.error(error);
     }
   }
+
+  if (user) return <Navigate to='/home' replace />;
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
