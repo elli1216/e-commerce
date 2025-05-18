@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { logout } from '../config/firebase';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AdminHeader = (): React.JSX.Element => {
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    logout();
     navigate('/login');
   };
 
@@ -49,7 +50,7 @@ const AdminHeader = (): React.JSX.Element => {
                 Profile
               </a>
             </li>
-            <li><a onClick={handleLogout}>Logout</a></li>
+            <li><button onClick={handleLogout}>Logout</button></li>
           </ul>
         </div>
       </div>

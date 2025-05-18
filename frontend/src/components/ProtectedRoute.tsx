@@ -16,6 +16,8 @@ const ProtectedRoute = ({ children, isAdminRoute = false }: { children: React.Re
 
   const isUserAdmin = user.email?.endsWith('@admin.com') || false;
 
+  if (isUserAdmin) return <Navigate to='/admin/users' replace />;
+
   // Only restrict access to admin routes for non-admin users
   if (isAdminRoute && !isUserAdmin) {
     return <Navigate to='/' replace />;
