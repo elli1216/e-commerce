@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/context';
 
-const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
+const ProtectedRoute = ({ children, isAdminRoute = false }: { children: React.ReactElement, isAdminRoute?: boolean }) => {
   const { user, loading } = useAuth();
 
   if (loading)
@@ -11,7 +11,15 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
         <span className="loading loading-ring size-15"></span>
       </div>
     );
+
   if (!user) return <Navigate to='/login' replace />;
+
+  const isUserAdmin = user.email?.endsWith('@admin.com') || false;
+
+  // Only restrict access to admin routes for non-admin users
+  if (isAdminRoute && !isUserAdmin) {
+    return <Navigate to='/' replace />;
+  }
 
   return children;
 };
