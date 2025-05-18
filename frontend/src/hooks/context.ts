@@ -24,6 +24,7 @@ export const useAuth = (): AuthContext => {
 interface CartContext {
   userCart: Cart | null;
   setUserCart: React.Dispatch<React.SetStateAction<Cart | null>>;
+  fetchCartItems: () => Promise<void>;
 }
 
 export const CartContext = React.createContext<CartContext | null>(null);

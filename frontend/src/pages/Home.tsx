@@ -4,11 +4,12 @@ import UserHeader from '../components/UserHeader';
 import FilterTabs from '../components/FilterTabs';
 import { type IProduct } from '../types/product';
 import { axiosInstance } from '../config/axios';
-import { useAuth } from '../hooks/context';
+import { useAuth, useCart } from '../hooks/context';
 
 const Home = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
   const { user } = useAuth();
+  const { fetchCartItems } = useCart();
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -29,14 +30,14 @@ const Home = (): React.JSX.Element => {
     if (!user) return;
 
     try {
-      const response = await axiosInstance.post('/cart/add', {
+      await axiosInstance.post('/cart/add', {
         userId: user.uid,
         productId: product.id,
         price: product.productPrice,
         quantity
       });
 
-      console.log(response)
+      await fetchCartItems();
     } catch (err) {
       console.error(err);
       return;
