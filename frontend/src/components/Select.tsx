@@ -1,8 +1,17 @@
 import React from 'react';
 
-const Select = (): React.JSX.Element => {
+interface SelectProps {
+  quantity: number;
+  onQuantityChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const Select = (props: SelectProps): React.JSX.Element => {
   return (
-    <select name="quantity" className="select select-sm w-fit">
+    <select
+      onChange={props.onQuantityChange}
+      value={props.quantity}
+      name="quantity"
+      className="select select-sm w-fit">
       {Array.from({ length: 30 }, (_, i) => (
         <option key={i + 1} value={i + 1}>
           {i + 1}
