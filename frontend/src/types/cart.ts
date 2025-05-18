@@ -14,5 +14,6 @@ export interface Cart {
   items: {
     item: Item | Item[]
   }
+  itemCount: string;
   total: string
 }

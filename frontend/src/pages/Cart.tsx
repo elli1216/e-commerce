@@ -1,13 +1,11 @@
 import React from 'react';
 import UserHeader from '../components/UserHeader';
 import { type Cart } from '../types/cart';
-import { axiosInstance } from '../config/axios';
 import CartItem from '../components/CartItem';
-import { useAuth } from '../hooks/context';
+import { useCart } from '../hooks/context';
 
 const Cart = (): React.JSX.Element => {
-  const [userCart, setUserCart] = React.useState<Cart | null>(null);
-  const { user } = useAuth();
+  const { userCart, setUserCart } = useCart();
 
   const handleIncreaseQuantity = (productId: string) => {
     if (!userCart) return;
@@ -78,46 +76,6 @@ const Cart = (): React.JSX.Element => {
       total: cartTotal.toFixed(2)
     });
   }
-
-  React.useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        // Fetch from cart.xml
-        const response = await axiosInstance.get<{ cart: Cart | Cart[] }>('/cart');
-        const carts = response.data.cart;
-
-        // Save current user cart
-        const [userCart] =
-          (Array.isArray(carts)
-            ? carts
-            : [carts]).filter(cart => cart && cart.userId === user?.uid);
-
-        // Save the total amount of cart
-        if (userCart) {
-          const items = Array.isArray(userCart.items.item)
-            ? userCart.items.item
-            : [userCart.items.item];
-
-          const cartTotal = items.reduce(
-            (sum, item) => sum + Number(item.subTotal ?? 0),
-            0
-          );
-
-          setUserCart({
-            ...userCart,
-            total: cartTotal.toFixed(2),
-          });
-        }
-
-        console.log(userCart);
-
-      } catch (error) {
-        console.error('Failed to fetch products:', error);
-      }
-    };
-
-    fetchCartItems();
-  }, [user]);
 
   return (
     <>
