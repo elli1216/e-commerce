@@ -99,3 +99,66 @@ export const addToCart = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Failed to add item to cart.' });
   }
 };
+
+export const increaseQuantity = async (req: Request, res: Response) => {
+  const { userId, productId } = req.body;
+  const XML_PATH = path.join(__dirname, '../xml/cart.xml');
+  const xmlData = fs.readFileSync(XML_PATH, 'utf-8');
+  const json = await parseStringPromise(xmlData);
+
+  const cart = json.carts.cart.find((c: any) => c.userId[0] === userId);
+  if (!cart) return;
+
+  let items = cart.items[0].item;
+  if (!Array.isArray(items)) items = [items];
+
+  const item = items.find((i: any) => i.productId[0] === productId);
+  if (item) {
+    item.quantity[0] = String(Number(item.quantity[0]) + 1);
+    item.subTotal[0] = (Number(item.price[0]) * Number(item.quantity[0])).toFixed(2);
+  }
+
+  // Update itemCount and subTotal
+  const itemCount = items.reduce((sum: number, i: any) => sum + Number(i.quantity[0]), 0);
+  cart.itemCount = [String(itemCount)];
+  const cartSubTotal = items.reduce((sum: number, i: any) => sum + Number(i.subTotal[0]), 0);
+  cart.subTotal = [cartSubTotal.toFixed(2)];
+
+  const builder = new Builder();
+  const updatedXml = builder.buildObject(json);
+  fs.writeFileSync(XML_PATH, updatedXml);
+
+  res.json({ success: true });
+};
+
+export const decreaseQuantity = async (req: Request, res: Response) => {
+  const { userId, productId } = req.body;
+  const XML_PATH = path.join(__dirname, '../xml/cart.xml');
+  const xmlData = fs.readFileSync(XML_PATH, 'utf-8');
+  const json = await parseStringPromise(xmlData);
+
+  const cart = json.carts.cart.find((c: any) => c.userId[0] === userId);
+  if (!cart) return;
+
+  let items = cart.items[0].item;
+  if (!Array.isArray(items)) items = [items];
+
+  const item = items.find((i: any) => i.productId[0] === productId);
+  if (item && Number(item.quantity[0]) > 1) {
+    item.quantity[0] = String(Number(item.quantity[0]) - 1);
+    item.subTotal[0] = (Number(item.price[0]) * Number(item.quantity[0])).toFixed(2);
+  }
+
+  // Update itemCount and subTotal
+  const itemCount = items.reduce((sum: number, i: any) => sum + Number(i.quantity[0]), 0);
+  cart.itemCount = [String(itemCount)];
+  const cartSubTotal = items.reduce((sum: number, i: any) => sum + Number(i.subTotal[0]), 0);
+  cart.subTotal = [cartSubTotal.toFixed(2)];
+
+  const builder = new Builder();
+  const updatedXml = builder.buildObject(json);
+  fs.writeFileSync(XML_PATH, updatedXml);
+
+  res.json({ success: true });
+};
+

@@ -2,79 +2,42 @@ import React from 'react';
 import UserHeader from '../components/UserHeader';
 import { type Cart } from '../types/cart';
 import CartItem from '../components/CartItem';
-import { useCart } from '../hooks/context';
+import { useAuth, useCart } from '../hooks/context';
+import { axiosInstance } from '../config/axios';
 
 const Cart = (): React.JSX.Element => {
-  const { userCart, setUserCart } = useCart();
+  const { userCart, fetchCartItems } = useCart();
+  const { user } = useAuth();
 
-  const handleIncreaseQuantity = (productId: string) => {
-    if (!userCart) return;
-
-    const items =
-      Array.isArray(userCart.items.item)
-        ? userCart.items.item
-        : [userCart.items.item]
-
-    const updatedItems = items.map(item => {
-      if (item.productId === productId) {
-        const newQuantity = Number(item.quantity) + 1;
-        const newSubTotal = (Number(item.price) * newQuantity).toFixed(2);
-        return {
-          ...item,
-          quantity: String(newQuantity),
-          subTotal: newSubTotal
-        };
-      }
-      return item;
-    });
-
-    const cartTotal = updatedItems.reduce(
-      (sum, item) => sum + Number(item.subTotal ?? 0),
-      0
-    );
-
-    setUserCart({
-      ...userCart,
-      items: { item: updatedItems },
-      total: cartTotal.toFixed(2)
-    });
-
-
-    console.log(userCart);
-
+  const handleIncreaseQuantity = async (productId: string) => {
+    if (!userCart || !user) return;
+    try {
+      await axiosInstance.post('/cart/increase', {
+        userId: user.uid,
+        productId,
+      });
+      // Refetch cart after update
+      await fetchCartItems();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  const handleDecreaseQuantity = (productId: string) => {
-    if (!userCart) return;
+  const handleDecreaseQuantity = async (productId: string) => {
+    if (!userCart || !user) return;
+    try {
+      await axiosInstance.post('/cart/decrease', {
+        userId: user.uid,
+        productId,
+      });
+      await fetchCartItems();
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-    const items =
-      Array.isArray(userCart.items.item)
-        ? userCart.items.item
-        : [userCart.items.item]
+  const placeOrder = () => {
 
-    const updatedItems = items.map(item => {
-      if (item.productId === productId && Number(item.quantity) > 1) {
-        const newQuantity = Number(item.quantity) - 1;
-        const newSubTotal = (Number(item.subTotal) - Number(item.price)).toFixed(2);
-        return {
-          ...item,
-          quantity: String(newQuantity),
-          subTotal: newSubTotal
-        };
-      }
-      return item;
-    });
-
-    const cartTotal = updatedItems.reduce(
-      (sum, item) => sum + Number(item.subTotal ?? 0),
-      0
-    );
-
-    setUserCart({
-      ...userCart,
-      items: { item: updatedItems },
-      total: cartTotal.toFixed(2)
-    });
   }
 
   return (
@@ -101,9 +64,12 @@ const Cart = (): React.JSX.Element => {
             <div className="divider p-0 m-0" />
             <div className="flex flex-row justify-between font-semibold">
               <span>Order total:</span>
-              <span>₱{userCart?.total}</span>
+              <span>₱{userCart.total}</span>
             </div>
-            <button className='btn btn-primary mt-5'>Place your order</button>
+            <button
+              onClick={placeOrder}
+              className='btn btn-primary mt-5'
+            >Place your order</button>
           </div>
         }
 
