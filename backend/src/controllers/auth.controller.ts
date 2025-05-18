@@ -3,13 +3,14 @@ import path from 'path';
 import fs from 'fs';
 
 export const signup = (req: Request, res: Response) => {
-  const { fullName, email } = req.body;
+  const { id, fullName, email } = req.body;
 
   const XML_DIR = path.join(__dirname, '../xml');
   const XML_PATH = path.join(XML_DIR, 'users.xml');
 
   const newUserXml = `
   <user>
+    <id>${id}</id>
     <fullName>${fullName}</fullName>
     <email>${email}</email>
   </user>`;
