@@ -14,6 +14,8 @@ import Order from './pages/Order';
 import TrackOrder from './pages/TrackOrder';
 import AuthProvider from './components/AuthProvider';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
+import { Navigate } from 'react-router-dom';
 
 const App = (): React.JSX.Element => {
   return (
@@ -58,10 +60,27 @@ const App = (): React.JSX.Element => {
           } />
 
           {/* admin routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="users" element={<Users />} />
-            <Route path="products" element={<Products />} />
-            <Route path="new-product" element={<NewProduct />} />
+          <Route path="/admin" element={
+            <AdminProtectedRoute>
+              <AdminLayout />
+            </AdminProtectedRoute>
+          }>
+            <Route index element={<Navigate to="users" replace />} />
+            <Route path="users" element={
+              <AdminProtectedRoute>
+                <Users />
+              </AdminProtectedRoute>
+            } />
+            <Route path="products" element={
+              <AdminProtectedRoute>
+                <Products />
+              </AdminProtectedRoute>
+            } />
+            <Route path="new-product" element={
+              <AdminProtectedRoute>
+                <NewProduct />
+              </AdminProtectedRoute>
+            } />
           </Route>
         </Routes>
       </BrowserRouter>
