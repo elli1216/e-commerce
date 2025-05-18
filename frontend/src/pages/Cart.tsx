@@ -44,8 +44,9 @@ const Cart = (): React.JSX.Element => {
         items: userCart.items.item,
         orderTotal: userCart.total,
       });
-      // Optionally, clear the cart or refetch cart items here
+
       alert('Order placed successfully!');
+      window.location.reload();
       await fetchCartItems();
     } catch (err) {
       console.error(err);

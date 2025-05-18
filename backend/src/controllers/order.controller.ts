@@ -24,6 +24,10 @@ export const addOrder = async (req: Request, res: Response) => {
   const xmlData = fs.readFileSync(XML_PATH, 'utf-8');
   const json = await parseStringPromise(xmlData);
 
+  // Add to orders
+  if (!json.orders) json.orders = {};
+  if (!json.orders.order) json.orders.order = [];
+
   // Prepare new order
   const newOrder = {
     id: [`${uuidv4()}`],
@@ -31,27 +35,54 @@ export const addOrder = async (req: Request, res: Response) => {
     date: [new Date().toISOString()],
     items: [
       {
-        item: Array.isArray(items) ? items.map(i => ({
-          productId: [i.productId],
-          roductName: [i.productName ?? ''],
-          quantity: [i.quantity],
-          status: ['Preparing'],
-          arrivingDate: [new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()],
-          subTotal: [i.subTotal ?? '']
-        })) : []
+        item: Array.isArray(items)
+          ? items.map(i => ({
+            productId: [i.productId],
+            productName: [i.productName ?? ''],
+            quantity: [i.quantity],
+            status: ['Preparing'],
+            arrivingDate: [new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()],
+            subTotal: [i.subTotal ?? '']
+          }))
+          : [
+            {
+              productId: [items.productId],
+              productName: [items.productName ?? ''],
+              quantity: [items.quantity],
+              status: ['Preparing'],
+              arrivingDate: [new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()],
+              subTotal: [items.subTotal ?? '']
+            }
+          ]
       }
     ],
     orderTotal: [orderTotal]
   };
 
-  // Add to orders
-  if (!json.orders.order) json.orders.order = [];
   json.orders.order.push(newOrder);
 
   // Write back to XML
   const builder = new Builder();
   const updatedXml = builder.buildObject(json);
   fs.writeFileSync(XML_PATH, updatedXml);
+
+  // Remove the user's cart
+  const CART_XML_PATH = path.join(__dirname, '../xml/cart.xml');
+  const cartXmlData = fs.readFileSync(CART_XML_PATH, 'utf-8');
+  const cartJson = await parseStringPromise(cartXmlData);
+
+  if (cartJson.carts && cartJson.carts.cart) {
+    if (Array.isArray(cartJson.carts.cart)) {
+      cartJson.carts.cart = cartJson.carts.cart.filter((c: any) => c.userId[0] !== userId);
+    } else if (cartJson.carts.cart.userId && cartJson.carts.cart.userId[0] === userId) {
+      // Only one cart and it's the user's cart, so remove it
+      cartJson.carts.cart = [];
+    }
+  }
+
+  const cartBuilder = new Builder();
+  const updatedCartXml = cartBuilder.buildObject(cartJson);
+  fs.writeFileSync(CART_XML_PATH, updatedCartXml);
 
   res.status(201).json({ message: 'Order placed successfully.' });
 };
