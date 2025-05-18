@@ -16,6 +16,7 @@ import AuthProvider from './components/AuthProvider';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 import { Navigate } from 'react-router-dom';
+import PublicRoute from './pages/PublicRoute';
 
 const App = (): React.JSX.Element => {
   return (
@@ -23,9 +24,21 @@ const App = (): React.JSX.Element => {
       <BrowserRouter>
         <Routes>
           {/* Auth Route */}
-          <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          } />
+          <Route path="/signup" element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          } />
+          <Route path="/login" element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          } />
 
           {/* Protected Route */}
           <Route path="*" element={
@@ -65,7 +78,11 @@ const App = (): React.JSX.Element => {
               <AdminLayout />
             </AdminProtectedRoute>
           }>
-            <Route index element={<Navigate to="users" replace />} />
+            <Route index element={
+              <AdminProtectedRoute>
+                <Navigate to="users" replace />
+              </AdminProtectedRoute>
+            } />
             <Route path="users" element={
               <AdminProtectedRoute>
                 <Users />

@@ -14,6 +14,13 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
 
   if (!user) return <Navigate to='/login' replace />;
 
+  // Check if user is admin based on email domain
+  // then redirect to admin if true
+  const isUserAdmin = user.email?.endsWith("@admin.com") || false;
+  if (isUserAdmin) {
+    return <Navigate to="/admin" replace />;
+  }
+
   return children;
 };
 
