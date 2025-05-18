@@ -4,6 +4,7 @@ import { FirebaseError } from 'firebase/app';
 import { axiosInstance } from '../config/axios';
 import { useAuth } from '../hooks/context';
 import { Navigate } from 'react-router-dom';
+import { isValidEmail } from '../utils/index';
 
 interface FormData {
   id: string;
@@ -43,6 +44,11 @@ const Signup = (): React.JSX.Element => {
       alert('Password does not match!');
       return;
     };
+
+    if (!isValidEmail(email)) {
+      alert('Invalid email!');
+      return;
+    }
 
     // store the user in firebase
     try {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { categoryData } from "../../data/data";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const renderCheckboxes = (
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -96,6 +97,12 @@ const NewProduct = (): React.JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
+
+    if (!formData.productCategory || !formData.productImage || !formData.productName || !formData.productPrice || !formData.productQuantity || !formData.productDescription) {
+      alert("Please fill in all fields");
+      return;
+    }
+
     alert("Product added successfully");
     console.log(formData);
     clearForm();
@@ -161,12 +168,7 @@ const NewProduct = (): React.JSX.Element => {
           </div>
         </div>
         <div className="flex self-end gap-2">
-          <button
-            className="btn btn-secondary"
-            onClick={() => navigate("/admin/products")}
-          >
-            Discard
-          </button>
+          <Link to="/admin/products"><button className="btn btn-secondary">Discard</button></Link>
           <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
             Add Product
           </button>

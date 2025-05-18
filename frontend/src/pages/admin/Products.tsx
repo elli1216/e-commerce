@@ -62,9 +62,11 @@ const DropdownMenu = (): React.JSX.Element => {
 
 const Products = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[]>([]);
-  const [filteredProducts, setFilteredProducts] = React.useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = React.useState<IProduct[]>(
+    []
+  );
   const [searchTerm, setSearchTerm] = React.useState<string>("");
-  
+
   // Use the debounce hook to delay the search term processing
   const debouncedSearchTerm = useDebounce<string>(searchTerm);
 
@@ -78,7 +80,9 @@ const Products = (): React.JSX.Element => {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter((product) =>
-        product.productName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        product.productName
+          .toLowerCase()
+          .includes(debouncedSearchTerm.toLowerCase())
       );
       setFilteredProducts(filtered);
       console.log(filtered);
@@ -104,7 +108,8 @@ const Products = (): React.JSX.Element => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">        <div className="flex flex-row items-center justify-between w-full">
+      <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
+        <div className="flex flex-row items-center justify-between w-full">
           <SearchInput
             placeholder="Search Products"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
