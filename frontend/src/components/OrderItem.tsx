@@ -3,10 +3,12 @@ import { axiosInstance } from '../config/axios';
 import { type Item } from '../types/order';
 import { type IProduct } from '../types/product';
 import { formatArrivingDate } from '../utils/date';
+import { useNavigate } from 'react-router-dom';
 
 const OrderItem = (item: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
   const product = products?.find(p => p.id === item.productId);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -23,6 +25,18 @@ const OrderItem = (item: Item): React.JSX.Element => {
     fetchProducts();
   }, []);
 
+  const handleTrackOrder = (): void => {
+    navigate(
+      `/order/:${item.productId}}`,
+      {
+        state: {
+          item,
+          product
+        }
+      }
+    )
+  }
+
   return (
     <div className="p-3 sm:flex sm:flex-row sm:gap-5">
       <div>
@@ -35,7 +49,10 @@ const OrderItem = (item: Item): React.JSX.Element => {
           <span>₱{product?.productPrice}</span>
           <span>Quantity: {item.quantity}</span>
         </div>
-        <button className='btn btn-sm w-full btn-secondary self-center sm:w-3xs'>
+        <button
+          onClick={handleTrackOrder}
+          className='btn btn-sm w-full btn-secondary self-center sm:w-3xs'
+        >
           Track Order
         </button>
       </div>

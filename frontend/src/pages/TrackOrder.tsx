@@ -1,8 +1,20 @@
 import React from 'react';
 import UserHeader from '../components/UserHeader';
-import { Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import { type Item } from '../types/order';
+import { type IProduct } from '../types/product';
+import { formatArrivingDate } from '../utils/date';
+
+interface LocationState {
+  item?: Item;
+  product?: IProduct;
+}
 
 const TrackOrder = (): React.JSX.Element => {
+
+  const location = useLocation();
+  const { item, product } = location.state as LocationState;
+
   return (
     <>
       <UserHeader />
@@ -15,9 +27,11 @@ const TrackOrder = (): React.JSX.Element => {
         </Link>
 
         <div className="flex flex-col gap-2">
-          <p className="text-2xl font-semibold">Arriving on Thursday, May 15</p>
-          <p>Product name</p>
-          <p>Quantity: 4</p>
+          <p className="text-2xl font-semibold">
+            Arriving on {formatArrivingDate(item?.arrivingDate ?? "")}
+          </p>
+          <p>{product?.productName}</p>
+          <p>Quantity: {item?.quantity}</p>
           <img
             src="https://picsum.photos/200"
             alt="Product image"
@@ -27,7 +41,7 @@ const TrackOrder = (): React.JSX.Element => {
 
         <ul className="timeline w-full">
           <li>
-            <div className="timeline-start timeline-box">Preparing</div>
+            <div className="timeline-start timeline-box">{item?.status}</div>
             <div className="timeline-middle">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
