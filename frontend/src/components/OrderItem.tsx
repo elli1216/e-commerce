@@ -2,6 +2,7 @@ import React from 'react';
 import { axiosInstance } from '../config/axios';
 import { type Item } from '../types/order';
 import { type IProduct } from '../types/product';
+import { formatArrivingDate } from '../utils/date';
 
 const OrderItem = (item: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
@@ -30,8 +31,8 @@ const OrderItem = (item: Item): React.JSX.Element => {
       <div className="flex flex-col justify-between gap-2 md:flex-row md:flex-1/2">
         <div className="flex flex-col gap-2">
           <span>{product?.productName}</span>
-          <span>{item.arrivingDate}</span>
-          <span>{product?.productPrice}</span>
+          <span>Arriving on: {formatArrivingDate(item.arrivingDate)}</span>
+          <span>₱{product?.productPrice}</span>
           <span>Quantity: {item.quantity}</span>
         </div>
         <button className='btn btn-sm w-full btn-secondary self-center sm:w-3xs'>

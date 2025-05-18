@@ -4,6 +4,7 @@ import OrderItem from '../components/OrderItem';
 import { axiosInstance } from '../config/axios';
 import { type Order } from '../types/order';
 import { useAuth } from '../hooks/context';
+import { formatOrderDate } from '../utils/date'
 
 const Order = (): React.JSX.Element => {
   const [orders, setOrders] = React.useState<Order[]>([]);
@@ -47,11 +48,11 @@ const Order = (): React.JSX.Element => {
               <div className="flex flex-row gap-5">
                 <div>
                   <span className="block font-semibold">Order Placed:</span>
-                  <span>{order.date}</span>
+                  <span>{formatOrderDate(order.date)}</span>
                 </div>
                 <div>
                   <span className="block font-semibold">Total:</span>
-                  <span>{order.orderTotal}</span>
+                  <span>₱{order.orderTotal}</span>
                 </div>
               </div>
             </div>
