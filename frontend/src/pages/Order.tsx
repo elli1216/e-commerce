@@ -3,24 +3,30 @@ import UserHeader from '../components/UserHeader';
 import OrderItem from '../components/OrderItem';
 import { axiosInstance } from '../config/axios';
 import { type Order } from '../types/order';
+import { useAuth } from '../hooks/context';
 
 const Order = (): React.JSX.Element => {
-  const [orders, setOrders] = React.useState<Order[] | null>(null);
+  const [orders, setOrders] = React.useState<Order[]>([]);
+  const { user } = useAuth();
 
   React.useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axiosInstance.get<{ order: Order[] }>('/orders');
-        const orders = response.data.order;
-        setOrders(orders);
-
-      } catch (err: unknown) {
+        const response = await axiosInstance.get<{ order: Order | Order[] }>('/orders');
+        let orders = response.data.order;
+        if (!Array.isArray(orders)) {
+          orders = orders ? [orders] : [];
+        }
+        // Filter orders for the logged-in user
+        const userOrders = user ? orders.filter(order => order.userId === user.uid) : [];
+        setOrders(userOrders);
+      } catch (err) {
         console.error('Failed to fetch Orders:', err);
       }
     };
 
     fetchOrders();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -29,7 +35,7 @@ const Order = (): React.JSX.Element => {
         <h1 className="text-4xl font-semibold w-fit">Your Order</h1>
       </div>
       {/* Render orders here */}
-      {orders?.map((order) =>
+      {orders.map((order) =>
         <div key={order.id} className="px-3 mb-10">
           <div className="flex flex-col max-w-5xl w-full mx-auto border border-base-300">
             {/* Header */}

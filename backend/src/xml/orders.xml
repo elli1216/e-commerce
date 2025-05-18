@@ -1,35 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <orders>
-  <order>
-    <id></id>
-    <userId></userId>
-    <date></date>
-    <items>
-      <item>
-        <productId></productId>
-        <roductName/>
-        <quantity></quantity>
-        <status></status>
-        <arrivingDate></arrivingDate>
-        <subTotal></subTotal>
-      </item>
-      <item>
-        <productId></productId>
-        <roductName/>
-        <quantity></quantity>
-        <status></status>
-        <arrivingDate></arrivingDate>
-        <subTotal></subTotal>
-      </item>
-      <item>
-        <productId></productId>
-        <roductName/>
-        <quantity></quantity>
-        <status></status>
-        <arrivingDate></arrivingDate>
-        <subTotal></subTotal>
-      </item>
-    </items>
-    <orderTotal></orderTotal>
-  </order>
 </orders>
