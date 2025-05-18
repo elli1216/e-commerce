@@ -36,10 +36,22 @@ const Cart = (): React.JSX.Element => {
     }
   }
 
-  const placeOrder = () => {
-
-  }
-
+  const placeOrder = async () => {
+    if (!userCart || !user) return;
+    try {
+      await axiosInstance.post('/order', {
+        userId: user.uid,
+        items: userCart.items.item,
+        orderTotal: userCart.total,
+      });
+      // Optionally, clear the cart or refetch cart items here
+      alert('Order placed successfully!');
+      await fetchCartItems();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to place order.');
+    }
+  };
   return (
     <>
       <UserHeader />
