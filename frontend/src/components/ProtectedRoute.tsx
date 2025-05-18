@@ -11,6 +11,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
         <span className="loading loading-ring size-15"></span>
       </div>
     );
+
   if (!user) return <Navigate to='/login' replace />;
 
   return children;
