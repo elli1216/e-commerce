@@ -52,6 +52,20 @@ const Cart = (): React.JSX.Element => {
       alert('Failed to place order.');
     }
   };
+
+  const handleDeleteItem = async (productId: string) => {
+    if (!userCart || !user) return;
+    try {
+      await axiosInstance.post('/cart/delete', {
+        userId: user.uid,
+        productId,
+      });
+      await fetchCartItems();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <UserHeader />
@@ -87,7 +101,7 @@ const Cart = (): React.JSX.Element => {
 
         {/* Cart Item */}
         <div className="flex flex-col gap-5 flex-1/2">
-          {userCart && (
+          {userCart?.items && (
             (Array.isArray(userCart.items.item)
               ? userCart.items.item
               : [userCart.items.item]
@@ -97,6 +111,7 @@ const Cart = (): React.JSX.Element => {
                 {...item}
                 increaseQuantity={handleIncreaseQuantity}
                 decreaseQuantity={handleDecreaseQuantity}
+                onDeleteItem={handleDeleteItem}
               />
             )
           )}

@@ -40,6 +40,7 @@ export const CartProvider = ({ children }: { children: React.ReactElement }) => 
       console.log(userCart);
 
     } catch (error) {
+      setUserCart(null);
       console.error('Failed to fetch products:', error);
     }
   }, [setUserCart, user]);

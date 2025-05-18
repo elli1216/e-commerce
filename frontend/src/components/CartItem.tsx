@@ -52,7 +52,12 @@ const CartItem = (props: Item): React.JSX.Element => {
             +
           </button>
         </div>
-        <span className="link-info link-hover cursor-pointer w-fit">Delete</span>
+        <button
+          onClick={() => props.onDeleteItem?.(props.productId)}
+          className="link-info link-hover cursor-pointer w-fit"
+        >
+          Delete
+        </button>
       </div>
 
       <div className="flex flex-col gap-3 min-w-fit">

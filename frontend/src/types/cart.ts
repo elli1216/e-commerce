@@ -7,6 +7,7 @@ export interface Item {
   subTotal: string
   increaseQuantity?: (productId: string) => void;
   decreaseQuantity?: (productId: string) => void;
+  onDeleteItem?: (productId: string) => void;
 }
 
 export interface Cart {
