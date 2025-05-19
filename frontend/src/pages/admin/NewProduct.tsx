@@ -109,9 +109,10 @@ const DropDown = ({
 interface FormData {
   category: string;
   productImage: string;
+  productBrand: string;
   productName: string;
   productPrice: string;
-  productQuantity: string;
+  productStock: string;
   productDescription: string;
   productTags: {
     connectivity: {
@@ -121,7 +122,7 @@ interface FormData {
       usb3: string;
       thunderbolt: string;
       hdmi: string;
-    },
+    };
     usageBased: {
       gaming: string;
       office: string;
@@ -131,7 +132,7 @@ interface FormData {
       homeUse: string;
       business: string;
       student: string;
-    },
+    };
     features: {
       rgb: string;
       mechanical: string;
@@ -139,22 +140,23 @@ interface FormData {
       ergonomic: string;
       portable: string;
       silent: string;
-    },
+    };
     miscellaneous: {
       newArrival: string;
       limitedEdition: string;
       ecoFriendly: string;
       energyEfficient: string;
-    },
+    };
   };
 }
 
 const initialFormData: FormData = {
   category: "",
   productImage: "",
+  productBrand: "",
   productName: "",
   productPrice: "",
-  productQuantity: "",
+  productStock: "",
   productDescription: "",
   productTags: {
     connectivity: {
@@ -190,7 +192,7 @@ const initialFormData: FormData = {
       energyEfficient: "false",
     },
   },
-}
+};
 
 const NewProduct = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
@@ -210,7 +212,9 @@ const NewProduct = (): React.JSX.Element => {
         productTags: {
           ...prevFormData.productTags,
           [category]: {
-            ...prevFormData.productTags[category as keyof typeof prevFormData.productTags],
+            ...prevFormData.productTags[
+              category as keyof typeof prevFormData.productTags
+            ],
             [tagName]: checked ? "true" : "false",
           },
         },
@@ -229,9 +233,10 @@ const NewProduct = (): React.JSX.Element => {
     if (
       !formData.category ||
       !formData.productImage ||
+      !formData.productBrand ||
       !formData.productName ||
       !formData.productPrice ||
-      !formData.productQuantity ||
+      !formData.productStock ||
       !formData.productDescription
     ) {
       alert("Please fill in all fields");
@@ -274,6 +279,12 @@ const NewProduct = (): React.JSX.Element => {
           name: "productImage",
           type: "file",
           className: "file-input",
+          onChange: handleChange,
+        })}
+        {renderInput({
+          label: "Product Brand",
+          name: "productBrand",
+          type: "text",
           onChange: handleChange,
         })}
         {renderInput({

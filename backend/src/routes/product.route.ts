@@ -8,7 +8,7 @@ import {
   deleteProduct,
 } from '../controllers/product.controller';
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 router.get('/products', getProducts);
 router.get('/categories', getCategories);

@@ -16,7 +16,10 @@ export const getProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { id } = req.params;
 
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
@@ -38,14 +41,14 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-
-export const addProduct = async (req: Request, res: Response) => {
+export const addProduct = async (req: Request, res: Response): Promise<any> => {
   const {
     category,
     productImage,
+    productBrand,
     productName,
     productPrice,
-    productQuantity,
+    productStock,
     productDescription,
     productTags,
   } = req.body;
@@ -67,9 +70,10 @@ export const addProduct = async (req: Request, res: Response) => {
     <id>${uuidv4()}</id>
     <category>${category}</category>
     <productImage>${imageFileName}</productImage>
+    <productBrand>${productBrand}</productBrand>
     <productName>${productName}</productName>
     <productPrice>${productPrice}</productPrice>
-    <productStock>${productQuantity}</productQuantity>
+    <productStock>${productStock}</productStock>
     <productDescription>${productDescription}</productDescription>
     <tags>
       <connectivity>
@@ -100,11 +104,13 @@ export const addProduct = async (req: Request, res: Response) => {
       </features>
       <miscellaneous>
         <newArrival>${productTags.miscellaneous.newArrival}</newArrival>
-        <limitedEdition>${productTags.miscellaneous.limitedEdition
-    }</limitedEdition>
+        <limitedEdition>${
+          productTags.miscellaneous.limitedEdition
+        }</limitedEdition>
         <ecoFriendly>${productTags.miscellaneous.ecoFriendly}</ecoFriendly>
-        <energyEfficient>${productTags.miscellaneous.energyEfficient
-    }</energyEfficient>
+        <energyEfficient>${
+          productTags.miscellaneous.energyEfficient
+        }</energyEfficient>
       </miscellaneous>
     </tags>
   </product>`;
@@ -119,10 +125,14 @@ export const addProduct = async (req: Request, res: Response) => {
   res.status(201).json({ message: "Product added successfully." });
 };
 
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProduct = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const {
     category,
     productImage,
+    productBrand,
     productName,
     productPrice,
     productStock,
@@ -142,15 +152,20 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const products = await readAndParseXml(XML_PATH);
   const product = products.product.find((p: any) => p.id === id);
-
-  const imgData = productImage.replace(/^data:image\/\w+;base64,/, "");
+  const imgData = productImage?.replace(/^data:image\/\w+;base64,/, "");
   let imageFileName;
-  if (!imgData) {
-    imageFileName = `${productName + Math.random()}.jpg`;
+
+  if (imgData && imgData.length > 0) {
+    // If there's new image data, save it with a new filename
+    imageFileName = `${productName.replace(/\s+/g, "-")}-${Date.now()}.jpg`;
     const imageFilePath = path.join(imageFolder, imageFileName);
     fs.writeFileSync(imageFilePath, Buffer.from(imgData, "base64"));
-  } else {
+  } else if (product && product.productImage) {
+    // If no new image, use the existing one
     imageFileName = product.productImage;
+  } else {
+    // Fallback to a default name if no image exists
+    imageFileName = `default-${Date.now()}.jpg`;
   }
 
   const updatedProductXml = `
@@ -159,6 +174,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   <category>${category}</category>
   <productImage>${imageFileName}</productImage>
   <productName>${productName}</productName>
+  <productBrand>${productBrand}</productBrand>
   <productPrice>${productPrice}</productPrice>
   <productStock>${productStock}</productStock>
   <productDescription>${productDescription}</productDescription>
@@ -198,32 +214,75 @@ export const updateProduct = async (req: Request, res: Response) => {
   </tags>
 </product>
   `;
+  try {
+    // Create a regex pattern that will match the entire product XML block with the given ID
+    // Using RegExp constructor to create a dynamic regex pattern with proper flags
+    const productRegex = new RegExp(
+      `<product>\\s*<id>${id}</id>[\\s\\S]*?</product>`,
+      "gm"
+    );
 
-  const updatedXML = productsXml.replace(
-    `<product><id>${id}</id>.*?</product>`,
-    updatedProductXml
-  );
+    // Check if the product exists in the XML
+    if (!productRegex.test(productsXml)) {
+      return res.status(404).json({ message: "Product not found." });
+    }
 
-  fs.writeFileSync(XML_PATH, updatedXML);
+    // Reset the lastIndex property of the regex
+    productRegex.lastIndex = 0;
 
-  res.status(200).json({ message: "Product updated successfully." });
+    // Replace the old product with the updated one
+    const updatedXML = productsXml.replace(
+      productRegex,
+      updatedProductXml.trim()
+    );
+
+    fs.writeFileSync(XML_PATH, updatedXML);
+
+    res.status(200).json({ message: "Product updated successfully." });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Failed to update product." });
+  }
 };
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProduct = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const { id } = req.params;
 
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
 
-  const productsXml = fs.readFileSync(XML_PATH).toString();
+  try {
+    const productsXml = fs.readFileSync(XML_PATH).toString();
 
-  const updatedXML = productsXml.replace(
-    `<product><id>${id}</id>(.*?)</product>`,
-    ""
-  );
+    // Create a regex pattern that matches the entire product XML block with the given ID
+    const productRegex = new RegExp(
+      `<product>\\s*<id>${id}</id>[\\s\\S]*?</product>`,
+      "gm"
+    );
 
-  fs.writeFileSync(XML_PATH, updatedXML);
+    // Check if the product exists
+    if (!productRegex.test(productsXml)) {
+      return res.status(404).json({ message: "Product not found." });
+    }
 
-  res.status(200).json({ message: "Product deleted successfully." });
+    // Reset the lastIndex property of the regex
+    productRegex.lastIndex = 0;
+
+    // Remove the product from the XML
+    const updatedXML = productsXml.replace(productRegex, "");
+
+    // Clean up any double newlines created by the deletion
+    const cleanedXML = updatedXML.replace(/\n\s*\n/g, "\n");
+
+    fs.writeFileSync(XML_PATH, cleanedXML);
+
+    res.status(200).json({ message: "Product deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ message: "Failed to delete product." });
+  }
 };
 
 export const getCategories = async (req: Request, res: Response) => {
