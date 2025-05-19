@@ -40,7 +40,7 @@ export const addProduct = async (req: Request, res: Response) => {
   fs.writeFileSync(imageFilePath, Buffer.from(data, "base64"));
 
   const newProductXml = `
-    <product>
+  <product>
     <id>${uuidv4()}</id>
     <category>${category}</category>
     <productImage>${imageFileName}</productImage>
@@ -84,8 +84,7 @@ export const addProduct = async (req: Request, res: Response) => {
     }</energyEfficient>
       </miscellaneous>
     </tags>
-  </product>
-  `;
+  </product>`;
 
   const updatedXML = productsXml.replace(
     "</products>",

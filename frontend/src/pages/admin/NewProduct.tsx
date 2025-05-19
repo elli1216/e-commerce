@@ -204,7 +204,7 @@ const NewProduct = (): React.JSX.Element => {
     if (type === "checkbox") {
       // Find the category and tag name
       const [category, tagName] = name.split("_");
-      
+
       setFormData((prevFormData) => ({
         ...prevFormData,
         productTags: {
@@ -289,8 +289,8 @@ const NewProduct = (): React.JSX.Element => {
           onChange: handleChange,
         })}
         {renderInput({
-          label: "Product Quantity",
-          name: "productQuantity",
+          label: "Product Stocks",
+          name: "productStock",
           type: "number",
           onChange: handleChange,
         })}
