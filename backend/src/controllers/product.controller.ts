@@ -46,7 +46,7 @@ export const addProduct = async (req: Request, res: Response) => {
     <productImage>${imageFileName}</productImage>
     <productName>${productName}</productName>
     <productPrice>${productPrice}</productPrice>
-    <productQuantity>${productQuantity}</productQuantity>
+    <productStock>${productQuantity}</productQuantity>
     <productDescription>${productDescription}</productDescription>
     <tags>
       <connectivity>
@@ -77,13 +77,11 @@ export const addProduct = async (req: Request, res: Response) => {
       </features>
       <miscellaneous>
         <newArrival>${productTags.miscellaneous.newArrival}</newArrival>
-        <limitedEdition>${
-          productTags.miscellaneous.limitedEdition
-        }</limitedEdition>
+        <limitedEdition>${productTags.miscellaneous.limitedEdition
+    }</limitedEdition>
         <ecoFriendly>${productTags.miscellaneous.ecoFriendly}</ecoFriendly>
-        <energyEfficient>${
-          productTags.miscellaneous.energyEfficient
-        }</energyEfficient>
+        <energyEfficient>${productTags.miscellaneous.energyEfficient
+    }</energyEfficient>
       </miscellaneous>
     </tags>
   </product>

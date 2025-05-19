@@ -134,4 +134,49 @@
       </miscellaneous>
     </tags>
   </product>
+
+    <product>
+    <id>349c6139-cdb7-49fa-a962-e00d570f7300</id>
+    <category>Laptop</category>
+    <productImage>fesafsef0.6024044835729121.jpg</productImage>
+    <productName>fesafsef</productName>
+    <productPrice>3213</productPrice>
+    <productStock>32332</productStock>
+    <productDescription>efsfsafasefasefsefesf</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>false</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>true</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>false</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  
 </products>
