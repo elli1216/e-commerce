@@ -32,4 +32,36 @@
     </items>
     <orderTotal>149.95</orderTotal>
   </order>
+  <order>
+    <id>ad776e27-1603-4a46-adf2-b93a1e7d61a8</id>
+    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
+    <date>2025-05-19T05:53:35.654Z</date>
+    <items>
+      <item>
+        <productId>75342c23-8cfb-41c1-ae11-2a88e768c854</productId>
+        <productName>Ultrabook Laptop</productName>
+        <quantity>1</quantity>
+        <status>Preparing</status>
+        <arrivingDate>2025-05-22T05:53:35.654Z</arrivingDate>
+        <subTotal>899.99</subTotal>
+      </item>
+    </items>
+    <orderTotal>899.99</orderTotal>
+  </order>
+  <order>
+    <id>06644a0c-ec6f-48f9-a78c-54f94279e385</id>
+    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
+    <date>2025-05-19T05:54:07.997Z</date>
+    <items>
+      <item>
+        <productId>39e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
+        <productName>Wireless Keyboard</productName>
+        <quantity>1</quantity>
+        <status>Preparing</status>
+        <arrivingDate>2025-05-22T05:54:07.997Z</arrivingDate>
+        <subTotal>49.99</subTotal>
+      </item>
+    </items>
+    <orderTotal>49.99</orderTotal>
+  </order>
 </orders>
