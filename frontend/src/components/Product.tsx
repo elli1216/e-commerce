@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from './Select';
 import { type IProduct } from '../types/product';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface ProductProps {
   product: IProduct;
@@ -12,6 +13,7 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
   const [quantity, setQuantity] = React.useState<number>(1);
   const [showAdded, setShowAdded] = React.useState<boolean>(false);
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   const handleQuantityChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -20,7 +22,8 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
     console.log(quantity)
   }
 
-  const handleAddToCart = (): void => {
+  const handleAddToCart = (e: React.MouseEvent): void => {
+    e.stopPropagation();
     onAddToCart(product, quantity);
     setShowAdded(true);
     if (timeoutRef.current) {
@@ -35,9 +38,16 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
     }
   }, []);
 
+  const handleCardClick = () => {
+    navigate(`/${product.id}`, { state: { product } });
+  }
+
   return (
-    <div className="flex flex-col w-fit hover:bg-base-300 transition-all">
+    <div
+      onClick={handleCardClick}
+      className="flex flex-col w-fit hover:bg-base-300 transition-all">
       <div>
+        { }
         <img src="https://picsum.photos/200" alt="Product image" />
       </div>
       <div className="flex flex-col gap-2 p-2">

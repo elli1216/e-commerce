@@ -47,7 +47,8 @@ export interface IProduct {
   productImage: string
   productName: string;
   productPrice: string;
-  productQuantity: string;
+  productStock: string;
   productDescription: string
-  tags: ProductTags
+  tags: ProductTags;
+  productBrand: string;
 }

@@ -53,7 +53,7 @@ const App = (): React.JSX.Element => {
                 <Home />
               </ProtectedRoute>
             } />
-            <Route path="/product/:id" element={
+            <Route path="/:id" element={
               <ProtectedRoute>
                 <ProductDetail />
               </ProtectedRoute>

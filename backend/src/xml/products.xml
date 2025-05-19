@@ -3,10 +3,11 @@
   <product>
     <id>39e859e9-8f2c-49e0-a325-01cc69f3834a</id>
     <category>Keyboard</category>
+    <productBrand>Logitech</productBrand>
     <productImage>product-image.jpg</productImage>
     <productName>Wireless Keyboard</productName>
     <productPrice>49.99</productPrice>
-    <productQuantity>100</productQuantity>
+    <productStock>100</productStock>
     <productDescription>Ergonomic wireless keyboard with backlit keys and Bluetooth connectivity.</productDescription>
     <tags>
       <connectivity>
@@ -47,10 +48,11 @@
   <product>
     <id>7f98831b-1423-4791-b9df-e74eea3b2f5e</id>
     <category>Mouse</category>
+    <productBrand>Razer</productBrand>
     <productImage>gaming-mouse.jpg</productImage>
     <productName>Gaming Mouse</productName>
     <productPrice>29.99</productPrice>
-    <productQuantity>250</productQuantity>
+    <productStock>250</productStock>
     <productDescription>High precision gaming mouse with RGB lighting and customizable buttons.</productDescription>
     <tags>
       <connectivity>
@@ -91,10 +93,11 @@
   <product>
     <id>75342c23-8cfb-41c1-ae11-2a88e768c854</id>
     <category>Laptop</category>
+    <productBrand>Dell</productBrand>
     <productImage>ultrabook.jpg</productImage>
     <productName>Ultrabook Laptop</productName>
     <productPrice>899.99</productPrice>
-    <productQuantity>50</productQuantity>
+    <productStock>50</productStock>
     <productDescription>Lightweight and powerful ultrabook ideal for students and professionals.</productDescription>
     <tags>
       <connectivity>
