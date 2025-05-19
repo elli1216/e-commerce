@@ -5,7 +5,12 @@ import { useAuth } from '../hooks/context';
 const PublicRoute = ({ children }: { children: React.ReactElement }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-ring size-15"></span>
+      </div>
+    );
 
   // If user is admin, redirect to /admin
   if (user && user.email?.endsWith('@admin.com')) {
