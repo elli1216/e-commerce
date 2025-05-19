@@ -14,7 +14,7 @@ const UserHeader = (): React.JSX.Element => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <Link to="/home" className="btn btn-ghost text-xl">Shop Name</Link>
+        <Link to="/home" className="btn btn-ghost text-xl">ByteBazaar</Link>
       </div>
 
       <div className="flex gap-2">

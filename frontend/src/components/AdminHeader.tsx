@@ -17,7 +17,7 @@ const AdminHeader = (): React.JSX.Element => {
           to="/admin/users"
           className="btn btn-ghost text-xl"
         >
-          Shop Name
+          ByteBazaar
         </Link>
       </div>
       {/* Nav Menu */}
