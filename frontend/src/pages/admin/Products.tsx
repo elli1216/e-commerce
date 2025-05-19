@@ -44,7 +44,9 @@ const DropdownMenu = ({ product }: { product: IProduct }): React.JSX.Element => 
     const deleteProduct = async (): Promise<void> => {
       try {
         await axiosInstance.delete(`/delete-product/${product.id}`);
-        navigate("/admin/products");
+        alert("Product deleted successfully");
+
+        window.location.reload();
       } catch (error) {
         console.error("Failed to delete product:", error);
       }

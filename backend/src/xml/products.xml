@@ -3,8 +3,9 @@
   <product>
   <id>39e859e9-8f2c-49e0-a325-01cc69f3834a</id>
   <category>Keyboard</category>
-  <productImage>Wireless-Keyboard-1747649609141.jpg</productImage>
+  <productImage>Wireless-Keyboard-1747650963112.jpg</productImage>
   <productName>Wireless Keyboard</productName>
+  <productBrand>Logitech</productBrand>
   <productPrice>49.99</productPrice>
   <productStock>99</productStock>
   <productDescription>Ergonomic wireless keyboard with backlit keys and Bluetooth connectivity.</productDescription>
@@ -131,48 +132,48 @@
       </miscellaneous>
     </tags>
   </product>
-
   <product>
-    <id>5f12f628-5b3a-4f63-b987-54a85853bb42</id>
-    <category>Laptop</category>
-    <productImage>ThinkPad E140.3617552426741004.jpg</productImage>
-    <productName>ThinkPad E14</productName>
-    <productPrice>39999</productPrice>
-    <productStock>1000</productStock>
-    <productDescription>lorem ipsum</productDescription>
-    <tags>
-      <connectivity>
-        <wifi>true</wifi>
-        <bluetooth>false</bluetooth>
-        <ethernet>false</ethernet>
-        <usb3>false</usb3>
-        <thunderbolt>false</thunderbolt>
-        <hdmi>false</hdmi>
-      </connectivity>
-      <usageBased>
-        <gaming>false</gaming>
-        <office>false</office>
-        <programming>true</programming>
-        <videoEditing>false</videoEditing>
-        <streaming>false</streaming>
-        <homeUse>false</homeUse>
-        <business>false</business>
-        <student>false</student>
-      </usageBased>
-      <features>
-        <rgb>false</rgb>
-        <mechanical>true</mechanical>
-        <backlit>false</backlit>
-        <ergonomic>false</ergonomic>
-        <portable>false</portable>
-        <silent>false</silent>
-      </features>
-      <miscellaneous>
-        <newArrival>false</newArrival>
-        <limitedEdition>false</limitedEdition>
-        <ecoFriendly>true</ecoFriendly>
-        <energyEfficient>false</energyEfficient>
-      </miscellaneous>
-    </tags>
-  </product>
+  <id>5f12f628-5b3a-4f63-b987-54a85853bb42</id>
+  <category>Laptop</category>
+  <productImage>ThinkPad-E14-1747650998963.jpg</productImage>
+  <productName>ThinkPad E14</productName>
+  <productBrand>Lenovo</productBrand>
+  <productPrice>39999</productPrice>
+  <productStock>988</productStock>
+  <productDescription>lorem ipsum</productDescription>
+  <tags>
+    <connectivity>
+      <wifi>true</wifi>
+      <bluetooth>false</bluetooth>
+      <ethernet>false</ethernet>
+      <usb3>false</usb3>
+      <thunderbolt>false</thunderbolt>
+      <hdmi>false</hdmi>
+    </connectivity>
+    <usageBased>
+      <gaming>false</gaming>
+      <office>false</office>
+      <programming>true</programming>
+      <videoEditing>false</videoEditing>
+      <streaming>false</streaming>
+      <homeUse>false</homeUse>
+      <business>false</business>
+      <student>false</student>
+    </usageBased>
+    <features>
+      <rgb>false</rgb>
+      <mechanical>true</mechanical>
+      <backlit>false</backlit>
+      <ergonomic>false</ergonomic>
+      <portable>false</portable>
+      <silent>false</silent>
+    </features>
+    <miscellaneous>
+      <newArrival>false</newArrival>
+      <limitedEdition>false</limitedEdition>
+      <ecoFriendly>true</ecoFriendly>
+      <energyEfficient>false</energyEfficient>
+    </miscellaneous>
+  </tags>
+</product>
 </products>
