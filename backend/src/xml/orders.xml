@@ -17,91 +17,19 @@
     <orderTotal>100.00</orderTotal>
   </order>
   <order>
-    <id>1092f034-aeab-4b63-a8f2-578202a5b97a</id>
+    <id>740b659e-4e21-4745-b5e1-43150671feb4</id>
     <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <date>2025-05-18T17:25:50.122Z</date>
+    <date>2025-05-19T05:44:29.561Z</date>
     <items>
-      <item>
-        <productId>39e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
-        <roductName/>
-        <quantity>1</quantity>
-        <status>Preparing</status>
-        <arrivingDate>2025-05-21T17:25:50.122Z</arrivingDate>
-        <subTotal>49.99</subTotal>
-      </item>
       <item>
         <productId>7f98831b-1423-4791-b9df-e74eea3b2f5e</productId>
-        <roductName/>
-        <quantity>1</quantity>
-        <status>Preparing</status>
-        <arrivingDate>2025-05-21T17:25:50.122Z</arrivingDate>
-        <subTotal>29.99</subTotal>
-      </item>
-    </items>
-    <orderTotal>79.98</orderTotal>
-  </order>
-  <order>
-    <id>092c1f51-ab25-47f5-83ec-4c82237d1c0b</id>
-    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <date>2025-05-18T17:30:40.110Z</date>
-    <items>
-      <item>
-        <productId>39e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
         <productName/>
-        <quantity>1</quantity>
+        <quantity>5</quantity>
         <status>Preparing</status>
-        <arrivingDate>2025-05-21T17:30:40.110Z</arrivingDate>
-        <subTotal>49.99</subTotal>
+        <arrivingDate>2025-05-22T05:44:29.561Z</arrivingDate>
+        <subTotal>149.95</subTotal>
       </item>
     </items>
-    <orderTotal>49.99</orderTotal>
-  </order>
-  <order>
-    <id>2d0a5388-21b1-4423-8631-3769de4f9ef7</id>
-    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <date>2025-05-18T17:45:07.349Z</date>
-    <items>
-      <item>
-        <productId>39e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
-        <productName/>
-        <quantity>1</quantity>
-        <status>Preparing</status>
-        <arrivingDate>2025-05-21T17:45:07.349Z</arrivingDate>
-        <subTotal>49.99</subTotal>
-      </item>
-    </items>
-    <orderTotal>49.99</orderTotal>
-  </order>
-  <order>
-    <id>b1b925a7-d8bb-4d8b-97e2-0583f6f5beb2</id>
-    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <date>2025-05-18T18:25:28.555Z</date>
-    <items>
-      <item>
-        <productId>75342c23-8cfb-41c1-ae11-2a88e768c854</productId>
-        <productName/>
-        <quantity>2</quantity>
-        <status>Preparing</status>
-        <arrivingDate>2025-05-21T18:25:28.555Z</arrivingDate>
-        <subTotal>1799.98</subTotal>
-      </item>
-    </items>
-    <orderTotal>1799.98</orderTotal>
-  </order>
-  <order>
-    <id>dc85e96a-698a-428c-b16a-b540e5f27827</id>
-    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <date>2025-05-19T03:38:48.543Z</date>
-    <items>
-      <item>
-        <productId>75342c23-8cfb-41c1-ae11-2a88e768c854</productId>
-        <productName/>
-        <quantity>1</quantity>
-        <status>Preparing</status>
-        <arrivingDate>2025-05-22T03:38:48.544Z</arrivingDate>
-        <subTotal>899.99</subTotal>
-      </item>
-    </items>
-    <orderTotal>899.99</orderTotal>
+    <orderTotal>149.95</orderTotal>
   </order>
 </orders>

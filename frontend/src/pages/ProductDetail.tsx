@@ -49,7 +49,7 @@ const ProductDetail = (): React.JSX.Element => {
           </div>
           <div className="flex flex-col gap-2 md:justify-between">
             <div className="flex flex-col gap-5">
-              <span>{product.productName}</span>
+              <span className="font-semibold">{product.productName}</span>
               <span>₱{product.productPrice}</span>
               <Select quantity={quantity} onQuantityChange={handleQuantityChange} />
             </div>

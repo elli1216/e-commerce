@@ -15,18 +15,4 @@
     <subTotal/>
     <itemCount/>
   </cart>
-  <cart>
-    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
-    <items>
-      <item>
-        <productId>75342c23-8cfb-41c1-ae11-2a88e768c854</productId>
-        <price>899.99</price>
-        <quantity>1</quantity>
-        <arrivingDate>2025-05-19T04:38:16.321Z</arrivingDate>
-        <shippingFee>0</shippingFee>
-        <subTotal>899.99</subTotal>
-      </item>
-    </items>
-    <subTotal>899.99</subTotal>
-  </cart>
 </carts>

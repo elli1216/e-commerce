@@ -44,7 +44,7 @@ const OrderItem = (item: Item): React.JSX.Element => {
       </div>
       <div className="flex flex-col justify-between gap-2 md:flex-row md:flex-1/2">
         <div className="flex flex-col gap-2">
-          <span>{product?.productName}</span>
+          <span className="font-semibold">{product?.productName}</span>
           <span>Arriving on: {formatArrivingDate(item.arrivingDate)}</span>
           <span>₱{product?.productPrice}</span>
           <span>Quantity: {item.quantity}</span>
