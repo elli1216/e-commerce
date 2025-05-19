@@ -18,6 +18,7 @@ import AdminProtectedRoute from './components/AdminProtectedRoute';
 import { Navigate } from 'react-router-dom';
 import PublicRoute from './pages/PublicRoute';
 import CartProvider from './components/CartProvider';
+import EditProduct from './pages/admin/EditProduct';
 
 const App = (): React.JSX.Element => {
   return (
@@ -98,6 +99,11 @@ const App = (): React.JSX.Element => {
               <Route path="new-product" element={
                 <AdminProtectedRoute>
                   <NewProduct />
+                </AdminProtectedRoute>
+              } />
+              <Route path="edit-product/:id" element={
+                <AdminProtectedRoute>
+                  <EditProduct />
                 </AdminProtectedRoute>
               } />
             </Route>

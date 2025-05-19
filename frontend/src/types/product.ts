@@ -1,40 +1,40 @@
 interface ConnectivityTags {
-  wifi: boolean;
-  blueetooth: boolean;
-  ethernet: boolean;
-  usb3: boolean;
-  thunderbolt: boolean;
-  hdmi: boolean;
+  wifi: string;
+  bluetooth: string;
+  ethernet: string;
+  usb3: string;
+  thunderbolt: string;
+  hdmi: string;
 }
 
 interface UsageBasedTags {
-  gaming: boolean
-  office: boolean
-  programming: boolean
-  videoEditing: boolean
-  streaming: boolean
-  homeUse: boolean
-  business: boolean
-  student: boolean
+  gaming: string
+  office: string
+  programming: string
+  videoEditing: string
+  streaming: string
+  homeUse: string
+  business: string
+  student: string
 }
 
 interface FeaturesTags {
-  rgb: boolean;
-  mechanical: boolean;
-  backlit: boolean;
-  ergonomic: boolean;
-  portable: boolean;
-  silent: boolean;
+  rgb: string;
+  mechanical: string;
+  backlit: string;
+  ergonomic: string;
+  portable: string;
+  silent: string;
 }
 
 interface MiscellaneousTags {
-  newArrival: boolean;
-  limitedEdition: boolean;
-  ecoFriendly: boolean;
-  energyEfficient: boolean;
+  newArrival: string;
+  limitedEdition: string;
+  ecoFriendly: string;
+  energyEfficient: string;
 }
 
-interface ProductTags {
+interface Tags {
   connectivity: ConnectivityTags;
   usageBased: UsageBasedTags;
   features: FeaturesTags;
@@ -45,10 +45,10 @@ export interface IProduct {
   id: string;
   category: string;
   productImage: string
+  productBrand: string;
   productName: string;
   productPrice: string;
   productStock: string;
   productDescription: string
-  tags: ProductTags;
-  productBrand: string;
+  tags: Tags;
 }

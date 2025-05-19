@@ -3,7 +3,7 @@ import { SearchInput } from "../../components/SearchInput";
 // import { mockProductData } from "../../data/mockData";
 import { type IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
 import {
   ChevronLeft,
@@ -18,10 +18,10 @@ const renderProductList = (product: IProduct): React.JSX.Element => {
     <tr key={product.id}>
       <td>{product.productName}</td>
       <td>{product.category}</td>
-      <td>{product.productQuantity}</td>
+      <td>{product.productStock}</td>
       <td>{product.productPrice}</td>
       <td className="px-0 self-center">
-        <DropdownMenu />
+        <DropdownMenu product={product}/>
       </td>
     </tr>
   );
@@ -37,7 +37,21 @@ const AddButton = (): React.JSX.Element => {
   );
 };
 
-const DropdownMenu = (): React.JSX.Element => {
+const DropdownMenu = ({ product }: { product: IProduct }): React.JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleDelete = (): void => {
+    const deleteProduct = async (): Promise<void> => {
+      try {
+        await axiosInstance.delete(`/delete-product/${product.id}`);
+        navigate("/admin/products");
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+      }
+    };
+    deleteProduct();
+  }; 
+
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
       <div tabIndex={0} role="button" className="cursor-pointer p-0">
@@ -47,11 +61,11 @@ const DropdownMenu = (): React.JSX.Element => {
         tabIndex={0}
         className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
       >
-        <button className="btn btn-ghost self-start justify-start w-full">
+        <button className="btn btn-ghost self-start justify-start w-full" onClick={() => navigate(`/admin/edit-product/${product.id}`)}>
           <SquarePen className="size-4" />
           Edit
         </button>
-        <button className="btn btn-ghost self-start justify-start w-full">
+        <button className="btn btn-ghost self-start justify-start w-full" onClick={handleDelete}>
           <DeleteIcon className="size-4" />
           Delete
         </button>
