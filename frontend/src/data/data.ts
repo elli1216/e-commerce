@@ -1,56 +1,36 @@
-export const categoryData = [
-  {
-    id: 1,
-    name: "Connectivity",
-    tags: [
-      { id: 1, name: "Bluetooth" },
-      { id: 2, name: "Wi-Fi" },
-      { id: 3, name: "Ethernet" },
-      { id: 4, name: "USB 3.0" },
-      { id: 5, name: "HDMI" },
-      { id: 6, name: "DisplayPort" },
-      { id: 7, name: "Thunderbolt" },
-      { id: 8, name: "VGA" },
-      { id: 9, name: "Audio Jack" },
-    ],
+import { Tag } from "../types/tag";
+
+export const tags: Tag = {
+  connectivity: {
+    wifi: "",
+    bluetooth: "",
+    ethernet: "",
+    usb3: "",
+    thunderbolt: "",
+    hdmi: "",
   },
-  {
-    id: 2,
-    name: "Usage-based",
-    tags: [
-      { id: 1, name: "Gaming" },
-      { id: 2, name: "Office" },
-      { id: 3, name: "Entertainment" },
-      { id: 4, name: "Design" },
-      { id: 5, name: "Programming" },
-      { id: 6, name: "Video Editing" },
-      { id: 7, name: "Student" },
-      { id: 8, name: "Home Use" },
-      { id: 9, name: "Business" },
-    ],
+  usageBased: {
+    gaming: "",
+    office: "",
+    programming: "",
+    videoEditing: "",
+    streaming: "",
+    homeUse: "",
+    business: "",
+    student: "",
   },
-  {
-    id: 3,
-    name: "Features",
-    tags: [
-      { id: 1, name: "RGB" },
-      { id: 2, name: "Mechanical" },
-      { id: 3, name: "Backlit" },
-      { id: 4, name: "Ergonimic" },
-      { id: 5, name: "Portable" },
-      { id: 6, name: "Silent" },
-      { id: 7, name: "Business" },
-      { id: 8, name: "Student" },
-    ],
+  features: {
+    rgb: "",
+    mechanical: "",
+    backlit: "",
+    ergonomic: "",
+    portable: "",
+    silent: "",
   },
-  {
-    id: 4,
-    name: "Miscellaneous",
-    tags: [
-      { id: 1, name: "New Arrival" },
-      { id: 2, name: "Limited Edition" },
-      { id: 3, name: "Eco-Friendly" },
-      { id: 4, name: "Energy-Efficient" },
-    ],
-  },
-];
+  miscellaneous: {
+    newArrival: "",
+    limitedEdition: "",
+    ecoFriendly: "",
+    energyEfficient: "",
+  }
+};
