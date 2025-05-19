@@ -2,7 +2,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React from 'react';
 import { axiosInstance } from '../config/axios';
 
-const FilterTabs = () => {
+interface FilterTabsProps {
+  selectedCategory: string | null;
+  setSelectedCategory: (category: string) => void;
+}
+
+const FilterTabs = ({ selectedCategory, setSelectedCategory }: FilterTabsProps) => {
   const filtersTabRef = React.useRef<HTMLDivElement | null>(null);
   const [categories, setCategories] = React.useState<string[] | null>(null);
 
@@ -39,8 +44,24 @@ const FilterTabs = () => {
         ref={filtersTabRef}
         className="tabs tabs-box flex-nowrap scroll-smooth overflow-hidden"
       >
+        <input
+          type="radio"
+          name="tab"
+          className="tab"
+          aria-label="All"
+          checked={!selectedCategory}
+          onChange={() => setSelectedCategory('')}
+        />
         {categories?.map(category =>
-          <input type="radio" name="tab" className="tab" aria-label={category} />
+          <input
+            key={category}
+            type="radio"
+            name="tab"
+            aria-label={category}
+            className="tab"
+            checked={selectedCategory === category}
+            onChange={() => setSelectedCategory(category)}
+          />
         )}
       </div>
       <ChevronRight
