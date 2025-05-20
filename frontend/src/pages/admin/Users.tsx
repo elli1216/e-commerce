@@ -1,16 +1,22 @@
 import * as React from "react";
 import { UserX as DeleteIcon } from "lucide-react";
-import { mockUserData as userData } from "../../data/mockData";
+// import { mockUserData as userData } from "../../data/mockData";
 import { SearchInput } from '../../components/SearchInput';
 import { type User } from "../../types/user";
 import { useDebounce } from "../../hooks/useDebounce";
-// import { axiosInstance } from "../../config/axios";
+import { axiosInstance } from "../../config/axios";
 
-const ConfirmDeleteModal = (): React.JSX.Element => {
+const ConfirmDeleteModal = ({ id }: { id: string }): React.JSX.Element => {
   const [password, setPassword] = React.useState<string>("");
 
-  const handleDelete = (): void => {
+  const handleDelete = async (): Promise<void> => {
     if (password === "admin") {
+      try {
+        await axiosInstance.delete(`/users/${id}`);
+      } catch (error) {
+        console.error('Failed to delete user:', error);
+      }
+
       alert("User deleted successfully");
       setPassword("");
     } else {
@@ -54,14 +60,14 @@ const renderUserList = (user: User): React.JSX.Element => {
       <div className="flex items-center gap-2">
         <img src="https://placehold.co/64x64" alt="User" className="w-12 h-12 rounded-full" />
         <div>
-          <p className="text-lg font-semibold">{user.name}</p>
+          <p className="text-lg font-semibold">{user.fullName}</p>
           <p className="text-sm text-gray-600">{user.email}</p>
         </div>
       </div>
       <label htmlFor="deleteModal" className="cursor-pointer">
         <DeleteIcon className="w-6 h-6" />
       </label>
-      <ConfirmDeleteModal />
+      <ConfirmDeleteModal id={user.id} />
     </div>
   );
 };
@@ -78,10 +84,10 @@ const Users = (): React.JSX.Element => {
   
   React.useEffect(() => {
     if (!debouncedSearchTerm.trim()) {
-      setUsers(userData);
+      setUsers(users);
     } else {
-      const filteredUsers = userData.filter((user) =>
-        user.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      const filteredUsers = users.filter((user) =>
+        user.fullName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
       setUsers(filteredUsers);
       console.log(filteredUsers);
@@ -90,23 +96,23 @@ const Users = (): React.JSX.Element => {
 
 
   React.useEffect(() => {
-    setUsers(userData);
+    setUsers(users);
     console.log(users);
   }, []);
 
-  // React.useEffect(() => {
-  //   const fetchUsers = async (): Promise<void> => {
-  //     try {
-  //       const response = await axiosInstance.get<{ user: User[] }>('/users');
-  //       const data = response.data.user;
-  //       setUsers(data);
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch users:', error);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
+  React.useEffect(() => {
+    const fetchUsers = async (): Promise<void> => {
+      try {
+        const response = await axiosInstance.get<{ user: User[] }>('/users');
+        const data = response.data.user;
+        setUsers(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   return (
     <div className="flex items-center justify-center">

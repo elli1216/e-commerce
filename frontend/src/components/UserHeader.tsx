@@ -66,7 +66,7 @@ const UserHeader = (): React.JSX.Element => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img src="" alt="Profile" />
+              <img src="https://picsum.photos/200" alt="Profile" />
             </div>
           </div>
           <ul

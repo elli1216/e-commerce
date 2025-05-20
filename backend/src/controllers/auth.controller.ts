@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 export const signup = (req: Request, res: Response) => {
-  const { id, fullName, email } = req.body;
+  const { fullName, email } = req.body;
+  const id = uuidv4();
 
   const XML_DIR = path.join(__dirname, '../xml');
   const XML_PATH = path.join(XML_DIR, 'users.xml');
