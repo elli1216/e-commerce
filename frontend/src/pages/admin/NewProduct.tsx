@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { tags } from "../../data/data";
 import { axiosInstance } from "../../config/axios";
+import { dataURLtoFile } from "../../utils";
 
 const renderCheckboxes = (
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -196,6 +197,7 @@ const initialFormData: FormData = {
 
 const NewProduct = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
+  const [productImage, setProductImage] = React.useState<string>("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -227,12 +229,22 @@ const NewProduct = (): React.JSX.Element => {
     }
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-
     if (
       !formData.category ||
-      !formData.productImage ||
+      !productImage ||
       !formData.productBrand ||
       !formData.productName ||
       !formData.productPrice ||
@@ -243,10 +255,38 @@ const NewProduct = (): React.JSX.Element => {
       return;
     }
 
+    const clearForm = (): void => {
+      setFormData(initialFormData);
+    };
+
     const addProduct = async () => {
       try {
-        const response = await axiosInstance.post("/add-product", formData);
-        console.log(response.data);
+        // Create a FormData object
+        const formDataObj = new FormData();
+
+        // Append form fields
+        formDataObj.append("category", formData.category);
+        formDataObj.append("productBrand", formData.productBrand);
+        formDataObj.append("productName", formData.productName);
+        formDataObj.append("productPrice", formData.productPrice);
+        formDataObj.append("productStock", formData.productStock);
+        formDataObj.append("productDescription", formData.productDescription);
+
+        // Convert base64 image to File
+        const imageFile = dataURLtoFile(
+          productImage,
+          `${formData.productName.replace(/\s+/g, "-")}.jpg`
+        );
+        formDataObj.append("productImage", imageFile);
+        formDataObj.append("productTags", JSON.stringify(formData.productTags));
+
+
+        await axiosInstance.post(
+          "/add-product",
+          formDataObj
+        );
+
+        alert("Product added successfully");
       } catch (error) {
         console.error(error);
         alert("Failed to add product: " + error);
@@ -255,14 +295,8 @@ const NewProduct = (): React.JSX.Element => {
 
     addProduct();
 
-    alert("Product added successfully");
-    console.log(formData);
     clearForm();
     navigate("/admin/products");
-  };
-
-  const clearForm = (): void => {
-    setFormData(initialFormData);
   };
 
   const navigate = useNavigate();
@@ -279,7 +313,7 @@ const NewProduct = (): React.JSX.Element => {
           name: "productImage",
           type: "file",
           className: "file-input",
-          onChange: handleChange,
+          onChange: handleImageChange,
         })}
         {renderInput({
           label: "Product Brand",

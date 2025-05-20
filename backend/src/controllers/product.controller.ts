@@ -45,30 +45,21 @@ export const getProductById = async (
 };
 
 export const addProduct = async (req: Request, res: Response): Promise<any> => {
-  const {
-    category,
-    productImage,
-    productBrand,
-    productName,
-    productPrice,
-    productStock,
-    productDescription,
-    productTags,
-  } = req.body;
+  try {
+    const {
+      category,
+      productBrand,
+      productName,
+      productPrice,
+      productStock,
+      productDescription,
+    } = req.body;
+    const productTags = JSON.parse(req.body.productTags);
+    const XML_PATH = path.join(__dirname, "../xml/products.xml");
+    const productsXml = fs.readFileSync(XML_PATH).toString();
+    const imageFileName = req.file ? req.file.filename : "default.jpg";
 
-  const XML_PATH = path.join(__dirname, "../xml/products.xml");
-
-  const productsXml = fs.readFileSync(XML_PATH).toString();
-  const imageFolder = path.join(__dirname, "../images");
-  if (!fs.existsSync(imageFolder)) {
-    fs.mkdirSync(imageFolder);
-  }
-  const imageFileName = `${productName.replace(/\s+/g, "-")}-${Date.now()}.jpg`;
-  const imageFilePath = path.join(imageFolder, imageFileName);
-  const data = productImage.replace(/^data:image\/\w+;base64,/, "");
-  fs.writeFileSync(imageFilePath, Buffer.from(data, "base64"));
-
-  const newProductXml = `
+    const newProductXml = `
   <product>
     <id>${uuidv4()}</id>
     <category>${category}</category>
@@ -118,14 +109,18 @@ export const addProduct = async (req: Request, res: Response): Promise<any> => {
     </tags>
   </product>`;
 
-  const updatedXML = productsXml.replace(
-    "</products>",
-    `${newProductXml}\n</products>`
-  );
+    const updatedXML = productsXml.replace(
+      "</products>",
+      `${newProductXml}\n</products>`
+    );
 
-  fs.writeFileSync(XML_PATH, updatedXML);
+    fs.writeFileSync(XML_PATH, updatedXML);
 
-  res.status(201).json({ message: "Product added successfully." });
+    res.status(201).json({ message: "Product added successfully." });
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res.status(500).json({ message: "Failed to add product." });
+  }
 };
 
 export const updateProduct = async (

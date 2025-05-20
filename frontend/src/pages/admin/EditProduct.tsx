@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { tags } from "../../data/data";
 import { axiosInstance } from "../../config/axios";
 import { IProduct } from "../../types/product";
+import { dataURLtoFile } from "../../utils";
 
 const renderCheckboxes = (
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -23,7 +24,10 @@ const renderCheckboxes = (
                   type="checkbox"
                   id={tagName}
                   name={`${categoryName}_${tagName}`}
-                  checked={(formData.productTags as any)[categoryName][tagName] === "true"}
+                  checked={
+                    (formData.productTags as any)[categoryName][tagName] ===
+                    "true"
+                  }
                   onChange={handleChange}
                 />
                 <label className="text-sm" htmlFor={tagName}>
@@ -130,7 +134,7 @@ interface FormData {
       usb3: string;
       thunderbolt: string;
       hdmi: string;
-    },
+    };
     usageBased: {
       gaming: string;
       office: string;
@@ -140,7 +144,7 @@ interface FormData {
       homeUse: string;
       business: string;
       student: string;
-    },
+    };
     features: {
       rgb: string;
       mechanical: string;
@@ -148,13 +152,13 @@ interface FormData {
       ergonomic: string;
       portable: string;
       silent: string;
-    },
+    };
     miscellaneous: {
       newArrival: string;
       limitedEdition: string;
       ecoFriendly: string;
       energyEfficient: string;
-    },
+    };
   };
 }
 
@@ -200,10 +204,11 @@ const initialFormData: FormData = {
       energyEfficient: "false",
     },
   },
-}
+};
 
 const EditProduct = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
+  const [productImage, setProductImage] = React.useState<string>("");
 
   React.useEffect(() => {
     const productId = window.location.pathname.split("/").pop();
@@ -240,13 +245,15 @@ const EditProduct = (): React.JSX.Element => {
     if (type === "checkbox") {
       // Find the category and tag name
       const [category, tagName] = name.split("_");
-      
+
       setFormData((prevFormData) => ({
         ...prevFormData,
         productTags: {
           ...prevFormData.productTags,
           [category]: {
-            ...prevFormData.productTags[category as keyof typeof prevFormData.productTags],
+            ...prevFormData.productTags[
+              category as keyof typeof prevFormData.productTags
+            ],
             [tagName]: checked ? "true" : "false",
           },
         },
@@ -259,12 +266,23 @@ const EditProduct = (): React.JSX.Element => {
     }
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
 
     if (
       !formData.category ||
-      !formData.productImage ||
+      !productImage ||
       !formData.productBrand ||
       !formData.productName ||
       !formData.productPrice ||
@@ -279,7 +297,27 @@ const EditProduct = (): React.JSX.Element => {
     const productId = window.location.pathname.split("/").pop();
     const editProduct = async () => {
       try {
-        const response = await axiosInstance.put(`/edit-product/${productId}`, formData);
+        const formDataObj = new FormData();
+
+        formDataObj.append("category", formData.category);
+        formDataObj.append("productBrand", formData.productBrand);
+        formDataObj.append("productName", formData.productName);
+        formDataObj.append("productPrice", formData.productPrice);
+        formDataObj.append("productStock", formData.productStock);
+        formDataObj.append("productDescription", formData.productDescription);
+
+        const imageFile = dataURLtoFile(
+          productImage,
+          `${formData.productName.replace(/\s+/g, "-")}.jpg`
+        );
+
+        formDataObj.append("productImage", imageFile);
+        formDataObj.append("productTags", JSON.stringify(formData.productTags));
+
+        const response = await axiosInstance.put(
+          `/edit-product/${productId}`,
+          formDataObj
+        );
         console.log(response.data);
       } catch (error) {
         console.error(error);
@@ -313,7 +351,7 @@ const EditProduct = (): React.JSX.Element => {
           name: "productImage",
           type: "file",
           className: "file-input",
-          onChange: handleChange,
+          onChange: handleImageChange,
         })}
         {renderInput({
           label: "Product Brand",
