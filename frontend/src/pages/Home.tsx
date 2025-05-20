@@ -34,6 +34,7 @@ const Home = (): React.JSX.Element => {
     try {
       await axiosInstance.post('/cart/add', {
         userId: user.uid,
+        productImage: product.productImage,
         productId: product.id,
         price: product.productPrice,
         quantity

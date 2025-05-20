@@ -32,3 +32,7 @@ export const isValidPhilippinePhoneNumber = (phone: string) => {
   const re = /^(\+?639|09)\d{9}$/;
   return re.test(cleanPhoneNum);
 };
+
+export const getImageUrl = (imageName: string) => {
+  return `${import.meta.env.VITE_API_URL}/images/${imageName}`;
+};

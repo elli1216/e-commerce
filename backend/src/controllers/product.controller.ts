@@ -4,7 +4,7 @@ import { readAndParseXml } from "../utils/parser";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export const getProducts = async (req: Request, res: Response) => {
+export const getProducts = async (req: Request, res: Response): Promise<any> => {
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
   try {
     const products = await readAndParseXml(XML_PATH);
@@ -256,6 +256,15 @@ export const deleteProduct = async (
   try {
     const productsXml = fs.readFileSync(XML_PATH).toString();
 
+    // Extract the image filename from the XML before deleting the product
+    const productMatch = productsXml.match(new RegExp(`<product>\\s*<id>${id}</id>[\\s\\S]*?<productImage>(.*?)</productImage>[\\s\\S]*?</product>`));
+    if (productMatch && productMatch[1]) {
+      const imagePath = path.join(__dirname, "../images", productMatch[1]);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
     // Create a regex pattern that matches the entire product XML block with the given ID
     const productRegex = new RegExp(
       `<product>\\s*<id>${id}</id>[\\s\\S]*?</product>`,
@@ -285,7 +294,7 @@ export const deleteProduct = async (
   }
 };
 
-export const getCategories = async (req: Request, res: Response) => {
+export const getCategories = async (req: Request, res: Response): Promise<any> => {
   const XML_PATH = path.join(__dirname, "../xml/categories.xml");
   try {
     const categories = await readAndParseXml(XML_PATH);

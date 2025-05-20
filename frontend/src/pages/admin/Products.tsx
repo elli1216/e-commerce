@@ -13,7 +13,7 @@ import {
   PackageX as DeleteIcon,
 } from "lucide-react";
 
-const renderProductList = (product: IProduct): React.JSX.Element => {
+const renderProductList = (product: IProduct, fetchProducts: () => void): React.JSX.Element => {
   return (
     <tr key={product.id}>
       <td>{product.productName}</td>
@@ -21,7 +21,7 @@ const renderProductList = (product: IProduct): React.JSX.Element => {
       <td>{product.productStock}</td>
       <td>{product.productPrice}</td>
       <td className="px-0 self-center">
-        <DropdownMenu product={product}/>
+        <DropdownMenu product={product} fetchProducts={fetchProducts}/>
       </td>
     </tr>
   );
@@ -37,16 +37,17 @@ const AddButton = (): React.JSX.Element => {
   );
 };
 
-const DropdownMenu = ({ product }: { product: IProduct }): React.JSX.Element => {
+const DropdownMenu = ({ product, fetchProducts }: { product: IProduct, fetchProducts: () => void }): React.JSX.Element => {
   const navigate = useNavigate();
 
   const handleDelete = (): void => {
     const deleteProduct = async (): Promise<void> => {
       try {
         await axiosInstance.delete(`/delete-product/${product.id}`);
+
         alert("Product deleted successfully");
 
-        window.location.reload();
+        fetchProducts();
       } catch (error) {
         console.error("Failed to delete product:", error);
       }
@@ -105,20 +106,21 @@ const Products = (): React.JSX.Element => {
     }
   }, [debouncedSearchTerm, products]);
 
+  const fetchProducts = async (): Promise<void> => {
+    try {
+      const response = await axiosInstance.get<{ product: IProduct[] }>(
+        "/products"
+      );
+      const data = response.data.product;
+      setProducts(data);
+      setFilteredProducts(data); // Initialize filtered products with all products
+      console.log(data);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
   React.useEffect(() => {
-    const fetchProducts = async (): Promise<void> => {
-      try {
-        const response = await axiosInstance.get<{ product: IProduct[] }>(
-          "/products"
-        );
-        const data = response.data.product;
-        setProducts(data);
-        setFilteredProducts(data); // Initialize filtered products with all products
-        console.log(data);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
     fetchProducts();
   }, []);
 
@@ -146,7 +148,7 @@ const Products = (): React.JSX.Element => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>{filteredProducts.map(renderProductList as any)}</tbody>
+              <tbody>{filteredProducts.map((product) => renderProductList(product, fetchProducts))}</tbody>
             </table>
           ) : (
             <p className="flex items-center justify-center w-full h-[50vh] text-lg ">

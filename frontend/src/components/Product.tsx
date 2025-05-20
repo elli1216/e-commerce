@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from './Select';
 import { type IProduct } from '../types/product';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { getImageUrl } from '../utils';
 interface ProductProps {
   product: IProduct;
   onAddToCart: (product: IProduct, quantity: number) => void;
@@ -47,8 +47,7 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
       onClick={handleCardClick}
       className="flex flex-col w-fit hover:bg-base-300 transition-all">
       <div>
-        { }
-        <img src="https://picsum.photos/200" alt="Product image" />
+        <img src={getImageUrl(product.productImage)} alt="Product image" />
       </div>
       <div className="flex flex-col gap-2 p-2">
         <span>{product.productName}</span>
