@@ -34,5 +34,5 @@ export const isValidPhilippinePhoneNumber = (phone: string) => {
 };
 
 export const getImageUrl = (imageName: string) => {
-  return `${import.meta.env.VITE_API_URL}/images/${imageName}`;
+  return `http://localhost:3000/images/${imageName}`;
 };

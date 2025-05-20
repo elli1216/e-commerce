@@ -46,8 +46,8 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
     <div
       onClick={handleCardClick}
       className="flex flex-col w-fit hover:bg-base-300 transition-all">
-      <div>
-        <img src={getImageUrl(product.productImage)} alt="Product image" />
+      <div className='flex justify-center items-center'>
+        <img src={getImageUrl(product.productImage)} className='w-[17rem] h-[13rem] object-cover rounded-lg' alt="Product image" />
       </div>
       <div className="flex flex-col gap-2 p-2">
         <span>{product.productName}</span>

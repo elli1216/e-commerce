@@ -70,7 +70,7 @@ const ProductDetail = (): React.JSX.Element => {
         {/* Product Details */}
         <section className="border border-base-300 p-2 md:flex flex-row gap-2 mx-auto max-w-5xl mb-5">
           <div>
-            <img src={getImageUrl(product.productImage)} alt="Product image" />
+            <img src={getImageUrl(product.productImage)} className='w-[20rem] h-[15rem] object-cover rounded-lg' alt="Product image" />
           </div>
           <div className="flex flex-col gap-2 md:justify-between">
             <div className="flex flex-col gap-5">

@@ -4,7 +4,7 @@ import { type Item } from '../types/order';
 import { type IProduct } from '../types/product';
 import { formatArrivingDate } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
-
+import { getImageUrl } from '../utils';
 const OrderItem = (item: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
   const product = products?.find(p => p.id === item.productId);
@@ -39,8 +39,8 @@ const OrderItem = (item: Item): React.JSX.Element => {
 
   return (
     <div className="p-3 sm:flex sm:flex-row sm:gap-5">
-      <div>
-        <img src="https://picsum.photos/200" alt="Product image" />
+      <div className='flex justify-center items-center'>
+        <img src={getImageUrl(product?.productImage || 'https://picsum.photos/200')} className='w-[13rem] h-[13rem] object-cover rounded-lg' alt="Product image" />
       </div>
       <div className="flex flex-col justify-between gap-2 md:flex-row md:flex-1/2">
         <div className="flex flex-col gap-2">

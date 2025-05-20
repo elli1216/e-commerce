@@ -4,7 +4,10 @@ import { readAndParseXml } from "../utils/parser";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export const getProducts = async (req: Request, res: Response): Promise<any> => {
+export const getProducts = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
   try {
     const products = await readAndParseXml(XML_PATH);
@@ -60,7 +63,7 @@ export const addProduct = async (req: Request, res: Response): Promise<any> => {
   if (!fs.existsSync(imageFolder)) {
     fs.mkdirSync(imageFolder);
   }
-  const imageFileName = `${productName + Math.random()}.jpg`;
+  const imageFileName = `${productName.replace(/\s+/g, "-")}-${Date.now()}.jpg`;
   const imageFilePath = path.join(imageFolder, imageFileName);
   const data = productImage.replace(/^data:image\/\w+;base64,/, "");
   fs.writeFileSync(imageFilePath, Buffer.from(data, "base64"));
@@ -257,7 +260,11 @@ export const deleteProduct = async (
     const productsXml = fs.readFileSync(XML_PATH).toString();
 
     // Extract the image filename from the XML before deleting the product
-    const productMatch = productsXml.match(new RegExp(`<product>\\s*<id>${id}</id>[\\s\\S]*?<productImage>(.*?)</productImage>[\\s\\S]*?</product>`));
+    const productMatch = productsXml.match(
+      new RegExp(
+        `<product>\\s*<id>${id}</id>[\\s\\S]*?<productImage>(.*?)</productImage>[\\s\\S]*?</product>`
+      )
+    );
     if (productMatch && productMatch[1]) {
       const imagePath = path.join(__dirname, "../images", productMatch[1]);
       if (fs.existsSync(imagePath)) {
@@ -294,7 +301,10 @@ export const deleteProduct = async (
   }
 };
 
-export const getCategories = async (req: Request, res: Response): Promise<any> => {
+export const getCategories = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
   const XML_PATH = path.join(__dirname, "../xml/categories.xml");
   try {
     const categories = await readAndParseXml(XML_PATH);
