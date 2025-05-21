@@ -15,4 +15,26 @@
     <subTotal/>
     <itemCount/>
   </cart>
+  <cart>
+    <userId>kirKlwMgnnUMkYfrYwYSpJ3QcWy1</userId>
+    <items>
+      <item>
+        <productId>75342c23-8cfb-41c1-ae11-2a88e768c854</productId>
+        <price>899.99</price>
+        <quantity>1</quantity>
+        <arrivingDate>2025-05-21T05:48:28.338Z</arrivingDate>
+        <shippingFee>0</shippingFee>
+        <subTotal>899.99</subTotal>
+      </item>
+      <item>
+        <productId>61b854c4-5381-4d2f-ba82-09058c490b88</productId>
+        <price>49999</price>
+        <quantity>1</quantity>
+        <arrivingDate>2025-05-21T05:48:47.250Z</arrivingDate>
+        <shippingFee>0</shippingFee>
+        <subTotal>49999.00</subTotal>
+      </item>
+    </items>
+    <subTotal>50898.99</subTotal>
+  </cart>
 </carts>
