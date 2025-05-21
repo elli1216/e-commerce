@@ -1,20 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { logout } from '../config/firebase';
-import { useCart } from '../hooks/context';
+import React from "react";
+import { Link } from "react-router-dom";
+import { logout } from "../config/firebase";
+import { useCart } from "../hooks/context";
 
 const UserHeader = (): React.JSX.Element => {
-
   const { userCart } = useCart();
 
   const handleLogout = () => {
     logout();
-  }
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <Link to="/home" className="btn btn-ghost text-xl">ByteBazaar</Link>
+        <Link to="/home" className="btn btn-ghost text-xl">
+          ByteBazaar
+        </Link>
       </div>
 
       <div className="flex gap-2">
@@ -26,7 +27,9 @@ const UserHeader = (): React.JSX.Element => {
         />
         {/* Order */}
         <div className="flex-1">
-          <Link to="/order" className="btn btn-ghost">Orders</Link>
+          <Link to="/order" className="btn btn-ghost">
+            Orders
+          </Link>
         </div>
         {/* Cart */}
         <div className="dropdown dropdown-end">
@@ -34,7 +37,10 @@ const UserHeader = (): React.JSX.Element => {
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
                 <path
                   strokeLinecap="round"
@@ -43,17 +49,26 @@ const UserHeader = (): React.JSX.Element => {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span className="badge badge-sm indicator-item">{userCart?.itemCount ?? 0}</span>
+              <span className="badge badge-sm indicator-item">
+                {userCart?.itemCount ?? 0}
+              </span>
             </div>
           </div>
           <div
             tabIndex={0}
-            className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
+            className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
+          >
             <div className="card-body">
-              <span className="text-lg font-bold">{userCart?.itemCount ?? 0} Items</span>
-              <span className="text-info">Subtotal: {userCart?.total ?? 0.00}</span>
+              <span className="text-lg font-bold">
+                {userCart?.itemCount ?? 0} Items
+              </span>
+              <span className="text-info">
+                Subtotal: {userCart?.total ?? 0.0}
+              </span>
               <div className="card-actions">
-                <Link to="/cart" className="btn btn-primary btn-block">View cart</Link>
+                <Link to="/cart" className="btn btn-primary btn-block">
+                  View cart
+                </Link>
               </div>
             </div>
           </div>
@@ -74,17 +89,12 @@ const UserHeader = (): React.JSX.Element => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a href="" className="justify-between">
-                Profile
-              </a>
-            </li>
-            <li>
               <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

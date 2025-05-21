@@ -1,22 +1,19 @@
-import React from 'react';
-import { logout } from '../config/firebase';
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { logout } from "../config/firebase";
+import { Link, useNavigate } from "react-router-dom";
 
 const AdminHeader = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
-        <Link
-          to="/admin/users"
-          className="btn btn-ghost text-xl"
-        >
+        <Link to="/admin/users" className="btn btn-ghost text-xl">
           ByteBazaar
         </Link>
       </div>
@@ -46,11 +43,8 @@ const AdminHeader = (): React.JSX.Element => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a href="" className="justify-between">
-                Profile
-              </a>
+              <button onClick={handleLogout}>Logout</button>
             </li>
-            <li><button onClick={handleLogout}>Logout</button></li>
           </ul>
         </div>
       </div>

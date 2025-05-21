@@ -13,7 +13,10 @@ import {
   PackageX as DeleteIcon,
 } from "lucide-react";
 
-const renderProductList = (product: IProduct, fetchProducts: () => void): React.JSX.Element => {
+const renderProductList = (
+  product: IProduct,
+  fetchProducts: () => void
+): React.JSX.Element => {
   return (
     <tr key={product.id}>
       <td>{product.productName}</td>
@@ -21,7 +24,7 @@ const renderProductList = (product: IProduct, fetchProducts: () => void): React.
       <td>{product.productStock}</td>
       <td>{product.productPrice}</td>
       <td className="px-0 self-center">
-        <DropdownMenu product={product} fetchProducts={fetchProducts}/>
+        <DropdownMenu product={product} fetchProducts={fetchProducts} />
       </td>
     </tr>
   );
@@ -37,7 +40,13 @@ const AddButton = (): React.JSX.Element => {
   );
 };
 
-const DropdownMenu = ({ product, fetchProducts }: { product: IProduct, fetchProducts: () => void }): React.JSX.Element => {
+const DropdownMenu = ({
+  product,
+  fetchProducts,
+}: {
+  product: IProduct;
+  fetchProducts: () => void;
+}): React.JSX.Element => {
   const navigate = useNavigate();
 
   const handleDelete = (): void => {
@@ -53,7 +62,7 @@ const DropdownMenu = ({ product, fetchProducts }: { product: IProduct, fetchProd
       }
     };
     deleteProduct();
-  }; 
+  };
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
@@ -64,11 +73,17 @@ const DropdownMenu = ({ product, fetchProducts }: { product: IProduct, fetchProd
         tabIndex={0}
         className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
       >
-        <button className="btn btn-ghost self-start justify-start w-full" onClick={() => navigate(`/admin/edit-product/${product.id}`)}>
+        <button
+          className="btn btn-ghost self-start justify-start w-full"
+          onClick={() => navigate(`/admin/edit-product/${product.id}`)}
+        >
           <SquarePen className="size-4" />
           Edit
         </button>
-        <button className="btn btn-ghost self-start justify-start w-full" onClick={handleDelete}>
+        <button
+          className="btn btn-ghost self-start justify-start w-full"
+          onClick={handleDelete}
+        >
           <DeleteIcon className="size-4" />
           Delete
         </button>
@@ -92,7 +107,7 @@ const Products = (): React.JSX.Element => {
   };
 
   // Effect that runs when the debounced search term changes
-  React.useEffect(() => {
+  React.useMemo(() => {
     if (!debouncedSearchTerm.trim()) {
       setFilteredProducts(products);
     } else {
@@ -148,7 +163,11 @@ const Products = (): React.JSX.Element => {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>{filteredProducts.map((product) => renderProductList(product, fetchProducts))}</tbody>
+              <tbody>
+                {filteredProducts.map((product) =>
+                  renderProductList(product, fetchProducts)
+                )}
+              </tbody>
             </table>
           ) : (
             <p className="flex items-center justify-center w-full h-[50vh] text-lg ">
