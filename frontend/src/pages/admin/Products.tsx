@@ -13,24 +13,8 @@ import {
   PackageX as DeleteIcon,
 } from "lucide-react";
 
-const renderProductList = (
-  product: IProduct,
-  fetchProducts: () => void
-): React.JSX.Element => {
-  return (
-    <tr key={product.id}>
-      <td>{product.productName}</td>
-      <td>{product.category}</td>
-      <td>{product.productStock}</td>
-      <td>{product.productPrice}</td>
-      <td className="px-0 self-center">
-        <DropdownMenu product={product} fetchProducts={fetchProducts} />
-      </td>
-    </tr>
-  );
-};
-
-const AddButton = (): React.JSX.Element => {
+// Memoized AddButton component
+const AddButton = React.memo((): React.JSX.Element => {
   return (
     <Link to="/admin/new-product">
       <button className="btn btn-primary">
@@ -38,59 +22,87 @@ const AddButton = (): React.JSX.Element => {
       </button>
     </Link>
   );
-};
+});
 
-const DropdownMenu = ({
-  product,
-  fetchProducts,
-}: {
-  product: IProduct;
-  fetchProducts: () => void;
-}): React.JSX.Element => {
-  const navigate = useNavigate();
+// Memoized DropdownMenu component
+const DropdownMenu = React.memo(
+  ({
+    product,
+    fetchProducts,
+  }: {
+    product: IProduct;
+    fetchProducts: () => void;
+  }): React.JSX.Element => {
+    const navigate = useNavigate();
 
-  const handleDelete = (): void => {
-    const deleteProduct = async (): Promise<void> => {
-      try {
-        await axiosInstance.delete(`/delete-product/${product.id}`);
+    const handleNavigateToEdit = React.useCallback(() => {
+      navigate(`/admin/edit-product/${product.id}`);
+    }, [navigate, product.id]);
 
-        alert("Product deleted successfully");
+    const handleDelete = React.useCallback((): void => {
+      const deleteProduct = async (): Promise<void> => {
+        try {
+          await axiosInstance.delete(`/delete-product/${product.id}`);
+          alert("Product deleted successfully");
+          fetchProducts();
+        } catch (error) {
+          console.error("Failed to delete product:", error);
+        }
+      };
+      deleteProduct();
+    }, [product.id, fetchProducts]);
 
-        fetchProducts();
-      } catch (error) {
-        console.error("Failed to delete product:", error);
-      }
-    };
-    deleteProduct();
-  };
-
-  return (
-    <div className="dropdown dropdown-bottom dropdown-end">
-      <div tabIndex={0} role="button" className="cursor-pointer p-0">
-        <EllipsisVertical />
+    return (
+      <div className="dropdown dropdown-bottom dropdown-end">
+        <div tabIndex={0} role="button" className="cursor-pointer p-0">
+          <EllipsisVertical />
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
+        >
+          <button
+            className="btn btn-ghost self-start justify-start w-full"
+            onClick={handleNavigateToEdit}
+          >
+            <SquarePen className="size-4" />
+            Edit
+          </button>
+          <button
+            className="btn btn-ghost self-start justify-start w-full"
+            onClick={handleDelete}
+          >
+            <DeleteIcon className="size-4" />
+            Delete
+          </button>
+        </ul>
       </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
-      >
-        <button
-          className="btn btn-ghost self-start justify-start w-full"
-          onClick={() => navigate(`/admin/edit-product/${product.id}`)}
-        >
-          <SquarePen className="size-4" />
-          Edit
-        </button>
-        <button
-          className="btn btn-ghost self-start justify-start w-full"
-          onClick={handleDelete}
-        >
-          <DeleteIcon className="size-4" />
-          Delete
-        </button>
-      </ul>
-    </div>
-  );
-};
+    );
+  }
+);
+
+// Memoized ProductRow component
+const ProductRow = React.memo(
+  ({
+    product,
+    fetchProducts,
+  }: {
+    product: IProduct;
+    fetchProducts: () => void;
+  }): React.JSX.Element => {
+    return (
+      <tr key={product.id}>
+        <td>{product.productName}</td>
+        <td>{product.category}</td>
+        <td>{product.productStock}</td>
+        <td>{product.productPrice}</td>
+        <td className="px-0 self-center">
+          <DropdownMenu product={product} fetchProducts={fetchProducts} />
+        </td>
+      </tr>
+    );
+  }
+);
 
 const Products = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[]>([]);
@@ -102,12 +114,15 @@ const Products = (): React.JSX.Element => {
   // Use the debounce hook to delay the search term processing
   const debouncedSearchTerm = useDebounce<string>(searchTerm);
 
-  const handleSearch = (searchTerm: string): void => {
-    setSearchTerm(searchTerm);
-  };
+  const handleSearch = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      setSearchTerm(e.target.value);
+    },
+    []
+  );
 
   // Effect that runs when the debounced search term changes
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (!debouncedSearchTerm.trim()) {
       setFilteredProducts(products);
     } else {
@@ -117,11 +132,10 @@ const Products = (): React.JSX.Element => {
           .includes(debouncedSearchTerm.toLowerCase())
       );
       setFilteredProducts(filtered);
-      console.log(filtered);
     }
   }, [debouncedSearchTerm, products]);
 
-  const fetchProducts = async (): Promise<void> => {
+  const fetchProducts = React.useCallback(async (): Promise<void> => {
     try {
       const response = await axiosInstance.get<{ product: IProduct[] }>(
         "/products"
@@ -129,64 +143,79 @@ const Products = (): React.JSX.Element => {
       const data = response.data.product;
       setProducts(data);
       setFilteredProducts(data); // Initialize filtered products with all products
-      console.log(data);
     } catch (error) {
       console.error("Failed to fetch products:", error);
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
+
+  // Memoize the product table
+  const productTable = React.useMemo(() => {
+    if (filteredProducts.length === 0) {
+      return (
+        <p className="flex items-center justify-center w-full h-[50vh] text-lg">
+          No products found
+        </p>
+      );
+    }
+
+    return (
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredProducts.map((product) => (
+            <ProductRow
+              key={product.id}
+              product={product}
+              fetchProducts={fetchProducts}
+            />
+          ))}
+        </tbody>
+      </table>
+    );
+  }, [filteredProducts, fetchProducts]);
+
+  // Memoize the pagination controls
+  const paginationControls = React.useMemo(
+    () => (
+      <div className="flex flex-row items-center justify-center w-[20vw]">
+        <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
+          <ChevronLeft />
+        </button>
+        <h1 className="px-4">1</h1>
+        <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
+          <ChevronRight />
+        </button>
+      </div>
+    ),
+    []
+  );
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
         <div className="flex flex-row items-center justify-between w-full">
-          <SearchInput
-            placeholder="Search Products"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleSearch(e.target.value)
-            }
-          />
+          <SearchInput placeholder="Search Products" onChange={handleSearch} />
           <AddButton />
         </div>
         <div className="overflow-x-auto w-full h-[70vh] border border-[#D9D9D9] rounded-lg">
-          {filteredProducts.length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProducts.map((product) =>
-                  renderProductList(product, fetchProducts)
-                )}
-              </tbody>
-            </table>
-          ) : (
-            <p className="flex items-center justify-center w-full h-[50vh] text-lg ">
-              No products found
-            </p>
-          )}
+          {productTable}
         </div>
-        <div className="flex flex-row items-center justify-center w-[20vw]">
-          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
-            <ChevronLeft />
-          </button>
-          <h1 className="px-4">1</h1>
-          <button className="btn border border-[#D9D9D9] hover:bg-[#D9D9D9]">
-            <ChevronRight />
-          </button>
-        </div>
+        {paginationControls}
       </div>
     </div>
   );
 };
 
-export default Products;
+export default React.memo(Products);

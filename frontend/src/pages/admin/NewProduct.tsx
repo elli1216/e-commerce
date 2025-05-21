@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { tags } from "../../data/data";
 import { axiosInstance } from "../../config/axios";
 import { dataURLtoFile } from "../../utils";
+import { useMemo, useCallback } from "react";
 
 const renderCheckboxes = (
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -65,7 +66,7 @@ const renderInput = ({
       })}
     </div>
   );
-};
+};  
 
 const DropDown = ({
   onChange,
@@ -280,7 +281,6 @@ const NewProduct = (): React.JSX.Element => {
         formDataObj.append("productImage", imageFile);
         formDataObj.append("productTags", JSON.stringify(formData.productTags));
 
-
         await axiosInstance.post(
           "/add-product",
           formDataObj
@@ -308,46 +308,47 @@ const NewProduct = (): React.JSX.Element => {
         className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4"
         onSubmit={handleSubmit}
       >
-        <DropDown onChange={handleChange} />
-        {renderInput({
+        {useMemo(() => <DropDown onChange={handleChange} />, [])}
+        {useMemo(() => renderInput({
           label: "Product Image URL",
           name: "productImage",
           type: "file",
           className: "file-input",
           onChange: handleImageChange,
-        })}
-        {renderInput({
+        }), [])}
+        {useMemo(() => renderInput({
           label: "Product Brand",
           name: "productBrand",
           type: "text",
           onChange: handleChange,
-        })}
-        {renderInput({
+        }), [])}
+        {useMemo(() => renderInput({
           label: "Product Name",
           name: "productName",
           type: "text",
           onChange: handleChange,
-        })}
-        {renderInput({
+        }), [])}
+        {useMemo(() => renderInput({
           label: "Product Price",
           name: "productPrice",
           type: "number",
           onChange: handleChange,
-        })}
-        {renderInput({
+        }), [])}
+        {useMemo(() => renderInput({
           label: "Product Stocks",
           name: "productStock",
           type: "number",
           onChange: handleChange,
-        })}
-        {renderInput({
+        }), [])}
+        {useMemo(() => renderInput({
           label: "Product Description",
           name: "productDescription",
           type: "textarea",
           className: "textarea",
           element: "textarea",
           onChange: handleChange,
-        })}
+        }), [])}
+        {useMemo(() => (
         <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
           <label className="text-[0.8rem]" htmlFor="productTags">
             Select all relevant tags
@@ -356,6 +357,7 @@ const NewProduct = (): React.JSX.Element => {
             {renderCheckboxes(handleChange)}
           </div>
         </div>
+        ), [])}
         <div className="flex self-end gap-2">
           <Link to="/admin/products">
             <button className="btn btn-secondary">Discard</button>
