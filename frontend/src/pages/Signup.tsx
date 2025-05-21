@@ -27,6 +27,7 @@ const Signup = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [isSigningUp, setIsSigningUp] = React.useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -38,6 +39,7 @@ const Signup = (): React.JSX.Element => {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setIsSigningUp(true);
 
     const { email, password, confirmPassword } = formData;
 
@@ -65,6 +67,7 @@ const Signup = (): React.JSX.Element => {
       await axiosInstance.post("auth/signup", updatedFormData);
       console.log(updatedFormData);
 
+      setIsSigningUp(false);
       navigate("/login");
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -135,8 +138,19 @@ const Signup = (): React.JSX.Element => {
           />
         </label>
 
-        <button type="submit" className="btn btn-primary">
-          Signup
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={isSigningUp}
+        >
+          {isSigningUp ? (
+            <>
+              <span className="loading loading-spinner loading-xs"></span>
+              Signing up...
+            </>
+          ) : (
+            "Signup"
+          )}
         </button>
         <h1>
           Already have an account?{" "}
