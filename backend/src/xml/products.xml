@@ -132,7 +132,6 @@
       </miscellaneous>
     </tags>
   </product>
-
   <product>
   <id>61b854c4-5381-4d2f-ba82-09058c490b88</id>
   <category>Laptop</category>
@@ -177,49 +176,4 @@
     </miscellaneous>
   </tags>
 </product>
-
-  <product>
-    <id>a7ea78ee-4636-4a1b-8630-f570f2b7edf5</id>
-    <category>Laptop</category>
-    <productImage>1747829342536-ThinkPad-E14.jpg</productImage>
-    <productBrand>Lenovo</productBrand>
-    <productName>ThinkPad E14</productName>
-    <productPrice>30000</productPrice>
-    <productStock>1000</productStock>
-    <productDescription>Good for gooning.</productDescription>
-    <tags>
-      <connectivity>
-        <wifi>true</wifi>
-        <bluetooth>true</bluetooth>
-        <ethernet>false</ethernet>
-        <usb3>false</usb3>
-        <thunderbolt>false</thunderbolt>
-        <hdmi>true</hdmi>
-      </connectivity>
-      <usageBased>
-        <gaming>true</gaming>
-        <office>false</office>
-        <programming>true</programming>
-        <videoEditing>false</videoEditing>
-        <streaming>false</streaming>
-        <homeUse>false</homeUse>
-        <business>true</business>
-        <student>false</student>
-      </usageBased>
-      <features>
-        <rgb>false</rgb>
-        <mechanical>true</mechanical>
-        <backlit>true</backlit>
-        <ergonomic>false</ergonomic>
-        <portable>false</portable>
-        <silent>false</silent>
-      </features>
-      <miscellaneous>
-        <newArrival>true</newArrival>
-        <limitedEdition>true</limitedEdition>
-        <ecoFriendly>false</ecoFriendly>
-        <energyEfficient>false</energyEfficient>
-      </miscellaneous>
-    </tags>
-  </product>
 </products>

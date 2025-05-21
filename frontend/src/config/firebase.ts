@@ -65,4 +65,5 @@ export const login = async (
 
 export const logout = async () => {
   await signOut(auth);
+  Cookies.remove('token');
 }

@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { signup } from '../config/firebase';
-import { FirebaseError } from 'firebase/app';
-import { useAuth } from '../hooks/context';
-import { Link, Navigate } from 'react-router-dom';
-import { isValidEmail } from '../utils/index';
-import { axiosInstance } from '../config/axios';
+import * as React from "react";
+import { signup } from "../config/firebase";
+import { FirebaseError } from "firebase/app";
+import { useAuth } from "../hooks/context";
+import { Link, Navigate } from "react-router-dom";
+import { isValidEmail } from "../utils/index";
+import { axiosInstance } from "../config/axios";
+import { useNavigate } from "react-router-dom";
 
 interface FormData {
   id: string;
@@ -15,17 +16,17 @@ interface FormData {
 }
 
 const initialFormData: FormData = {
-  id: '',
-  fullName: '',
-  email: '',
-  password: '',
-  confirmPassword: ''
-}
+  id: "",
+  fullName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const Signup = (): React.JSX.Element => {
-
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -41,24 +42,30 @@ const Signup = (): React.JSX.Element => {
     const { email, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
-      alert('Password does not match!');
+      alert("Password does not match!");
       return;
-    };
+    }
 
     if (!isValidEmail(email)) {
-      alert('Invalid email!');
+      alert("Invalid email!");
       return;
     }
 
     try {
       // store the user in firebase
-      const userCredential = await signup(email.toString(), password.toString());
+      const userCredential = await signup(
+        email.toString(),
+        password.toString()
+      );
 
       const updatedFormData = { ...formData, id: userCredential.uid };
       setFormData(updatedFormData);
 
       // send the user to the backend
-      await axiosInstance.post('auth/signup', updatedFormData);
+      await axiosInstance.post("auth/signup", updatedFormData);
+      console.log(updatedFormData);
+
+      navigate("/login");
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         alert(error.message);
@@ -68,9 +75,9 @@ const Signup = (): React.JSX.Element => {
 
       return;
     }
-  }
+  };
 
-  if (user) return <Navigate to='/home' replace />;
+  if (user) return <Navigate to="/home" replace />;
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
@@ -128,13 +135,15 @@ const Signup = (): React.JSX.Element => {
           />
         </label>
 
-        <button
-          type="submit"
-          className="btn btn-primary"
-        >
+        <button type="submit" className="btn btn-primary">
           Signup
         </button>
-        <h1>Already have an account? <Link to='/login' className='text-primary underline'>Login here</Link></h1>
+        <h1>
+          Already have an account?{" "}
+          <Link to="/login" className="text-primary underline">
+            Login here
+          </Link>
+        </h1>
       </form>
     </div>
   );
