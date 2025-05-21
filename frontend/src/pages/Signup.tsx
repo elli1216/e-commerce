@@ -65,8 +65,8 @@ const Signup = (): React.JSX.Element => {
 
       // send the user to the backend
       await axiosInstance.post("auth/signup", updatedFormData);
-      console.log(updatedFormData);
 
+      alert("Signup successful!");
       setIsSigningUp(false);
       navigate("/login");
     } catch (error: unknown) {
