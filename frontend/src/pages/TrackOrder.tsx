@@ -1,9 +1,10 @@
-import React from 'react';
-import UserHeader from '../components/UserHeader';
-import { useLocation, Link } from 'react-router-dom';
-import { type Item } from '../types/order';
-import { type IProduct } from '../types/product';
-import { formatArrivingDate } from '../utils/date';
+import React from "react";
+import UserHeader from "../components/UserHeader";
+import { useLocation, Link } from "react-router-dom";
+import { type Item } from "../types/order";
+import { type IProduct } from "../types/product";
+import { formatArrivingDate } from "../utils/date";
+import { getImageUrl } from "../utils";
 
 interface LocationState {
   item?: Item;
@@ -11,7 +12,6 @@ interface LocationState {
 }
 
 const TrackOrder = (): React.JSX.Element => {
-
   const location = useLocation();
   const { item, product } = location.state as LocationState;
 
@@ -19,10 +19,7 @@ const TrackOrder = (): React.JSX.Element => {
     <>
       <UserHeader />
       <div className="flex flex-col gap-5 mx-auto max-w-5xl mt-10 p-3">
-        <Link
-          to='/order'
-          className="link link-hover link-info w-fit"
-        >
+        <Link to="/order" className="link link-hover link-info w-fit">
           View all orders
         </Link>
 
@@ -33,7 +30,9 @@ const TrackOrder = (): React.JSX.Element => {
           <p>{product?.productName}</p>
           <p>Quantity: {item?.quantity}</p>
           <img
-            src="https://picsum.photos/200"
+            src={getImageUrl(
+              product?.productImage ?? "https://placehold.co/200x200"
+            )}
             alt="Product image"
             className="max-w-sm"
           />

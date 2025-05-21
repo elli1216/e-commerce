@@ -1,21 +1,29 @@
-import React from 'react';
-import UserHeader from '../components/UserHeader';
-import { type Cart } from '../types/cart';
-import CartItem from '../components/CartItem';
-import { useAuth, useCart } from '../hooks/context';
-import { axiosInstance } from '../config/axios';
-import { ShoppingCart } from 'lucide-react';
+import React from "react";
+import UserHeader from "../components/UserHeader";
+import { type Cart } from "../types/cart";
+import CartItem from "../components/CartItem";
+import { useAuth, useCart } from "../hooks/context";
+import { axiosInstance } from "../config/axios";
+import { ShoppingCart } from "lucide-react";
 
 const Cart = (): React.JSX.Element => {
   const { userCart, fetchCartItems } = useCart();
   const { user } = useAuth();
-  const isCartEmpty = !userCart?.items?.item ||
-    (Array.isArray(userCart.items.item) && userCart.items.item.length === 0);
+
+  // Ensure cart items are always in array format
+  const cartItems = React.useMemo(() => {
+    if (!userCart?.items?.item) return [];
+    return Array.isArray(userCart.items.item)
+      ? userCart.items.item
+      : [userCart.items.item];
+  }, [userCart]);
+
+  const isCartEmpty = cartItems.length === 0;
 
   const handleIncreaseQuantity = async (productId: string) => {
     if (!userCart || !user) return;
     try {
-      await axiosInstance.post('/cart/increase', {
+      await axiosInstance.post("/cart/increase", {
         userId: user.uid,
         productId,
       });
@@ -24,12 +32,12 @@ const Cart = (): React.JSX.Element => {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const handleDecreaseQuantity = async (productId: string) => {
     if (!userCart || !user) return;
     try {
-      await axiosInstance.post('/cart/decrease', {
+      await axiosInstance.post("/cart/decrease", {
         userId: user.uid,
         productId,
       });
@@ -37,30 +45,30 @@ const Cart = (): React.JSX.Element => {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const placeOrder = async () => {
     if (!userCart || !user) return;
     try {
-      await axiosInstance.post('/order', {
+      await axiosInstance.post("/order", {
         userId: user.uid,
-        items: userCart.items.item,
+        items: cartItems,
         orderTotal: userCart.total,
       });
 
-      alert('Order placed successfully!');
+      alert("Order placed successfully!");
       window.location.reload();
       await fetchCartItems();
     } catch (err) {
       console.error(err);
-      alert('Failed to place order.');
+      alert("Failed to place order.");
     }
   };
 
   const handleDeleteItem = async (productId: string) => {
     if (!userCart || !user) return;
     try {
-      await axiosInstance.post('/cart/delete', {
+      await axiosInstance.post("/cart/delete", {
         userId: user.uid,
         productId,
       });
@@ -80,7 +88,9 @@ const Cart = (): React.JSX.Element => {
         {isCartEmpty ? (
           <div className="flex flex-col items-center justify-center w-full h-96 text-base-content/60">
             <ShoppingCart className="w-20 h-20 mb-4 text-secondary-content" />
-            <span className="text-2xl text-secondary-content">Your cart is empty.</span>
+            <span className="text-2xl text-secondary-content">
+              Your cart is empty.
+            </span>
           </div>
         ) : (
           <>
@@ -88,7 +98,7 @@ const Cart = (): React.JSX.Element => {
               <h2 className="text-2xl">Order Summary</h2>
               <div>
                 <div className="flex flex-row justify-between">
-                  <span>Items({Array.isArray(userCart?.items?.item) ? userCart.items.item.length : 1}):</span>
+                  <span>Items({cartItems.length}):</span>
                   <span>₱{userCart?.total}</span>
                 </div>
                 <div className="flex flex-row justify-between">
@@ -99,30 +109,24 @@ const Cart = (): React.JSX.Element => {
               <div className="divider p-0 m-0" />
               <div className="flex flex-row justify-between font-semibold">
                 <span>Order total:</span>
-                <span>₱{userCart.total}</span>
+                <span>₱{userCart?.total || 0}</span>
               </div>
-              <button
-                onClick={placeOrder}
-                className='btn btn-primary mt-5'
-              >Place your order</button>
+              <button onClick={placeOrder} className="btn btn-primary mt-5">
+                Place your order
+              </button>
             </div>
 
             {/* Cart Item */}
             <div className="flex flex-col gap-5 flex-1/2">
-              {userCart?.items && (
-                (Array.isArray(userCart.items.item)
-                  ? userCart.items.item
-                  : [userCart.items.item]
-                ).map((item) =>
-                  <CartItem
-                    key={item.productId}
-                    {...item}
-                    increaseQuantity={handleIncreaseQuantity}
-                    decreaseQuantity={handleDecreaseQuantity}
-                    onDeleteItem={handleDeleteItem}
-                  />
-                )
-              )}
+              {cartItems.map((item) => (
+                <CartItem
+                  key={item.productId}
+                  {...item}
+                  increaseQuantity={handleIncreaseQuantity}
+                  decreaseQuantity={handleDecreaseQuantity}
+                  onDeleteItem={handleDeleteItem}
+                />
+              ))}
             </div>
           </>
         )}

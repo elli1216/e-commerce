@@ -74,6 +74,7 @@ const renderUserList = (user: User): React.JSX.Element => {
 
 const Users = (): React.JSX.Element => {
   const [users, setUsers] = React.useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
   const [searchTerm, setSearchTerm] = React.useState<string>("");
 
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -84,21 +85,22 @@ const Users = (): React.JSX.Element => {
   
   React.useEffect(() => {
     if (!debouncedSearchTerm.trim()) {
-      setUsers(users);
+      setFilteredUsers(users);
     } else {
       const filteredUsers = users.filter((user) =>
         user.fullName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
-      setUsers(filteredUsers);
+      setFilteredUsers(filteredUsers);
       console.log(filteredUsers);
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, users]);
 
 
   React.useEffect(() => {
     setUsers(users);
+    setFilteredUsers(users);
     console.log(users);
-  }, []);
+  }, [users]);
 
   React.useEffect(() => {
     const fetchUsers = async (): Promise<void> => {
@@ -106,6 +108,7 @@ const Users = (): React.JSX.Element => {
         const response = await axiosInstance.get<{ user: User[] }>('/users');
         const data = response.data.user;
         setUsers(data);
+        setFilteredUsers(data);
         console.log(data);
       } catch (error) {
         console.error('Failed to fetch users:', error);
@@ -121,7 +124,7 @@ const Users = (): React.JSX.Element => {
           <SearchInput placeholder="Search Name" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)} />
         </div>
         <div className="flex flex-col items-center justify-center w-full h-full gap-2 border border-[#D9D9D9] rounded-lg p-4">
-          {users.length > 0 ? users.map(renderUserList) : <p>No users found</p>}
+          {filteredUsers.length > 0 ? filteredUsers.map(renderUserList) : <p>No users found</p>}
         </div>
       </div>
     </div>
