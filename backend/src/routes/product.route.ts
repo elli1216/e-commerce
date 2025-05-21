@@ -18,7 +18,7 @@ router.get("/products", getProducts);
 router.get("/categories", getCategories);
 router.post("/add-product", upload.single("productImage"), addProduct);
 router.get("/products/:id", getProductById);
-router.put("/edit-product/:id", updateProduct);
+router.put("/edit-product/:id", upload.single("productImage"), updateProduct);
 router.delete("/delete-product/:id", deleteProduct);
 
 export default router;

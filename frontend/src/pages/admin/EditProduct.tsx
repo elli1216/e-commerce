@@ -25,7 +25,7 @@ const renderCheckboxes = (
                   id={tagName}
                   name={`${categoryName}_${tagName}`}
                   checked={
-                    (formData.productTags as any)[categoryName][tagName] ===
+                    (formData.productTags as Record<string, Record<string, string>>)[categoryName][tagName] ===
                     "true"
                   }
                   onChange={handleChange}
@@ -282,7 +282,6 @@ const EditProduct = (): React.JSX.Element => {
 
     if (
       !formData.category ||
-      !productImage ||
       !formData.productBrand ||
       !formData.productName ||
       !formData.productPrice ||
@@ -306,19 +305,34 @@ const EditProduct = (): React.JSX.Element => {
         formDataObj.append("productStock", formData.productStock);
         formDataObj.append("productDescription", formData.productDescription);
 
-        const imageFile = dataURLtoFile(
-          productImage,
-          `${formData.productName.replace(/\s+/g, "-")}.jpg`
-        );
+        // Handle the image upload
+        if (productImage) {
+          try {
+            const imageFile = dataURLtoFile(
+              productImage,
+              `${formData.productName.replace(/\s+/g, "-")}.jpg`
+            );
+            formDataObj.append("productImage", imageFile);
+          } catch (error) {
+            console.error("Failed to process image:", error);
+            alert("Failed to process image. Please try again with a different image.");
+            return;
+          }
+        } else {
+          // If no new image, keep existing image path
+          formDataObj.append("productImage", formData.productImage);
+        }
 
-        formDataObj.append("productImage", imageFile);
         formDataObj.append("productTags", JSON.stringify(formData.productTags));
 
-        const response = await axiosInstance.put(
+        await axiosInstance.put(
           `/edit-product/${productId}`,
           formDataObj
         );
-        console.log(response.data);
+        
+        alert("Product edited successfully");
+        clearForm();
+        navigate("/admin/products");
       } catch (error) {
         console.error(error);
         alert("Failed to edit product: " + error);
@@ -326,11 +340,6 @@ const EditProduct = (): React.JSX.Element => {
     };
 
     editProduct();
-
-    alert("Product edited successfully");
-    console.log(formData);
-    clearForm();
-    navigate("/admin/products");
   };
 
   const clearForm = (): void => {

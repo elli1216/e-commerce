@@ -287,6 +287,7 @@ const NewProduct = (): React.JSX.Element => {
         );
 
         alert("Product added successfully");
+        
       } catch (error) {
         console.error(error);
         alert("Failed to add product: " + error);

@@ -134,47 +134,47 @@
   </product>
 
   <product>
-    <id>61b854c4-5381-4d2f-ba82-09058c490b88</id>
-    <category>Laptop</category>
-    <productImage>1747758561428-ThinkPad-E14.jpg</productImage>
-    <productBrand>Lenovo</productBrand>
-    <productName>ThinkPad E14</productName>
-    <productPrice>49999</productPrice>
-    <productStock>1000</productStock>
-    <productDescription>lorem ipsum</productDescription>
-    <tags>
-      <connectivity>
-        <wifi>true</wifi>
-        <bluetooth>true</bluetooth>
-        <ethernet>false</ethernet>
-        <usb3>false</usb3>
-        <thunderbolt>false</thunderbolt>
-        <hdmi>false</hdmi>
-      </connectivity>
-      <usageBased>
-        <gaming>true</gaming>
-        <office>false</office>
-        <programming>true</programming>
-        <videoEditing>false</videoEditing>
-        <streaming>false</streaming>
-        <homeUse>false</homeUse>
-        <business>false</business>
-        <student>true</student>
-      </usageBased>
-      <features>
-        <rgb>false</rgb>
-        <mechanical>true</mechanical>
-        <backlit>true</backlit>
-        <ergonomic>false</ergonomic>
-        <portable>false</portable>
-        <silent>false</silent>
-      </features>
-      <miscellaneous>
-        <newArrival>true</newArrival>
-        <limitedEdition>false</limitedEdition>
-        <ecoFriendly>false</ecoFriendly>
-        <energyEfficient>true</energyEfficient>
-      </miscellaneous>
-    </tags>
-  </product>
+  <id>61b854c4-5381-4d2f-ba82-09058c490b88</id>
+  <category>Laptop</category>
+  <productImage>1747758561428-ThinkPad-E14.jpg</productImage>
+  <productName>ThinkPad E14</productName>
+  <productBrand>Lenovo</productBrand>
+  <productPrice>49999</productPrice>
+  <productStock>999</productStock>
+  <productDescription>lorem ipsum</productDescription>
+  <tags>
+    <connectivity>
+      <wifi>true</wifi>
+      <bluetooth>true</bluetooth>
+      <ethernet>false</ethernet>
+      <usb3>false</usb3>
+      <thunderbolt>false</thunderbolt>
+      <hdmi>false</hdmi>
+    </connectivity>
+    <usageBased>
+      <gaming>true</gaming>
+      <office>false</office>
+      <programming>true</programming>
+      <videoEditing>false</videoEditing>
+      <streaming>false</streaming>
+      <homeUse>false</homeUse>
+      <business>false</business>
+      <student>true</student>
+    </usageBased>
+    <features>
+      <rgb>false</rgb>
+      <mechanical>true</mechanical>
+      <backlit>true</backlit>
+      <ergonomic>false</ergonomic>
+      <portable>false</portable>
+      <silent>false</silent>
+    </features>
+    <miscellaneous>
+      <newArrival>true</newArrival>
+      <limitedEdition>false</limitedEdition>
+      <ecoFriendly>false</ecoFriendly>
+      <energyEfficient>true</energyEfficient>
+    </miscellaneous>
+  </tags>
+</product>
 </products>

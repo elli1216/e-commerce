@@ -28,8 +28,8 @@ export const getProductById = async (
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
 
   try {
-    const products = await readAndParseXml(XML_PATH);
-    const response = products.product.find((p: any) => p.id === id);
+    const products = await readAndParseXml(XML_PATH) as any;
+    const response = products.product.find((p: any) => p.id === id); //have error but works
 
     if (!response) {
       return res.status(404).json({ message: "Product not found." });
@@ -127,46 +127,74 @@ export const updateProduct = async (
   req: Request,
   res: Response
 ): Promise<any> => {
+  const { id } = req.params;
   const {
     category,
-    productImage,
     productBrand,
     productName,
     productPrice,
     productStock,
     productDescription,
-    productTags,
   } = req.body;
-  const { id } = req.params;
-
+  
+  const productTags = JSON.parse(req.body.productTags);
   const XML_PATH = path.join(__dirname, "../xml/products.xml");
-
-  const productsXml = fs.readFileSync(XML_PATH).toString();
-
   const imageFolder = path.join(__dirname, "../images");
+  
   if (!fs.existsSync(imageFolder)) {
     fs.mkdirSync(imageFolder);
   }
 
-  const products = await readAndParseXml(XML_PATH);
-  const product = products.product.find((p: any) => p.id === id);
-  const imgData = productImage?.replace(/^data:image\/\w+;base64,/, "");
-  let imageFileName;
+  try {
+    const productsXml = fs.readFileSync(XML_PATH).toString();
+    const products = await readAndParseXml(XML_PATH) as any;
+    const product = products.product.find((p: any) => p.id === id);
+    
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+    
+    let imageFileName;
+    
+    // Handle image file if uploaded through multer
+    if (req.file) {
+      // Delete old image if it exists and is not the default
+      if (product.productImage && product.productImage !== 'default.jpg') {
+        const oldImagePath = path.join(imageFolder, product.productImage);
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+      
+      // Use the new uploaded file
+      imageFileName = req.file.filename;
+    } 
+    // Handle base64 image data
+    else if (req.body.productImage && req.body.productImage.startsWith('data:image')) {
+      const imgData = req.body.productImage.replace(/^data:image\/\w+;base64,/, "");
+      
+      if (imgData && imgData.length > 0) {
+        // Delete old image if it exists and is not the default
+        if (product.productImage && product.productImage !== 'default.jpg') {
+          const oldImagePath = path.join(imageFolder, product.productImage);
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+          }
+        }
+        
+        // Save new image with unique timestamp filename
+        imageFileName = `${Date.now()}-${productName.replace(/\s+/g, "-")}.jpg`;
+        const imageFilePath = path.join(imageFolder, imageFileName);
+        fs.writeFileSync(imageFilePath, Buffer.from(imgData, "base64"));
+      }
+    }
+    
+    // If no new image provided, keep the existing one
+    if (!imageFileName) {
+      imageFileName = product.productImage;
+    }
 
-  if (imgData && imgData.length > 0) {
-    // If there's new image data, save it with a new filename
-    imageFileName = `${productName.replace(/\s+/g, "-")}-${Date.now()}.jpg`;
-    const imageFilePath = path.join(imageFolder, imageFileName);
-    fs.writeFileSync(imageFilePath, Buffer.from(imgData, "base64"));
-  } else if (product && product.productImage) {
-    // If no new image, use the existing one
-    imageFileName = product.productImage;
-  } else {
-    // Fallback to a default name if no image exists
-    imageFileName = `default-${Date.now()}.jpg`;
-  }
-
-  const updatedProductXml = `
+    const updatedProductXml = `
   <product>
   <id>${id}</id>
   <category>${category}</category>
@@ -212,9 +240,8 @@ export const updateProduct = async (
   </tags>
 </product>
   `;
-  try {
+
     // Create a regex pattern that will match the entire product XML block with the given ID
-    // Using RegExp constructor to create a dynamic regex pattern with proper flags
     const productRegex = new RegExp(
       `<product>\\s*<id>${id}</id>[\\s\\S]*?</product>`,
       "gm"
