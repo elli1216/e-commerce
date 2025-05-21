@@ -1,23 +1,21 @@
-import * as React from 'react';
-import { AuthErrorCodes } from 'firebase/auth';
-import { login } from '../config/firebase';
-import { FirebaseError } from 'firebase/app';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/context';
+import * as React from "react";
+import { AuthErrorCodes } from "firebase/auth";
+import { login } from "../config/firebase";
+import { FirebaseError } from "firebase/app";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/context";
 
 interface FormData {
   email: string;
   password: string;
-
 }
 
 const initialFormData: FormData = {
-  email: '',
-  password: '',
-}
+  email: "",
+  password: "",
+};
 
 const Login = (): React.JSX.Element => {
-
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const navigate = useNavigate();
   const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
@@ -38,23 +36,21 @@ const Login = (): React.JSX.Element => {
 
     // fetch the user from firebase
     try {
-
       await login(email.toString(), password.toString());
       setIsLoggingIn(false);
-      navigate('/home');
-
+      navigate("/home");
     } catch (error: unknown) {
       if (
         error instanceof FirebaseError &&
         error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS
       ) {
-        alert('Invalid Credential!');
+        alert("Invalid Credential!");
         setIsLoggingIn(false);
       }
     }
-  }
+  };
 
-  if (user) return <Navigate to='/home' replace />;
+  if (user) return <Navigate to="/home" replace />;
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center">
@@ -64,9 +60,7 @@ const Login = (): React.JSX.Element => {
       >
         <h1 className="text-5xl mb-5">Login</h1>
 
-        <label className={`floating-label`}>
-
-        </label>
+        <label className={`floating-label`}></label>
 
         <label className="floating-label">
           <span>Email</span>
@@ -96,16 +90,21 @@ const Login = (): React.JSX.Element => {
           disabled={isLoggingIn}
           className="btn btn-primary"
         >
-          {(isLoggingIn) ? (
+          {isLoggingIn ? (
             <>
               <span className="loading loading-spinner loading-xs"></span>
               Loading...
             </>
           ) : (
-            'Login'
+            "Login"
           )}
         </button>
-
+        <h1>
+          Don't have an account?{" "}
+          <Link to="/register" className="text-primary underline">
+            Register here
+          </Link>
+        </h1>
       </form>
     </div>
   );

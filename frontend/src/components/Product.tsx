@@ -94,7 +94,7 @@ const Product = ({ product, onAddToCart }: ProductProps): React.JSX.Element => {
                 />
               </g>
             </svg>
-            Addded
+            Added
           </div>
         </div>
         <button

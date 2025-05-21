@@ -12,7 +12,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
       </div>
     );
 
-  if (!user) return <Navigate to='/login' replace />;
+  if (!user) return (
+    <>
+      <Navigate to='/login' replace />
+      <Navigate to='/signup' replace />
+    </>
+  );
 
   // Check if user is admin based on email domain
   // then redirect to admin if true

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { signup } from '../config/firebase';
 import { FirebaseError } from 'firebase/app';
 import { useAuth } from '../hooks/context';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { isValidEmail } from '../utils/index';
 import { axiosInstance } from '../config/axios';
 
@@ -134,7 +134,7 @@ const Signup = (): React.JSX.Element => {
         >
           Signup
         </button>
-
+        <h1>Already have an account? <Link to='/login' className='text-primary underline'>Login here</Link></h1>
       </form>
     </div>
   );
