@@ -144,10 +144,7 @@ const Users = (): React.JSX.Element => {
         key={user.id}
         className="flex items-center justify-between w-full p-2 border-b border-gray-300"
       >
-        <Link
-          to={`/admin/users/${user.id}`}
-          className="flex items-center gap-2 flex-grow"
-        >
+        <div className="flex items-center gap-2 flex-grow">
           <img
             src="https://placehold.co/64x64"
             alt="User"
@@ -157,7 +154,7 @@ const Users = (): React.JSX.Element => {
             <p className="text-lg font-semibold">{user.fullName}</p>
             <p className="text-sm text-gray-600">{user.email}</p>
           </div>
-        </Link>
+        </div>
         <label
           htmlFor="deleteModal"
           className="cursor-pointer"
