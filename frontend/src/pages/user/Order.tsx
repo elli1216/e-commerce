@@ -1,11 +1,11 @@
-import React from 'react';
-import UserHeader from '../components/UserHeader';
-import OrderItem from '../components/OrderItem';
-import { axiosInstance } from '../config/axios';
-import { type Order } from '../types/order';
-import { useAuth } from '../hooks/context';
-import { formatOrderDate } from '../utils/date'
-import { PackageX } from 'lucide-react';
+import React from "react";
+import UserHeader from "../../components/user/UserHeader";
+import OrderItem from "../../components/user/OrderItem";
+import { axiosInstance } from "../../config/axios";
+import { type Order } from "../../types/order";
+import { useAuth } from "../../context/context";
+import { formatOrderDate } from "../../utils/date";
+import { PackageX } from "lucide-react";
 
 const Order = (): React.JSX.Element => {
   const [orders, setOrders] = React.useState<Order[]>([]);
@@ -14,16 +14,20 @@ const Order = (): React.JSX.Element => {
   React.useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axiosInstance.get<{ order: Order | Order[] }>('/orders');
+        const response = await axiosInstance.get<{ order: Order | Order[] }>(
+          "/orders"
+        );
         let orders = response.data.order;
         if (!Array.isArray(orders)) {
           orders = orders ? [orders] : [];
         }
         // Filter orders for the logged-in user
-        const userOrders = user ? orders.filter(order => order.userId === user.uid) : [];
+        const userOrders = user
+          ? orders.filter((order) => order.userId === user.uid)
+          : [];
         setOrders(userOrders);
       } catch (err) {
-        console.error('Failed to fetch Orders:', err);
+        console.error("Failed to fetch Orders:", err);
       }
     };
 
@@ -40,10 +44,12 @@ const Order = (): React.JSX.Element => {
       {orders.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-96 text-base-content/60">
           <PackageX className="w-20 h-20 mb-4 text-secondary-content" />
-          <span className="text-2xl text-secondary-content">You have no orders yet.</span>
+          <span className="text-2xl text-secondary-content">
+            You have no orders yet.
+          </span>
         </div>
       ) : (
-        orders.map((order) =>
+        orders.map((order) => (
           <div key={order.id} className="px-3 mb-10">
             <div className="flex flex-col max-w-5xl w-full mx-auto border border-base-300">
               {/* Header */}
@@ -66,12 +72,13 @@ const Order = (): React.JSX.Element => {
               {/* Item */}
               {(Array.isArray(order.items.item)
                 ? order.items.item
-                : [order.items.item]).map((item) => (
-                  <OrderItem key={item.productId} {...item} />
-                ))}
+                : [order.items.item]
+              ).map((item) => (
+                <OrderItem key={item.productId} {...item} />
+              ))}
             </div>
           </div>
-        )
+        ))
       )}
     </>
   );

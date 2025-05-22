@@ -1,214 +1,18 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { tags } from "../../data/data";
 import { axiosInstance } from "../../config/axios";
 import { IProduct } from "../../types/product";
 import { dataURLtoFile } from "../../utils";
-
-const renderCheckboxes = (
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  formData: FormData
-): React.JSX.Element => {
-  return (
-    <div className="grid grid-cols-[repeat(4,1fr)] gap-2">
-      {Object.entries(tags).map(([categoryName, categoryTags]) => (
-        <div key={categoryName} className="flex flex-col gap-2">
-          <label className="text-sm">
-            {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
-          </label>
-          <div className="grid grid-cols-[1fr] gap-2">
-            {Object.entries(categoryTags).map(([tagName]) => (
-              <div key={tagName} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id={tagName}
-                  name={`${categoryName}_${tagName}`}
-                  checked={
-                    (formData.productTags as Record<string, Record<string, string>>)[categoryName][tagName] ===
-                    "true"
-                  }
-                  onChange={handleChange}
-                />
-                <label className="text-sm" htmlFor={tagName}>
-                  {tagName}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const renderInput = ({
-  label,
-  name,
-  type,
-  className,
-  element,
-  value,
-  onChange,
-}: {
-  label: string;
-  name: string;
-  type: string;
-  className?: string;
-  element?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}): React.JSX.Element => {
-  return (
-    <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
-      <label className="text-sm" htmlFor={name}>
-        * {label}
-      </label>
-      {React.createElement(element || "input", {
-        className: `input w-full ${className}`,
-        id: name,
-        name: name,
-        type: type,
-        value: value,
-        onChange,
-      })}
-    </div>
-  );
-};
-
-const DropDown = ({
-  onChange,
-  value,
-}: {
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  value?: string;
-}) => {
-  const [categories, setCategories] = React.useState<string[] | null>(null);
-
-  React.useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await axiosInstance.get<{ category: string[] }>(
-        "/categories"
-      );
-      const categories = response.data.category;
-      setCategories(categories);
-    };
-
-    fetchCategories();
-  }, []);
-
-  return (
-    <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
-      <label className="text-sm" htmlFor="category">
-        * Category
-      </label>
-      <select
-        id="category"
-        name="category"
-        defaultValue={value}
-        className="select w-full"
-        onChange={onChange}
-      >
-        <option disabled={true}>Pick a category</option>
-        {categories?.map((category) => (
-          <option key={category}>{category}</option>
-        ))}
-      </select>
-    </div>
-  );
-};
-
-interface FormData {
-  category: string;
-  productImage: string;
-  productName: string;
-  productBrand: string;
-  productPrice: string;
-  productStock: string;
-  productDescription: string;
-  productTags: {
-    connectivity: {
-      wifi: string;
-      bluetooth: string;
-      ethernet: string;
-      usb3: string;
-      thunderbolt: string;
-      hdmi: string;
-    };
-    usageBased: {
-      gaming: string;
-      office: string;
-      programming: string;
-      videoEditing: string;
-      streaming: string;
-      homeUse: string;
-      business: string;
-      student: string;
-    };
-    features: {
-      rgb: string;
-      mechanical: string;
-      backlit: string;
-      ergonomic: string;
-      portable: string;
-      silent: string;
-    };
-    miscellaneous: {
-      newArrival: string;
-      limitedEdition: string;
-      ecoFriendly: string;
-      energyEfficient: string;
-    };
-  };
-}
-
-const initialFormData: FormData = {
-  category: "",
-  productImage: "",
-  productName: "",
-  productBrand: "",
-  productPrice: "",
-  productStock: "",
-  productDescription: "",
-  productTags: {
-    connectivity: {
-      wifi: "false",
-      bluetooth: "false",
-      ethernet: "false",
-      usb3: "false",
-      thunderbolt: "false",
-      hdmi: "false",
-    },
-    usageBased: {
-      gaming: "false",
-      office: "false",
-      programming: "false",
-      videoEditing: "false",
-      streaming: "false",
-      homeUse: "false",
-      business: "false",
-      student: "false",
-    },
-    features: {
-      rgb: "false",
-      mechanical: "false",
-      backlit: "false",
-      ergonomic: "false",
-      portable: "false",
-      silent: "false",
-    },
-    miscellaneous: {
-      newArrival: "false",
-      limitedEdition: "false",
-      ecoFriendly: "false",
-      energyEfficient: "false",
-    },
-  },
-};
+import Checkboxes from "../../components/admin/editProduct/Checkboxes";
+import Input from "../../components/admin/editProduct/Input";
+import Dropdown from "../../components/admin/editProduct/Dropdown";
+import { type FormData, initialFormData } from "../../types/form";
 
 const EditProduct = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const [productImage, setProductImage] = React.useState<string>("");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const productId = window.location.pathname.split("/").pop();
@@ -315,7 +119,9 @@ const EditProduct = (): React.JSX.Element => {
             formDataObj.append("productImage", imageFile);
           } catch (error) {
             console.error("Failed to process image:", error);
-            alert("Failed to process image. Please try again with a different image.");
+            alert(
+              "Failed to process image. Please try again with a different image."
+            );
             return;
           }
         } else {
@@ -325,11 +131,8 @@ const EditProduct = (): React.JSX.Element => {
 
         formDataObj.append("productTags", JSON.stringify(formData.productTags));
 
-        await axiosInstance.put(
-          `/edit-product/${productId}`,
-          formDataObj
-        );
-        
+        await axiosInstance.put(`/edit-product/${productId}`, formDataObj);
+
         alert("Product edited successfully");
         clearForm();
         navigate("/admin/products");
@@ -346,65 +149,63 @@ const EditProduct = (): React.JSX.Element => {
     setFormData(initialFormData);
   };
 
-  const navigate = useNavigate();
-
   return (
     <div className="flex items-center justify-center w-full h-full">
       <form
         className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4"
         onSubmit={handleSubmit}
       >
-        <DropDown onChange={handleChange} value={formData.category} />
-        {renderInput({
-          label: "Product Image URL",
-          name: "productImage",
-          type: "file",
-          className: "file-input",
-          onChange: handleImageChange,
-        })}
-        {renderInput({
-          label: "Product Brand",
-          name: "productBrand",
-          type: "text",
-          value: formData.productBrand,
-          onChange: handleChange,
-        })}
-        {renderInput({
-          label: "Product Name",
-          name: "productName",
-          type: "text",
-          value: formData.productName,
-          onChange: handleChange,
-        })}
-        {renderInput({
-          label: "Product Price",
-          name: "productPrice",
-          type: "number",
-          value: formData.productPrice,
-          onChange: handleChange,
-        })}
-        {renderInput({
-          label: "Product Quantity",
-          name: "productStock",
-          type: "number",
-          value: formData.productStock,
-          onChange: handleChange,
-        })}
-        {renderInput({
-          label: "Product Description",
-          name: "productDescription",
-          type: "textarea",
-          className: "textarea",
-          element: "textarea",
-          value: formData.productDescription,
-          onChange: handleChange,
-        })}
+        <Dropdown onChange={handleChange} value={formData.category} />
+        {<Input
+          label="Product Image URL"
+          name="productImage"
+          type="file"
+          className="file-input"
+          onChange={handleImageChange}
+        />}
+        {<Input
+          label="Product Brand"
+          name="productBrand"
+          type="text"
+          value={formData.productBrand}
+          onChange={handleChange}
+        />}
+        {<Input
+          label="Product Name"
+          name="productName"
+          type="text"
+          value={formData.productName}
+          onChange={handleChange}
+        />}
+        {<Input
+          label="Product Price"
+          name="productPrice"
+          type="number"
+          value={formData.productPrice}
+          onChange={handleChange}
+        />}
+        {<Input
+          label="Product Quantity"
+          name="productStock"
+          type="number"
+          value={formData.productStock}
+          onChange={handleChange}
+        />}
+        {<Input
+          label="Product Description"
+          name="productDescription"
+          type="textarea"
+          className="textarea"
+          element="textarea"
+          value={formData.productDescription}
+          onChange={handleChange}
+        />}
         <div className="grid grid-cols-[2fr_8fr] gap-2 items-center w-full">
           <label className="text-[0.8rem]" htmlFor="productTags">
             Select all relevant tags
           </label>
           <div className="flex flex-col gap-2">
-            {renderCheckboxes(handleChange, formData)}
+            <Checkboxes handleChange={handleChange} formData={formData} />
           </div>
         </div>
         <div className="flex self-end gap-2">

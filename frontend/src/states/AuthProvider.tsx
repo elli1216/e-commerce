@@ -1,9 +1,13 @@
-import * as React from 'react';
-import { onAuthStateChanged, type User } from 'firebase/auth';
-import { auth } from '../config/firebase';
-import { AuthContext } from '../hooks/context';
+import * as React from "react";
+import { onAuthStateChanged, type User } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { AuthContext } from "../context/context";
 
-const AuthProvider = ({ children }: { children: React.ReactElement }): React.JSX.Element => {
+const AuthProvider = ({
+  children,
+}: {
+  children: React.ReactElement;
+}): React.JSX.Element => {
   const [user, setUser] = React.useState<User | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
 

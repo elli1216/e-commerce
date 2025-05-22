@@ -1,7 +1,7 @@
 import * as React from "react";
-import { CartContext, useAuth } from "../hooks/context";
-import { type Cart } from "../types/cart";
-import { axiosInstance } from "../config/axios";
+import { CartContext, useAuth } from "../../context/context";
+import { type Cart } from "../../types/cart";
+import { axiosInstance } from "../../config/axios";
 
 export const CartProvider = ({
   children,

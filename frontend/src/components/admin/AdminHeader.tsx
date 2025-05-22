@@ -1,5 +1,5 @@
 import React from "react";
-import { logout } from "../config/firebase";
+import { logout } from "../../config/firebase";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminHeader = (): React.JSX.Element => {

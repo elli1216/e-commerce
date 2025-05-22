@@ -1,8 +1,8 @@
 import React from "react";
 import Select from "./Select";
-import { type IProduct } from "../types/product";
+import { type IProduct } from "../../types/product";
 import { useNavigate } from "react-router-dom";
-import { getImageUrl } from "../utils";
+import { getImageUrl } from "../../utils";
 interface ProductProps {
   product: IProduct;
   onAddToCart: (product: IProduct, quantity: number) => void;

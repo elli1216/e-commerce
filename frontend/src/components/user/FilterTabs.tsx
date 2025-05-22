@@ -1,35 +1,40 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React from 'react';
-import { axiosInstance } from '../config/axios';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import React from "react";
+import { axiosInstance } from "../../config/axios";
 
 interface FilterTabsProps {
   selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
 }
 
-const FilterTabs = ({ selectedCategory, setSelectedCategory }: FilterTabsProps) => {
+const FilterTabs = ({
+  selectedCategory,
+  setSelectedCategory,
+}: FilterTabsProps) => {
   const filtersTabRef = React.useRef<HTMLDivElement | null>(null);
   const [categories, setCategories] = React.useState<string[] | null>(null);
 
   React.useEffect(() => {
     const fetchCategories = async () => {
-      const response = await axiosInstance.get<{ category: string[] }>('/categories');
+      const response = await axiosInstance.get<{ category: string[] }>(
+        "/categories"
+      );
       const categories = response.data.category;
       setCategories(categories);
-    }
+    };
 
     fetchCategories();
   }, []);
 
   const handleClick: React.MouseEventHandler<SVGSVGElement> = (e) => {
     // previous button
-    if (e.currentTarget.classList.contains('previous')) {
-      filtersTabRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
+    if (e.currentTarget.classList.contains("previous")) {
+      filtersTabRef.current?.scrollBy({ left: -200, behavior: "smooth" });
       return;
     }
     // next button
-    if (e.currentTarget.classList.contains('next')) {
-      filtersTabRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
+    if (e.currentTarget.classList.contains("next")) {
+      filtersTabRef.current?.scrollBy({ left: 200, behavior: "smooth" });
       return;
     }
   };
@@ -50,9 +55,9 @@ const FilterTabs = ({ selectedCategory, setSelectedCategory }: FilterTabsProps) 
           className="tab"
           aria-label="All"
           checked={!selectedCategory}
-          onChange={() => setSelectedCategory('')}
+          onChange={() => setSelectedCategory("")}
         />
-        {categories?.map(category =>
+        {categories?.map((category) => (
           <input
             key={category}
             type="radio"
@@ -62,7 +67,7 @@ const FilterTabs = ({ selectedCategory, setSelectedCategory }: FilterTabsProps) 
             checked={selectedCategory === category}
             onChange={() => setSelectedCategory(category)}
           />
-        )}
+        ))}
       </div>
       <ChevronRight
         className="btn btn-square self-center next"

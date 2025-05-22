@@ -1,9 +1,9 @@
 import * as React from "react";
 import { AuthErrorCodes } from "firebase/auth";
-import { login } from "../config/firebase";
+import { login } from "../../config/firebase";
 import { FirebaseError } from "firebase/app";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/context";
+import { useAuth } from "../../context/context";
 
 interface FormData {
   email: string;

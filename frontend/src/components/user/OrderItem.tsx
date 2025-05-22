@@ -1,24 +1,25 @@
-import React from 'react';
-import { axiosInstance } from '../config/axios';
-import { type Item } from '../types/order';
-import { type IProduct } from '../types/product';
-import { formatArrivingDate } from '../utils/date';
-import { useNavigate } from 'react-router-dom';
-import { getImageUrl } from '../utils';
+import React from "react";
+import { axiosInstance } from "../../config/axios";
+import { type Item } from "../../types/order";
+import { type IProduct } from "../../types/product";
+import { formatArrivingDate } from "../../utils/date";
+import { useNavigate } from "react-router-dom";
+import { getImageUrl } from "../../utils";
 const OrderItem = (item: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
-  const product = products?.find(p => p.id === item.productId);
+  const product = products?.find((p) => p.id === item.productId);
   const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axiosInstance.get<{ product: IProduct[] }>('/products');
+        const response = await axiosInstance.get<{ product: IProduct[] }>(
+          "/products"
+        );
         const products = response.data.product;
         setProducts(products);
-
       } catch (error) {
-        console.error('Failed to fetch products:', error);
+        console.error("Failed to fetch products:", error);
       }
     };
 
@@ -26,21 +27,24 @@ const OrderItem = (item: Item): React.JSX.Element => {
   }, []);
 
   const handleTrackOrder = (): void => {
-    navigate(
-      `/order/:${item.productId}}`,
-      {
-        state: {
-          item,
-          product
-        }
-      }
-    )
-  }
+    navigate(`/order/:${item.productId}}`, {
+      state: {
+        item,
+        product,
+      },
+    });
+  };
 
   return (
     <div className="p-3 sm:flex sm:flex-row sm:gap-5">
-      <div className='flex justify-center items-center'>
-        <img src={getImageUrl(product?.productImage || 'https://picsum.photos/200')} className='w-[13rem] h-[13rem] object-cover rounded-lg' alt="Product image" />
+      <div className="flex justify-center items-center">
+        <img
+          src={getImageUrl(
+            product?.productImage || "https://picsum.photos/200"
+          )}
+          className="w-[13rem] h-[13rem] object-cover rounded-lg"
+          alt="Product image"
+        />
       </div>
       <div className="flex flex-col justify-between gap-2 md:flex-row md:flex-1/2">
         <div className="flex flex-col gap-2">
@@ -51,12 +55,12 @@ const OrderItem = (item: Item): React.JSX.Element => {
         </div>
         <button
           onClick={handleTrackOrder}
-          className='btn btn-sm w-full btn-secondary self-center sm:w-3xs'
+          className="btn btn-sm w-full btn-secondary self-center sm:w-3xs"
         >
           Track Order
         </button>
       </div>
-    </div >
+    </div>
   );
 };
 

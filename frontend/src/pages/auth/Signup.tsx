@@ -1,10 +1,10 @@
 import * as React from "react";
-import { signup } from "../config/firebase";
+import { signup } from "../../config/firebase";
 import { FirebaseError } from "firebase/app";
-import { useAuth } from "../hooks/context";
+import { useAuth } from "../../context/context";
 import { Link, Navigate } from "react-router-dom";
-import { isValidEmail } from "../utils/index";
-import { axiosInstance } from "../config/axios";
+import { isValidEmail } from "../../utils/index";
+import { axiosInstance } from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 
 interface FormData {

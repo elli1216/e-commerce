@@ -1,25 +1,25 @@
 import React from "react";
 import "./App.css";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
 import AdminLayout from "./layouts/AdminLayout";
 import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
 import NewProduct from "./pages/admin/NewProduct";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Order from "./pages/Order";
-import TrackOrder from "./pages/TrackOrder";
-import AuthProvider from "./components/AuthProvider";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import Home from "./pages/user/Home";
+import ProductDetail from "./pages/user/ProductDetail";
+import Cart from "./pages/user/Cart";
+import Order from "./pages/user/Order";
+import TrackOrder from "./pages/user/TrackOrder";
+import AuthProvider from "./states/AuthProvider";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminProtectedRoute from "./routes/AdminProtectedRoute";
 import { Navigate } from "react-router-dom";
-import PublicRoute from "./pages/PublicRoute";
-import CartProvider from "./components/CartProvider";
+import PublicRoute from "./routes/PublicRoute";
+import CartProvider from "./components/user/CartProvider";
 import EditProduct from "./pages/admin/EditProduct";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/user/NotFound";
 
 const App = (): React.JSX.Element => {
   return (

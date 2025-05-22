@@ -1,108 +1,12 @@
 import * as React from "react";
-import { SearchInput } from "../../components/SearchInput";
+import { SearchInput } from "../../components/admin/SearchInput";
+import AddButton from "../../components/admin/products/AddButton";
+import ProductRow from "../../components/admin/products/ProductRow";
 // import { mockProductData } from "../../data/mockData";
 import { type IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
-import { Link, useNavigate } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
-import {
-  ChevronLeft,
-  ChevronRight,
-  EllipsisVertical,
-  SquarePen,
-  PackageX as DeleteIcon,
-} from "lucide-react";
-
-// Memoized AddButton component
-const AddButton = React.memo((): React.JSX.Element => {
-  return (
-    <Link to="/admin/new-product">
-      <button className="btn btn-primary">
-        <p className="text-sm font-semibold">Add Product</p>
-      </button>
-    </Link>
-  );
-});
-
-// Memoized DropdownMenu component
-const DropdownMenu = React.memo(
-  ({
-    product,
-    fetchProducts,
-  }: {
-    product: IProduct;
-    fetchProducts: () => void;
-  }): React.JSX.Element => {
-    const navigate = useNavigate();
-
-    const handleNavigateToEdit = React.useCallback(() => {
-      navigate(`/admin/edit-product/${product.id}`);
-    }, [navigate, product.id]);
-
-    const handleDelete = React.useCallback((): void => {
-      const deleteProduct = async (): Promise<void> => {
-        try {
-          await axiosInstance.delete(`/delete-product/${product.id}`);
-          alert("Product deleted successfully");
-          fetchProducts();
-        } catch (error) {
-          console.error("Failed to delete product:", error);
-        }
-      };
-      deleteProduct();
-    }, [product.id, fetchProducts]);
-
-    return (
-      <div className="dropdown dropdown-bottom dropdown-end">
-        <div tabIndex={0} role="button" className="cursor-pointer p-0">
-          <EllipsisVertical />
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 rounded-box z-1 w-[10vw] shadow"
-        >
-          <button
-            className="btn btn-ghost self-start justify-start w-full"
-            onClick={handleNavigateToEdit}
-          >
-            <SquarePen className="size-4" />
-            Edit
-          </button>
-          <button
-            className="btn btn-ghost self-start justify-start w-full"
-            onClick={handleDelete}
-          >
-            <DeleteIcon className="size-4" />
-            Delete
-          </button>
-        </ul>
-      </div>
-    );
-  }
-);
-
-// Memoized ProductRow component
-const ProductRow = React.memo(
-  ({
-    product,
-    fetchProducts,
-  }: {
-    product: IProduct;
-    fetchProducts: () => void;
-  }): React.JSX.Element => {
-    return (
-      <tr key={product.id}>
-        <td>{product.productName}</td>
-        <td>{product.category}</td>
-        <td>{product.productStock}</td>
-        <td>{product.productPrice}</td>
-        <td className="px-0 self-center">
-          <DropdownMenu product={product} fetchProducts={fetchProducts} />
-        </td>
-      </tr>
-    );
-  }
-);
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Products = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[]>([]);

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/context';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/context";
 
 const PublicRoute = ({ children }: { children: React.ReactElement }) => {
   const { user, loading } = useAuth();
@@ -13,7 +13,7 @@ const PublicRoute = ({ children }: { children: React.ReactElement }) => {
     );
 
   // If user is admin, redirect to /admin
-  if (user && user.email?.endsWith('@admin.com')) {
+  if (user && user.email?.endsWith("@admin.com")) {
     return <Navigate to="/admin" replace />;
   }
 

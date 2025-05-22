@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../config/firebase";
-import { useCart } from "../hooks/context";
+import { logout } from "../../config/firebase";
+import { useCart } from "../../context/context";
 
 const UserHeader = (): React.JSX.Element => {
   const { userCart } = useCart();

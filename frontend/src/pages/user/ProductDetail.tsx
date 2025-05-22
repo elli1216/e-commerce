@@ -1,11 +1,11 @@
 import React from "react";
-import Select from "../components/Select";
-import UserHeader from "../components/UserHeader";
+import Select from "../../components/user/Select";
+import UserHeader from "../../components/user/UserHeader";
 import { useLocation } from "react-router-dom";
-import { IProduct } from "../types/product";
-import { useAuth, useCart } from "../hooks/context";
-import { axiosInstance } from "../config/axios";
-import { getImageUrl } from "../utils";
+import { IProduct } from "../../types/product";
+import { useAuth, useCart } from "../../context/context";
+import { axiosInstance } from "../../config/axios";
+import { getImageUrl } from "../../utils";
 import { CircleArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 const ProductDetail = (): React.JSX.Element => {

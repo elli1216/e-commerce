@@ -19,14 +19,6 @@
     <userId>kirKlwMgnnUMkYfrYwYSpJ3QcWy1</userId>
     <items>
       <item>
-        <productId>a7ea78ee-4636-4a1b-8630-f570f2b7edf5</productId>
-        <price>30000</price>
-        <quantity>1</quantity>
-        <arrivingDate>2025-05-21T12:09:52.249Z</arrivingDate>
-        <shippingFee>0</shippingFee>
-        <subTotal>30000.00</subTotal>
-      </item>
-      <item>
         <productId>61b854c4-5381-4d2f-ba82-09058c490b88</productId>
         <price>49999</price>
         <quantity>1</quantity>
@@ -34,7 +26,24 @@
         <shippingFee>0</shippingFee>
         <subTotal>49999.00</subTotal>
       </item>
+      <item>
+        <productId>39e859e9-8f2c-49e0-a325-01cc69f3834a</productId>
+        <price>49.99</price>
+        <quantity>1</quantity>
+        <arrivingDate>2025-05-22T02:52:06.842Z</arrivingDate>
+        <shippingFee>0</shippingFee>
+        <subTotal>49.99</subTotal>
+      </item>
+      <item>
+        <productId>7f98831b-1423-4791-b9df-e74eea3b2f5e</productId>
+        <price>29.99</price>
+        <quantity>1</quantity>
+        <arrivingDate>2025-05-22T02:52:07.565Z</arrivingDate>
+        <shippingFee>0</shippingFee>
+        <subTotal>29.99</subTotal>
+      </item>
     </items>
-    <subTotal>79999.00</subTotal>
+    <subTotal>50078.98</subTotal>
+    <itemCount>3</itemCount>
   </cart>
 </carts>

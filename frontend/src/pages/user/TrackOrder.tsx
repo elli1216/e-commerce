@@ -1,10 +1,10 @@
 import React from "react";
-import UserHeader from "../components/UserHeader";
+import UserHeader from "../../components/user/UserHeader";
 import { useLocation, Link } from "react-router-dom";
-import { type Item } from "../types/order";
-import { type IProduct } from "../types/product";
-import { formatArrivingDate } from "../utils/date";
-import { getImageUrl } from "../utils";
+import { type Item } from "../../types/order";
+import { type IProduct } from "../../types/product";
+import { formatArrivingDate } from "../../utils/date";
+import { getImageUrl } from "../../utils";
 
 interface LocationState {
   item?: Item;

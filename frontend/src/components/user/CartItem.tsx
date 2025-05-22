@@ -1,9 +1,9 @@
 import React from "react";
 import DeliveryOption from "./DeliveryOption";
-import type { IProduct } from "../types/product";
-import { axiosInstance } from "../config/axios";
-import { type Item } from "../types/cart";
-import { getImageUrl } from "../utils";
+import type { IProduct } from "../../types/product";
+import { axiosInstance } from "../../config/axios";
+import { type Item } from "../../types/cart";
+import { getImageUrl } from "../../utils";
 
 const CartItem = (props: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);

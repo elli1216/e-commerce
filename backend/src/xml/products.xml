@@ -176,4 +176,101 @@
     </miscellaneous>
   </tags>
 </product>
+
+  <product>
+  <id>256d9d86-0a2e-4017-8b97-00f012892522</id>
+  <category>Monitors</category>
+  <productImage>1747882727397-Doris-Baker.jpg</productImage>
+  <productName>MAG 274QRF</productName>
+  <productBrand>MSI</productBrand>
+  <productPrice>18999</productPrice>
+  <productStock>78</productStock>
+  <productDescription>Rapid IPS
+Provides 1ms GTG fast response time, optimizes screen colors and brightness.
+
+WQHD High Resolution
+Game titles will even look better, displaying more details.
+
+180Hz High Refresh Rate
+Experience smooth gaming with a blazing fast 180Hz refresh rate, that gives you the upper hand in fast moving games.</productDescription>
+  <tags>
+    <connectivity>
+      <wifi>false</wifi>
+      <bluetooth>false</bluetooth>
+      <ethernet>true</ethernet>
+      <usb3>false</usb3>
+      <thunderbolt>true</thunderbolt>
+      <hdmi>true</hdmi>
+    </connectivity>
+    <usageBased>
+      <gaming>true</gaming>
+      <office>true</office>
+      <programming>true</programming>
+      <videoEditing>false</videoEditing>
+      <streaming>false</streaming>
+      <homeUse>false</homeUse>
+      <business>false</business>
+      <student>true</student>
+    </usageBased>
+    <features>
+      <rgb>true</rgb>
+      <mechanical>false</mechanical>
+      <backlit>false</backlit>
+      <ergonomic>true</ergonomic>
+      <portable>false</portable>
+      <silent>false</silent>
+    </features>
+    <miscellaneous>
+      <newArrival>true</newArrival>
+      <limitedEdition>false</limitedEdition>
+      <ecoFriendly>false</ecoFriendly>
+      <energyEfficient>false</energyEfficient>
+    </miscellaneous>
+  </tags>
+</product>
+
+  <product>
+  <id>d382bba1-b3f3-4e4e-8614-0171a3c45cb4</id>
+  <category>Accessories</category>
+  <productImage>1747882940193-Logitech-G733-Lightweight-Wireless-RGB.jpg</productImage>
+  <productName>Logitech G733</productName>
+  <productBrand>Logitech</productBrand>
+  <productPrice>5699</productPrice>
+  <productStock>400</productStock>
+  <productDescription>Finally, a headset that can be as expressive as you. G733 is wireless and designed for comfort. And it’s outfitted with all the surround sound, voice filters, and advanced lighting you need to look, sound, and play with more style than ever.</productDescription>
+  <tags>
+    <connectivity>
+      <wifi>false</wifi>
+      <bluetooth>true</bluetooth>
+      <ethernet>false</ethernet>
+      <usb3>false</usb3>
+      <thunderbolt>false</thunderbolt>
+      <hdmi>false</hdmi>
+    </connectivity>
+    <usageBased>
+      <gaming>true</gaming>
+      <office>false</office>
+      <programming>true</programming>
+      <videoEditing>false</videoEditing>
+      <streaming>false</streaming>
+      <homeUse>false</homeUse>
+      <business>false</business>
+      <student>true</student>
+    </usageBased>
+    <features>
+      <rgb>true</rgb>
+      <mechanical>false</mechanical>
+      <backlit>false</backlit>
+      <ergonomic>false</ergonomic>
+      <portable>false</portable>
+      <silent>false</silent>
+    </features>
+    <miscellaneous>
+      <newArrival>true</newArrival>
+      <limitedEdition>true</limitedEdition>
+      <ecoFriendly>false</ecoFriendly>
+      <energyEfficient>false</energyEfficient>
+    </miscellaneous>
+  </tags>
+</product>
 </products>

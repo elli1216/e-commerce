@@ -1,9 +1,9 @@
 import React from "react";
-import UserHeader from "../components/UserHeader";
-import { type Cart } from "../types/cart";
-import CartItem from "../components/CartItem";
-import { useAuth, useCart } from "../hooks/context";
-import { axiosInstance } from "../config/axios";
+import UserHeader from "../../components/user/UserHeader";
+import { type Cart } from "../../types/cart";
+import CartItem from "../../components/user/CartItem";
+import { useAuth, useCart } from "../../context/context";
+import { axiosInstance } from "../../config/axios";
 import { ShoppingCart } from "lucide-react";
 
 const Cart = (): React.JSX.Element => {
