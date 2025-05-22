@@ -1,5 +1,4 @@
 import React from "react";
-import UserHeader from "../../components/user/UserHeader";
 import { useLocation, Link } from "react-router-dom";
 import { type Item } from "../../types/order";
 import { type IProduct } from "../../types/product";
@@ -17,7 +16,6 @@ const TrackOrder = (): React.JSX.Element => {
 
   return (
     <>
-      <UserHeader />
       <div className="flex flex-col gap-5 mx-auto max-w-5xl mt-10 p-3">
         <Link to="/order" className="link link-hover link-info w-fit">
           View all orders

@@ -1,5 +1,4 @@
 import React from "react";
-import UserHeader from "../../components/user/UserHeader";
 import { type Cart } from "../../types/cart";
 import CartItem from "../../components/user/CartItem";
 import { useAuth, useCart } from "../../context/context";
@@ -80,7 +79,6 @@ const Cart = (): React.JSX.Element => {
 
   return (
     <>
-      <UserHeader />
       <div className="max-w-7xl mx-auto my-8 p-3">
         <h1 className="text-4xl font-semibold w-fit">Your Cart</h1>
       </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import UserHeader from "../../components/user/UserHeader";
 import OrderItem from "../../components/user/OrderItem";
 import { axiosInstance } from "../../config/axios";
 import { type Order } from "../../types/order";
@@ -36,7 +35,6 @@ const Order = (): React.JSX.Element => {
 
   return (
     <>
-      <UserHeader />
       <div className="max-w-5xl mx-auto my-8 p-3">
         <h1 className="text-4xl font-semibold w-fit">Your Order</h1>
       </div>

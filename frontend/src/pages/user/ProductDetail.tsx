@@ -1,6 +1,5 @@
 import React from "react";
 import Select from "../../components/user/Select";
-import UserHeader from "../../components/user/UserHeader";
 import { useLocation } from "react-router-dom";
 import { IProduct } from "../../types/product";
 import { useAuth, useCart } from "../../context/context";
@@ -71,7 +70,6 @@ const ProductDetail = (): React.JSX.Element => {
 
   return (
     <>
-      <UserHeader />
       <div className="flex flex-row items-start justify-center p-4">
         {/* Product Details */}
         <button

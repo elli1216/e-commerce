@@ -1,6 +1,5 @@
 import * as React from "react";
 import Product from "../../components/user/Product";
-import UserHeader from "../../components/user/UserHeader";
 import FilterTabs from "../../components/user/FilterTabs";
 import { type IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
@@ -62,7 +61,6 @@ const Home = (): React.JSX.Element => {
 
   return (
     <>
-      <UserHeader />
       <div className="max-w-7xl mx-auto px-2">
         <FilterTabs
           selectedCategory={selectedCategory}
