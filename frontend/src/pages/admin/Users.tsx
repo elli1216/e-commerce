@@ -1,5 +1,5 @@
 import * as React from "react";
-import { UserX as DeleteIcon } from "lucide-react";
+import { UserX as DeleteIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { SearchInput } from "../../components/admin/SearchInput";
 import { type User } from "../../types/user";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -11,6 +11,8 @@ const Users = (): React.JSX.Element => {
   const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [selectedUserId, setSelectedUserId] = React.useState<string>("");
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const itemsPerPage = 5;
 
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -25,14 +27,17 @@ const Users = (): React.JSX.Element => {
     [handleSearch]
   );
 
+  // Update filtered users when search term or users change
   React.useEffect(() => {
     if (!debouncedSearchTerm.trim()) {
       setFilteredUsers(users);
+      setCurrentPage(1); // Reset to first page when search is cleared
     } else {
       const filtered = users.filter((user) =>
         user.fullName.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       );
       setFilteredUsers(filtered);
+      setCurrentPage(1); // Reset to first page on new search
     }
   }, [debouncedSearchTerm, users]);
 
@@ -55,13 +60,31 @@ const Users = (): React.JSX.Element => {
     setSelectedUserId(userId);
   }, []);
 
+  // Get current users
+  const indexOfLastUser = currentPage * itemsPerPage;
+  const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   // Memoize the user list to prevent unnecessary re-renders
   const userList = React.useMemo(() => {
     if (filteredUsers.length === 0) {
       return <p>No users found</p>;
     }
 
-    return filteredUsers.map((user) => (
+    return currentUsers.map((user) => (
       <div
         key={user.id}
         className="flex items-center justify-between w-full p-2 border-b border-gray-300"
@@ -86,20 +109,56 @@ const Users = (): React.JSX.Element => {
         </label>
       </div>
     ));
-  }, [filteredUsers, handleDeleteClick]);
+  }, [currentUsers, handleDeleteClick]);
+
+  // Pagination controls
+  const paginationControls = React.useMemo(() => {
+    if (totalPages <= 1) return null;
+
+    return (
+      <div className="flex items-center justify-center gap-2 mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className={`p-2 rounded ${
+            currentPage === 1
+              ? "text-gray-400 cursor-not-allowed"
+              : "hover:bg-gray-200"
+          }`}
+        >
+          <ChevronLeft />
+        </button>
+        <span className="mx-2">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          className={`p-2 rounded ${
+            currentPage === totalPages
+              ? "text-gray-400 cursor-not-allowed"
+              : "hover:bg-gray-200"
+          }`}
+        >
+          <ChevronRight />
+        </button>
+      </div>
+    );
+  }, [currentPage, totalPages]);
 
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-col items-center justify-center w-[50vw] h-full gap-4 p-4">
-        <div className="self-start">
+        <div className="self-start w-full">
           <SearchInput
             placeholder="Search Name"
             onChange={handleSearchInputChange}
           />
         </div>
-        <div className="flex flex-col items-center justify-center w-full h-full gap-2 border border-[#D9D9D9] rounded-lg p-4">
+        <div className="flex flex-col items-center justify-start w-full h-[60vh] gap-2 border border-[#D9D9D9] rounded-lg p-4 overflow-y-auto">
           {userList}
         </div>
+        {paginationControls}
         {selectedUserId && (
           <ConfirmDeleteModal id={selectedUserId} fetchUsers={fetchUsers} />
         )}

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <products>
   <product>
-  <id>39e859e9-8f2c-49e0-a325-01cc69f3834a</id>
-  <category>Keyboard</category>
-  <productImage>wireless-kb.jpg</productImage>
-  <productName>Wireless Keyboard</productName>
-  <productBrand>Logitech</productBrand>
-  <productPrice>49.99</productPrice>
-  <productStock>99</productStock>
-  <productDescription>Ergonomic wireless keyboard with backlit keys and Bluetooth connectivity.</productDescription>
-  <tags>
-    <connectivity>
-      <wifi>true</wifi>
-      <bluetooth>true</bluetooth>
-      <ethernet>false</ethernet>
-      <usb3>false</usb3>
-      <thunderbolt>false</thunderbolt>
-      <hdmi>false</hdmi>
-    </connectivity>
-    <usageBased>
-      <gaming>false</gaming>
-      <office>true</office>
-      <programming>true</programming>
-      <videoEditing>false</videoEditing>
-      <streaming>false</streaming>
-      <homeUse>true</homeUse>
-      <business>false</business>
-      <student>true</student>
-    </usageBased>
-    <features>
-      <rgb>false</rgb>
-      <mechanical>false</mechanical>
-      <backlit>true</backlit>
-      <ergonomic>true</ergonomic>
-      <portable>true</portable>
-      <silent>true</silent>
-    </features>
-    <miscellaneous>
-      <newArrival>true</newArrival>
-      <limitedEdition>false</limitedEdition>
-      <ecoFriendly>true</ecoFriendly>
-      <energyEfficient>true</energyEfficient>
-    </miscellaneous>
-  </tags>
-</product>
+    <id>39e859e9-8f2c-49e0-a325-01cc69f3834a</id>
+    <category>Keyboard</category>
+    <productImage>wireless-kb.jpg</productImage>
+    <productName>Wireless Keyboard</productName>
+    <productBrand>Logitech</productBrand>
+    <productPrice>49.99</productPrice>
+    <productStock>99</productStock>
+    <productDescription>Ergonomic wireless keyboard with backlit keys and Bluetooth connectivity.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>false</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>true</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>true</backlit>
+        <ergonomic>true</ergonomic>
+        <portable>true</portable>
+        <silent>true</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>true</ecoFriendly>
+        <energyEfficient>true</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
   <product>
     <id>7f98831b-1423-4791-b9df-e74eea3b2f5e</id>
     <category>Mouse</category>
@@ -133,144 +133,695 @@
     </tags>
   </product>
   <product>
-  <id>61b854c4-5381-4d2f-ba82-09058c490b88</id>
-  <category>Laptop</category>
-  <productImage>1747758561428-ThinkPad-E14.jpg</productImage>
-  <productName>ThinkPad E14</productName>
-  <productBrand>Lenovo</productBrand>
-  <productPrice>49999</productPrice>
-  <productStock>999</productStock>
-  <productDescription>lorem ipsum</productDescription>
-  <tags>
-    <connectivity>
-      <wifi>true</wifi>
-      <bluetooth>true</bluetooth>
-      <ethernet>false</ethernet>
-      <usb3>false</usb3>
-      <thunderbolt>false</thunderbolt>
-      <hdmi>false</hdmi>
-    </connectivity>
-    <usageBased>
-      <gaming>true</gaming>
-      <office>false</office>
-      <programming>true</programming>
-      <videoEditing>false</videoEditing>
-      <streaming>false</streaming>
-      <homeUse>false</homeUse>
-      <business>false</business>
-      <student>true</student>
-    </usageBased>
-    <features>
-      <rgb>false</rgb>
-      <mechanical>true</mechanical>
-      <backlit>true</backlit>
-      <ergonomic>false</ergonomic>
-      <portable>false</portable>
-      <silent>false</silent>
-    </features>
-    <miscellaneous>
-      <newArrival>true</newArrival>
-      <limitedEdition>false</limitedEdition>
-      <ecoFriendly>false</ecoFriendly>
-      <energyEfficient>true</energyEfficient>
-    </miscellaneous>
-  </tags>
-</product>
+    <id>61b854c4-5381-4d2f-ba82-09058c490b88</id>
+    <category>Laptop</category>
+    <productImage>1747758561428-ThinkPad-E14.jpg</productImage>
+    <productName>ThinkPad E14</productName>
+    <productBrand>Lenovo</productBrand>
+    <productPrice>49999</productPrice>
+    <productStock>999</productStock>
+    <productDescription>lorem ipsum</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>true</mechanical>
+        <backlit>true</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>true</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>256d9d86-0a2e-4017-8b97-00f012892522</id>
+    <category>Monitors</category>
+    <productImage>1747882727397-Doris-Baker.jpg</productImage>
+    <productName>MAG 274QRF</productName>
+    <productBrand>MSI</productBrand>
+    <productPrice>18999</productPrice>
+    <productStock>78</productStock>
+    <productDescription>Rapid IPS
+      Provides 1ms GTG fast response time, optimizes screen colors and brightness.
+      WQHD High Resolution
+      Game titles will even look better, displaying more details.
+      180Hz High Refresh Rate
+      Experience smooth gaming with a blazing fast 180Hz refresh rate, that gives you the upper hand
+      in fast moving games.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>true</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>true</thunderbolt>
+        <hdmi>true</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>true</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>true</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>d382bba1-b3f3-4e4e-8614-0171a3c45cb4</id>
+    <category>Accessories</category>
+    <productImage>1747882940193-Logitech-G733-Lightweight-Wireless-RGB.jpg</productImage>
+    <productName>Logitech G733</productName>
+    <productBrand>Logitech</productBrand>
+    <productPrice>5699</productPrice>
+    <productStock>400</productStock>
+    <productDescription>Finally, a headset that can be as expressive as you. G733 is wireless and
+      designed for comfort. And it’s outfitted with all the surround sound, voice filters, and
+      advanced lighting you need to look, sound, and play with more style than ever.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>true</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>85bbd6b5-1dab-4a37-a036-a32dcade4499</id>
+    <category>Desktop</category>
+    <productImage>1747901205129-EliteDesk-800-G2.jpg</productImage>
+    <productBrand>HP</productBrand>
+    <productName>EliteDesk 800 G2</productName>
+    <productPrice>20999</productPrice>
+    <productStock>20</productStock>
+    <productDescription>HP EliteDesk 800 G2 Desktop Business Computer PC with Intel Quad Core i5,
+      8GB RAM, 1TB HDD, Windows 10 Home, 23.6 FHD LED Monitor</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>true</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>true</rgb>
+        <mechanical>true</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>c78a9293-7843-4891-a43b-f786383a9ddc</id>
+    <category>Mini Pc</category>
+    <productImage>1747901340716-NucBox-K7-Plus.jpg</productImage>
+    <productBrand>GMKtec</productBrand>
+    <productName>NucBox K7 Plus</productName>
+    <productPrice>13999</productPrice>
+    <productStock>10</productStock>
+    <productDescription>Intel Core i7 136200H | 32GB RAM | 1TB SSD | Intel UHD Graphics | Windows 11
+      Pro</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>true</usb3>
+        <thunderbolt>true</thunderbolt>
+        <hdmi>true</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>true</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>true</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>true</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>a454b5e6-ff24-4441-909c-bab0e0b1678e</id>
+    <category>Gaming Pc</category>
+    <productImage>1747902482683-VENGEANCE-i7600-Gaming-PC.jpg</productImage>
+    <productName>VENGEANCE i7600</productName>
+    <productBrand>Corsair</productBrand>
+    <productPrice>79999</productPrice>
+    <productStock>5</productStock>
+    <productDescription>Step up your game with a CORSAIR VENGEANCE i7600 Series Gaming PC, built
+      with a full range of award-winning CORSAIR components, and powered by an Intel® Core™ Ultra
+      CPU and NVIDIA® GeForce RTX™ 40 Series graphics.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>false</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>true</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>4f763bd2-d360-48da-90ee-3c80c7a326b0</id>
+    <category>Hardwares</category>
+    <productImage>1747903187400-XCJ-Gaming-ATX.jpg</productImage>
+    <productBrand>Intel</productBrand>
+    <productName>XCJ Gaming ATX</productName>
+    <productPrice>3999</productPrice>
+    <productStock>300</productStock>
+    <productDescription>Fit for ASUS ROG Strix B250G Gaming Original Motherboard for Intel DDR4 LGA
+      1151 64GB DVI HDMI Desktop Motherboard PC Boards ATX Motherboard</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>false</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>00e1fd50-e502-4f07-b733-1ccd01201001</id>
+    <category>Storage</category>
+    <productImage>1747907963686-SATA3.0-SSD.jpg</productImage>
+    <productBrand>SanDisk</productBrand>
+    <productName>SATA3.0 SSD</productName>
+    <productPrice>799</productPrice>
+    <productStock>2000</productStock>
+    <productDescription>SanDisk SSD Plus delivers improved speed and performance with sequential
+      read speeds of up to 535MB/s** 480GB, 960GB, and 1TB; 530MB/s** 120GB and 240GB, faster than
+      typical HDDs, making it ideal for typical PC workloads.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>false</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>true</homeUse>
+        <business>false</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>615bc6a7-d21f-4b97-ab10-2feb47648f06</id>
+    <category>Networking</category>
+    <productImage>1747908687351-Network-Tool-Kit.jpg</productImage>
+    <productBrand>Nike</productBrand>
+    <productName>Network Tool Kit</productName>
+    <productPrice>499</productPrice>
+    <productStock>1000</productStock>
+    <productDescription>3 Claws magnetic retrievers
+      chip puller
+      Long nose pliers 5 "
+      Diagonal cutting pliers
+      4 1/2 "
+      Jacks manual reversible
+      10 assorted tips</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>false</gaming>
+        <office>false</office>
+        <programming>false</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>true</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>true</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>dc2998c0-7aeb-4f15-bb8b-ca67844f6a2a</id>
+    <category>Softwares</category>
+    <productImage>1747908815297-Windows11-pro-64bit.jpg</productImage>
+    <productBrand>Windows</productBrand>
+    <productName>Windows11 pro 64bit</productName>
+    <productPrice>900</productPrice>
+    <productStock>12</productStock>
+    <productDescription>Windows license key DVD.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>false</gaming>
+        <office>false</office>
+        <programming>false</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>false</homeUse>
+        <business>false</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>false</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>1277a038-1552-464d-84e6-283c8f1503eb</id>
+    <category>Speaker</category>
+    <productImage>1747909010135-Quantum-Duo.jpg</productImage>
+    <productBrand>JBL</productBrand>
+    <productName>Quantum Duo</productName>
+    <productPrice>9399</productPrice>
+    <productStock>67</productStock>
+    <productDescription>From the tiniest footsteps to the loudest explosion, JBL QuantumSOUND
+      Signature makes every scene epic and every gamer more competitive. The high excursion 2.5”
+      drivers and tweeters deliver a sound curve tuned by JBL audiologists and specifically designed
+      for gaming. Our signature surround sound technology, together with Dolby digital, creates the
+      most realistic soundstage. Be fully devoted in the game and win the game as it allows you to
+      hear every enemies coming by.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>true</homeUse>
+        <business>false</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>  
+        <portable>true</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+  <product>
+    <id>94473d2a-0dee-4280-8735-d9c86365bab5</id>
+    <category>Mic</category>
+    <productImage>1747909142711-USB-Computer-Microphone.jpg</productImage>
+    <productBrand>LIANGSTAR</productBrand>
+    <productName>USB Computer Microphone</productName>
+    <productPrice>399</productPrice>
+    <productStock>2000</productStock>
+    <productDescription>Podcast Mic Desktop with Mute Button for Recording Streaming,
+      Omnidirectional Condenser, PlugPlay Stand with Volume Control for PC, Laptop, Mac, YouTube</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>true</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>false</streaming>
+        <homeUse>true</homeUse>
+        <business>true</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
 
   <product>
-  <id>256d9d86-0a2e-4017-8b97-00f012892522</id>
-  <category>Monitors</category>
-  <productImage>1747882727397-Doris-Baker.jpg</productImage>
-  <productName>MAG 274QRF</productName>
-  <productBrand>MSI</productBrand>
-  <productPrice>18999</productPrice>
-  <productStock>78</productStock>
-  <productDescription>Rapid IPS
-Provides 1ms GTG fast response time, optimizes screen colors and brightness.
-
-WQHD High Resolution
-Game titles will even look better, displaying more details.
-
-180Hz High Refresh Rate
-Experience smooth gaming with a blazing fast 180Hz refresh rate, that gives you the upper hand in fast moving games.</productDescription>
-  <tags>
-    <connectivity>
-      <wifi>false</wifi>
-      <bluetooth>false</bluetooth>
-      <ethernet>true</ethernet>
-      <usb3>false</usb3>
-      <thunderbolt>true</thunderbolt>
-      <hdmi>true</hdmi>
-    </connectivity>
-    <usageBased>
-      <gaming>true</gaming>
-      <office>true</office>
-      <programming>true</programming>
-      <videoEditing>false</videoEditing>
-      <streaming>false</streaming>
-      <homeUse>false</homeUse>
-      <business>false</business>
-      <student>true</student>
-    </usageBased>
-    <features>
-      <rgb>true</rgb>
-      <mechanical>false</mechanical>
-      <backlit>false</backlit>
-      <ergonomic>true</ergonomic>
-      <portable>false</portable>
-      <silent>false</silent>
-    </features>
-    <miscellaneous>
-      <newArrival>true</newArrival>
-      <limitedEdition>false</limitedEdition>
-      <ecoFriendly>false</ecoFriendly>
-      <energyEfficient>false</energyEfficient>
-    </miscellaneous>
-  </tags>
-</product>
+    <id>f9b7cb3e-e46b-439d-a1f9-dfc93ae42e24</id>
+    <category>Hardwares</category>
+    <productImage>1747909826702-GSkill-Trident-Z-Neo.jpg</productImage>
+    <productBrand>Arbeitsspeicher</productBrand>
+    <productName>GSkill Trident Z Neo</productName>
+    <productPrice>1299</productPrice>
+    <productStock>300</productStock>
+    <productDescription>32GB DDR4 3200 (2x 16GB) </productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>true</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>true</streaming>
+        <homeUse>true</homeUse>
+        <business>true</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>false</mechanical>
+        <backlit>false</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>false</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
 
   <product>
-  <id>d382bba1-b3f3-4e4e-8614-0171a3c45cb4</id>
-  <category>Accessories</category>
-  <productImage>1747882940193-Logitech-G733-Lightweight-Wireless-RGB.jpg</productImage>
-  <productName>Logitech G733</productName>
-  <productBrand>Logitech</productBrand>
-  <productPrice>5699</productPrice>
-  <productStock>400</productStock>
-  <productDescription>Finally, a headset that can be as expressive as you. G733 is wireless and designed for comfort. And it’s outfitted with all the surround sound, voice filters, and advanced lighting you need to look, sound, and play with more style than ever.</productDescription>
-  <tags>
-    <connectivity>
-      <wifi>false</wifi>
-      <bluetooth>true</bluetooth>
-      <ethernet>false</ethernet>
-      <usb3>false</usb3>
-      <thunderbolt>false</thunderbolt>
-      <hdmi>false</hdmi>
-    </connectivity>
-    <usageBased>
-      <gaming>true</gaming>
-      <office>false</office>
-      <programming>true</programming>
-      <videoEditing>false</videoEditing>
-      <streaming>false</streaming>
-      <homeUse>false</homeUse>
-      <business>false</business>
-      <student>true</student>
-    </usageBased>
-    <features>
-      <rgb>true</rgb>
-      <mechanical>false</mechanical>
-      <backlit>false</backlit>
-      <ergonomic>false</ergonomic>
-      <portable>false</portable>
-      <silent>false</silent>
-    </features>
-    <miscellaneous>
-      <newArrival>true</newArrival>
-      <limitedEdition>true</limitedEdition>
-      <ecoFriendly>false</ecoFriendly>
-      <energyEfficient>false</energyEfficient>
-    </miscellaneous>
-  </tags>
-</product>
+    <id>a5d3d75a-848a-4b3d-8199-cf21c5f9c47f</id>
+    <category>Keyboard</category>
+    <productImage>1747910424627-Logitech-G713.jpg</productImage>
+    <productBrand>Logitech</productBrand>
+    <productName>Logitech G713</productName>
+    <productPrice>7500</productPrice>
+    <productStock>100</productStock>
+    <productDescription>TKL Wired Mechanical Gaming Keyboard. Let the (good) games begin with the satisfying feel of mechanical GX switches and full media controls at your fingertips. Everything you need to play your best and take quick control of your music, movies, and more. Roll to the perfect volume in a flash. Your content at your convenience. And be sure to choose the right GX switch for you. Linear is quiet and low-friction. Tactile gives you feedback you can feel and some click. Clicky is the classic gamers’ fave with the most feedback.</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>false</wifi>
+        <bluetooth>false</bluetooth>
+        <ethernet>false</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>true</videoEditing>
+        <streaming>true</streaming>
+        <homeUse>true</homeUse>
+        <business>true</business>
+        <student>true</student>
+      </usageBased>
+      <features>
+        <rgb>false</rgb>
+        <mechanical>true</mechanical>
+        <backlit>true</backlit>
+        <ergonomic>true</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>false</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
+
+  <product>
+    <id>f90e034f-c4cd-4d5f-b09f-ecbe6ce68977</id>
+    <category>Laptop</category>
+    <productImage>1747910591004-Blade-15-Base.jpg</productImage>
+    <productBrand>Razer</productBrand>
+    <productName>Blade 15 Base</productName>
+    <productPrice>7599</productPrice>
+    <productStock>20</productStock>
+    <productDescription>The Razer Blade 15 has the smallest footprint of any 15.6-inch gaming laptop and is also one of the thinnest in its class.
+
+GeForce RTX 3060: NVIDIA’s 2nd gen RTX—with new RT Cores, Tensor Cores, and streaming multiprocessors to give the most realistic ray-traced graphics and improved performance</productDescription>
+    <tags>
+      <connectivity>
+        <wifi>true</wifi>
+        <bluetooth>true</bluetooth>
+        <ethernet>true</ethernet>
+        <usb3>false</usb3>
+        <thunderbolt>false</thunderbolt>
+        <hdmi>false</hdmi>
+      </connectivity>
+      <usageBased>
+        <gaming>true</gaming>
+        <office>false</office>
+        <programming>true</programming>
+        <videoEditing>false</videoEditing>
+        <streaming>true</streaming>
+        <homeUse>false</homeUse>
+        <business>true</business>
+        <student>false</student>
+      </usageBased>
+      <features>
+        <rgb>true</rgb>
+        <mechanical>true</mechanical>
+        <backlit>true</backlit>
+        <ergonomic>false</ergonomic>
+        <portable>false</portable>
+        <silent>false</silent>
+      </features>
+      <miscellaneous>
+        <newArrival>true</newArrival>
+        <limitedEdition>true</limitedEdition>
+        <ecoFriendly>true</ecoFriendly>
+        <energyEfficient>false</energyEfficient>
+      </miscellaneous>
+    </tags>
+  </product>
 </products>

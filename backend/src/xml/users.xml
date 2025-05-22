@@ -31,4 +31,10 @@
     <fullName>Lebron James</fullName>
     <email>lebronjames23@gmail.com</email>
   </user>
+
+  <user>
+    <id>75ccae7f-a1ce-41be-8744-63ed0edcd241</id>
+    <fullName>Stephen Curry</fullName>
+    <email>chefcurry@gmail.com</email>
+  </user>
 </users>

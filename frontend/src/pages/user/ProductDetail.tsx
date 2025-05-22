@@ -40,34 +40,6 @@ const ProductDetail = (): React.JSX.Element => {
     }
   };
 
-  const handleBuyNow = async () => {
-    if (!user) return;
-    try {
-      await axiosInstance.post("/order", {
-        userId: user.uid,
-        items: [
-          {
-            productId: product.id,
-            productName: product.productName,
-            quantity,
-            status: "Preparing",
-            arrivingDate: new Date(
-              Date.now() + 3 * 24 * 60 * 60 * 1000
-            ).toISOString(),
-            subTotal: (Number(product.productPrice) * quantity).toFixed(2),
-          },
-        ],
-        orderTotal: (Number(product.productPrice) * quantity).toFixed(2),
-      });
-
-      alert("Order placed successfully!");
-      await fetchCartItems();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to place order.");
-    }
-  };
-
   return (
     <>
       <div className="flex flex-row items-start justify-center p-4">
@@ -103,9 +75,6 @@ const ProductDetail = (): React.JSX.Element => {
                   className="btn btn-secondary"
                 >
                   Add to cart
-                </button>
-                <button onClick={handleBuyNow} className="btn btn-primary">
-                  Buy now
                 </button>
               </div>
             </div>

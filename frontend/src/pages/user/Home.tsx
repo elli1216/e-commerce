@@ -4,13 +4,16 @@ import FilterTabs from "../../components/user/FilterTabs";
 import { type IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
 import { useAuth, useCart } from "../../context/context";
-import { PackageX } from "lucide-react";
+import { PackageX, ChevronLeft, ChevronRight } from "lucide-react";
+
+const ITEMS_PER_PAGE = 6;
 
 const Home = (): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(
     null
   );
+  const [currentPage, setCurrentPage] = React.useState(1);
   const { user } = useAuth();
   const { fetchCartItems } = useCart();
 
@@ -59,6 +62,25 @@ const Home = (): React.JSX.Element => {
     return products.filter((p) => p.category === selectedCategory);
   }, [products, selectedCategory]);
 
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Reset to first page when category changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-2">
@@ -74,15 +96,54 @@ const Home = (): React.JSX.Element => {
             </span>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
-            {filteredProducts.map((product) => (
-              <Product
-                key={product.id}
-                product={product}
-                onAddToCart={handleAddToCart}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+              {paginatedProducts.map((product) => (
+                <Product
+                  key={product.id}
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                />
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-8 mb-4">
+                <div className="join">
+                  <button
+                    className="join-item btn btn-sm"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        className={`join-item btn btn-sm ${
+                          currentPage === page ? "btn-primary" : ""
+                        }`}
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </button>
+                    )
+                  )}
+
+                  <button
+                    className="join-item btn btn-sm"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

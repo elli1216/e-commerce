@@ -16,7 +16,7 @@ const ProductRow = React.memo(
         <td>{product.category}</td>
         <td>{product.productStock}</td>
         <td>{product.productPrice}</td>
-        <td className="px-0 self-center">
+        <td className="px-0">
           <DropdownMenu product={product} fetchProducts={fetchProducts} />
         </td>
       </tr>
