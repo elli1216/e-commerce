@@ -4,6 +4,8 @@ import { login } from "../../config/firebase";
 import { FirebaseError } from "firebase/app";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
+import { isValidEmail } from "../../utils";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface FormData {
   email: string;
@@ -19,6 +21,9 @@ const Login = (): React.JSX.Element => {
   const [formData, setFormData] = React.useState<FormData>(initialFormData);
   const navigate = useNavigate();
   const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
+  const [isRecaptchaVerified, setIsRecaptchaVerified] =
+    React.useState<boolean>(false);
+  const recaptchaRef = React.useRef<ReCAPTCHA>(null);
   const { user } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -29,12 +34,29 @@ const Login = (): React.JSX.Element => {
     }));
   };
 
+  const handleRecaptchaChange = (value: string | null): void => {
+    if (value) {
+      setIsRecaptchaVerified(true);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setIsLoggingIn(true);
     const { email, password } = formData;
 
-    // fetch the user from firebase
+    if (!isValidEmail(email)) {
+      alert("Invalid email!");
+      setIsLoggingIn(false);
+      return;
+    }
+
+    if (!isRecaptchaVerified) {
+      alert("Please verify you're not a robot!");
+      setIsLoggingIn(false);
+      return;
+    }
+
     try {
       await login(email.toString(), password.toString());
       setIsLoggingIn(false);
@@ -60,8 +82,6 @@ const Login = (): React.JSX.Element => {
       >
         <h1 className="text-5xl mb-5">Login</h1>
 
-        <label className={`floating-label`}></label>
-
         <label className="floating-label">
           <span>Email</span>
           <input
@@ -85,9 +105,17 @@ const Login = (): React.JSX.Element => {
             className="input w-full"
           />
         </label>
+
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey="6LfyZkQrAAAAAPk8WtF142ivKkm6CQ2PywCnKi34"
+          onChange={handleRecaptchaChange}
+          className="self-center"
+        />
+
         <button
           type="submit"
-          disabled={isLoggingIn}
+          disabled={isLoggingIn || !isRecaptchaVerified}
           className="btn btn-primary"
         >
           {isLoggingIn ? (
