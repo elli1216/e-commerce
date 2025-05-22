@@ -19,7 +19,7 @@ export const getOrders = async (req: Request, res: Response) => {
 };
 
 export const addOrder = async (req: Request, res: Response) => {
-  const { userId, items, orderTotal } = req.body;
+  const { userId, items, orderTotal, shippingFee } = req.body;
   const XML_PATH = path.join(__dirname, '../xml/orders.xml');
   const xmlData = fs.readFileSync(XML_PATH, 'utf-8');
   const json = await parseStringPromise(xmlData);
@@ -41,6 +41,7 @@ export const addOrder = async (req: Request, res: Response) => {
             productName: [i.productName ?? ''],
             quantity: [i.quantity],
             status: ['Preparing'],
+            shippingFee: [i.shippingFee],
             arrivingDate: [new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()],
             subTotal: [i.subTotal ?? '']
           }))
@@ -50,13 +51,14 @@ export const addOrder = async (req: Request, res: Response) => {
               productName: [items.productName ?? ''],
               quantity: [items.quantity],
               status: ['Preparing'],
+              shippingFee: [items.shippingFee],
               arrivingDate: [new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString()],
               subTotal: [items.subTotal ?? '']
             }
           ]
       }
     ],
-    orderTotal: [orderTotal]
+    orderTotal: [orderTotal],
   };
 
   json.orders.order.push(newOrder);

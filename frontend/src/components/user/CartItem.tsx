@@ -4,16 +4,37 @@ import type { IProduct } from "../../types/product";
 import { axiosInstance } from "../../config/axios";
 import { type Item } from "../../types/cart";
 import { getImageUrl } from "../../utils";
+import { formatArrivingDate } from "../../utils/date";
 
 const CartItem = (props: Item): React.JSX.Element => {
   const [products, setProducts] = React.useState<IProduct[] | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [selectedShipping, setSelectedShipping] = React.useState<string>("0");
 
   const cartProduct = React.useMemo(() => {
     if (!products) return null;
     return products.find((p) => p.id === props.productId) || null;
   }, [products, props.productId]);
+
+  const calculateArrivalDate = (daysToAdd: number): Date => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysToAdd);
+    // Set time to end of day
+    date.setHours(23, 59, 59, 999);
+    return date;
+  };
+
+  const getFormattedArrivalDate = (daysToAdd: number): string => {
+    return formatArrivingDate(calculateArrivalDate(daysToAdd).toISOString());
+  };
+
+  const handleShippingSelect = (fee: string, days: number) => {
+    setSelectedShipping(fee);
+    // Update the item's arriving date when shipping option is selected
+    const newDate = calculateArrivalDate(days);
+    props.onShippingChange?.(props.productId, fee, newDate.toISOString());
+  };
 
   React.useEffect(() => {
     const fetchProducts = async () => {
@@ -166,18 +187,27 @@ const CartItem = (props: Item): React.JSX.Element => {
         <p className="font-semibold">Choose Delivery Option:</p>
         <DeliveryOption
           prodId={`${props.productId}`}
-          label="Thursday, May 5"
+          label={getFormattedArrivalDate(7)}
           subLabel="Free - Shipping"
+          shippingFee="0"
+          isSelected={selectedShipping === "0"}
+          onSelect={() => handleShippingSelect("0", 7)}
         />
         <DeliveryOption
           prodId={`${props.productId}`}
-          label="Sunday, May 11"
+          label={getFormattedArrivalDate(4)}
           subLabel="₱40 - Shipping"
+          shippingFee="40"
+          isSelected={selectedShipping === "40"}
+          onSelect={() => handleShippingSelect("40", 4)}
         />
         <DeliveryOption
           prodId={`${props.productId}`}
-          label="Wednesday, May 7"
+          label={getFormattedArrivalDate(2)}
           subLabel="₱80 - Shipping"
+          shippingFee="80"
+          isSelected={selectedShipping === "80"}
+          onSelect={() => handleShippingSelect("80", 2)}
         />
       </div>
     </div>

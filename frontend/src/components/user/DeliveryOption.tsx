@@ -1,26 +1,65 @@
-import React from 'react';
+import React from "react";
+import { useAuth, useCart } from "../../context/context";
+import { axiosInstance } from "../../config/axios";
 
 interface DeliveryOptionProps {
   prodId: string;
   label: string;
   subLabel: string;
+  shippingFee: string;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
-const DeliveryOption = ({ prodId, label, subLabel }: DeliveryOptionProps): React.JSX.Element => {
+const DeliveryOption = ({
+  prodId,
+  label,
+  subLabel,
+  shippingFee,
+  isSelected,
+  onSelect,
+}: DeliveryOptionProps): React.JSX.Element => {
+  const { userCart, fetchCartItems } = useCart();
+  const { user } = useAuth();
+
+  const handleDeliveryOptionChange = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!userCart || !user) return;
+
+    try {
+      await axiosInstance.post("/cart/update-shipping-fee", {
+        userId: user.uid,
+        productId: prodId,
+        shippingFee: shippingFee,
+      });
+      onSelect();
+      await fetchCartItems();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <label
-      htmlFor={`${prodId}-${label}`}
-      className="grid grid-flow-col grid-rows-2 gap-x-4 w-fit"
+    <div
+      className={`flex items-center gap-2 p-2 border rounded-lg cursor-pointer transition-colors ${
+        isSelected
+          ? "border-primary bg-primary/10"
+          : "border-base-300 hover:border-primary/50"
+      }`}
+      onClick={handleDeliveryOptionChange}
     >
       <input
         type="radio"
-        name={`deliveryOption-${prodId}`}
-        id={`${prodId}-${label}`}
-        className="radio radio-primary radio-sm row-span-2 self-center"
+        name={`delivery-${prodId}`}
+        checked={isSelected}
+        onChange={() => {}} // Required for controlled component
+        className="radio radio-primary"
       />
-      <span className=''>{label}</span>
-      <span className="text-base-content/40">{subLabel}</span>
-    </label>
+      <div className="flex-1">
+        <div className="font-medium">{label}</div>
+        <div className="text-sm opacity-70">{subLabel}</div>
+      </div>
+    </div>
   );
 };
 

@@ -34,7 +34,7 @@ export const getCartItems = async (req: Request, res: Response) => {
 };
 
 export const addToCart = async (req: Request, res: Response) => {
-  const { userId, productId, price, quantity } = req.body;
+  const { userId, productId, price, quantity, shippingFee = 0 } = req.body;
   const XML_PATH = path.join(__dirname, "../xml/cart.xml");
 
   try {
@@ -63,7 +63,10 @@ export const addToCart = async (req: Request, res: Response) => {
       // Update quantity and subtotal if item exists
       item.quantity[0] = String(Number(item.quantity[0]) + Number(quantity));
       item.subTotal = [
-        (Number(item.price[0]) * Number(item.quantity[0])).toFixed(2),
+        (
+          Number(item.price[0]) * Number(item.quantity[0]) +
+          Number(item.shippingFee[0])
+        ).toFixed(2),
       ];
     } else {
       // Add new item
@@ -72,8 +75,10 @@ export const addToCart = async (req: Request, res: Response) => {
         price: [price],
         quantity: [String(quantity)],
         arrivingDate: [new Date().toISOString()],
-        shippingFee: ["0"],
-        subTotal: [(Number(price) * Number(quantity)).toFixed(2)],
+        shippingFee: [String(shippingFee)],
+        subTotal: [
+          (Number(price) * Number(quantity) + Number(shippingFee)).toFixed(2),
+        ],
       });
     }
 
@@ -111,7 +116,8 @@ export const increaseQuantity = async (req: Request, res: Response) => {
   if (item) {
     item.quantity[0] = String(Number(item.quantity[0]) + 1);
     item.subTotal[0] = (
-      Number(item.price[0]) * Number(item.quantity[0])
+      Number(item.price[0]) * Number(item.quantity[0]) +
+      Number(item.shippingFee[0])
     ).toFixed(2);
   }
 
@@ -150,7 +156,8 @@ export const decreaseQuantity = async (req: Request, res: Response) => {
   if (item && Number(item.quantity[0]) > 1) {
     item.quantity[0] = String(Number(item.quantity[0]) - 1);
     item.subTotal[0] = (
-      Number(item.price[0]) * Number(item.quantity[0])
+      Number(item.price[0]) * Number(item.quantity[0]) +
+      Number(item.shippingFee[0])
     ).toFixed(2);
   }
 
@@ -165,6 +172,30 @@ export const decreaseQuantity = async (req: Request, res: Response) => {
     0
   );
   cart.subTotal = [cartSubTotal.toFixed(2)];
+
+  const builder = new Builder();
+  const updatedXml = builder.buildObject(json);
+  fs.writeFileSync(XML_PATH, updatedXml);
+
+  res.json({ success: true });
+};
+
+export const updateShippingFee = async (req: Request, res: Response) => {
+  const { userId, productId, shippingFee } = req.body;
+  const XML_PATH = path.join(__dirname, "../xml/cart.xml");
+  const xmlData = fs.readFileSync(XML_PATH, "utf-8");
+  const json = await parseStringPromise(xmlData);
+
+  const cart = json.carts.cart.find((c: any) => c.userId[0] === userId);
+  if (!cart) return;
+
+  let items = cart.items[0].item;
+  if (!Array.isArray(items)) items = [items];
+
+  const item = items.find((i: any) => i.productId[0] === productId);
+  if (item) {
+    item.shippingFee[0] = shippingFee;
+  }
 
   const builder = new Builder();
   const updatedXml = builder.buildObject(json);
