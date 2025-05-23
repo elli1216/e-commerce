@@ -131,4 +131,21 @@
     </items>
     <orderTotal>50158.98</orderTotal>
   </order>
+  <order>
+    <id>da37bbb4-b754-4f12-a8a1-c87138ac6a94</id>
+    <userId>ABg25pQ79BT7Li0FUQj2NF3AwlQ2</userId>
+    <date>2025-05-23T02:57:03.255Z</date>
+    <items>
+      <item>
+        <productId>61b854c4-5381-4d2f-ba82-09058c490b88</productId>
+        <productName/>
+        <quantity>1</quantity>
+        <status>Preparing</status>
+        <shippingFee>0</shippingFee>
+        <arrivingDate>2025-05-26T02:57:03.255Z</arrivingDate>
+        <subTotal>49999.00</subTotal>
+      </item>
+    </items>
+    <orderTotal>49999.00</orderTotal>
+  </order>
 </orders>

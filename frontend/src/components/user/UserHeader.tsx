@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../config/firebase";
 import { useCart } from "../../context/context";
+import { generateRandomDiceBearThumbUrl } from "../../utils/dicebear";
 
 const UserHeader = (): React.JSX.Element => {
   const { userCart } = useCart();
@@ -36,7 +37,7 @@ const UserHeader = (): React.JSX.Element => {
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
+                xmlns="https://api.dicebear.com/9.x/thumbs/svg?randomizeIds=false"
                 className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -81,7 +82,7 @@ const UserHeader = (): React.JSX.Element => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img src="https://picsum.photos/200" alt="Profile" />
+              <img src={generateRandomDiceBearThumbUrl()} alt="Profile" />
             </div>
           </div>
           <ul

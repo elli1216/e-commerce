@@ -91,7 +91,7 @@ const Users = (): React.JSX.Element => {
       >
         <div className="flex items-center gap-2 flex-grow">
           <img
-            src="https://placehold.co/64x64"
+            src={`https://api.dicebear.com/9.x/initials/svg?seed=${user.fullName}`}
             alt="User"
             className="w-12 h-12 rounded-full"
           />
@@ -120,11 +120,10 @@ const Users = (): React.JSX.Element => {
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className={`p-2 rounded ${
-            currentPage === 1
-              ? "text-gray-400 cursor-not-allowed"
-              : "hover:bg-gray-200"
-          }`}
+          className={`p-2 rounded ${currentPage === 1
+            ? "text-gray-400 cursor-not-allowed"
+            : "hover:bg-gray-200"
+            }`}
         >
           <ChevronLeft />
         </button>
@@ -134,11 +133,10 @@ const Users = (): React.JSX.Element => {
         <button
           onClick={nextPage}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded ${
-            currentPage === totalPages
-              ? "text-gray-400 cursor-not-allowed"
-              : "hover:bg-gray-200"
-          }`}
+          className={`p-2 rounded ${currentPage === totalPages
+            ? "text-gray-400 cursor-not-allowed"
+            : "hover:bg-gray-200"
+            }`}
         >
           <ChevronRight />
         </button>
