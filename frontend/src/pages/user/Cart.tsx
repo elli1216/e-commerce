@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import { type Cart } from "../../types/cart";
 import CartItem from "../../components/user/CartItem";
 import { useAuth, useCart } from "../../context/context";
@@ -10,7 +10,7 @@ const Cart = (): React.JSX.Element => {
   const { user } = useAuth();
 
   // Ensure cart items are always in array format
-  const cartItemsArray = React.useMemo(() => {
+  const cartItemsArray = useMemo(() => {
     if (!userCart?.items?.item) return [];
     return Array.isArray(userCart.items.item)
       ? userCart.items.item
@@ -19,34 +19,39 @@ const Cart = (): React.JSX.Element => {
 
   const isCartEmpty = cartItemsArray.length === 0;
 
-  const handleIncreaseQuantity = async (productId: string) => {
-    if (!userCart || !user) return;
-    try {
-      await axiosInstance.post("/cart/increase", {
-        userId: user.uid,
-        productId,
-      });
-      // Refetch cart after update
-      await fetchCartItems();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const handleIncreaseQuantity = useCallback(
+    async (productId: string) => {
+      if (!userCart || !user) return;
+      try {
+        await axiosInstance.post("/cart/increase", {
+          userId: user.uid,
+          productId,
+        });
+        await fetchCartItems();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [userCart, user, fetchCartItems]
+  );
 
-  const handleDecreaseQuantity = async (productId: string) => {
-    if (!userCart || !user) return;
-    try {
-      await axiosInstance.post("/cart/decrease", {
-        userId: user.uid,
-        productId,
-      });
-      await fetchCartItems();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const handleDecreaseQuantity = useCallback(
+    async (productId: string) => {
+      if (!userCart || !user) return;
+      try {
+        await axiosInstance.post("/cart/decrease", {
+          userId: user.uid,
+          productId,
+        });
+        await fetchCartItems();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [userCart, user, fetchCartItems]
+  );
 
-  const placeOrder = async () => {
+  const placeOrder = useCallback(async () => {
     if (!userCart || !user) return;
     try {
       await axiosInstance.post("/order", {
@@ -66,48 +71,48 @@ const Cart = (): React.JSX.Element => {
       console.error(err);
       alert("Failed to place order.");
     }
-  };
+  }, [userCart, user, cartItemsArray, fetchCartItems]);
 
-  const handleDeleteItem = async (productId: string) => {
-    if (!userCart || !user) return;
-    try {
-      await axiosInstance.post("/cart/delete", {
-        userId: user.uid,
-        productId,
+  const handleDeleteItem = useCallback(
+    async (productId: string) => {
+      if (!userCart || !user) return;
+      try {
+        await axiosInstance.post("/cart/delete", {
+          userId: user.uid,
+          productId,
+        });
+        await fetchCartItems();
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [userCart, user, fetchCartItems]
+  );
+
+  const handleShippingChange = useCallback(
+    (productId: string, shippingFee: string, arrivingDate: string) => {
+      if (!userCart) return;
+
+      const updatedItems = Array.isArray(userCart.items.item)
+        ? userCart.items.item.map((item) =>
+            item.productId === productId
+              ? { ...item, shippingFee, arrivingDate }
+              : item
+          )
+        : userCart.items.item.productId === productId
+        ? { ...userCart.items.item, shippingFee, arrivingDate }
+        : userCart.items.item;
+
+      setUserCart({
+        ...userCart,
+        items: {
+          ...userCart.items,
+          item: updatedItems,
+        },
       });
-      await fetchCartItems();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleShippingChange = (
-    productId: string,
-    shippingFee: string,
-    arrivingDate: string
-  ) => {
-    if (!userCart) return;
-
-    // Update the item's shipping fee and arriving date
-    const updatedItems = Array.isArray(userCart.items.item)
-      ? userCart.items.item.map((item) =>
-          item.productId === productId
-            ? { ...item, shippingFee, arrivingDate }
-            : item
-        )
-      : userCart.items.item.productId === productId
-      ? { ...userCart.items.item, shippingFee, arrivingDate }
-      : userCart.items.item;
-
-    // Update the cart state
-    setUserCart({
-      ...userCart,
-      items: {
-        ...userCart.items,
-        item: updatedItems,
-      },
-    });
-  };
+    },
+    [userCart, setUserCart]
+  );
 
   // Calculate total shipping fee
   const totalShippingFee = useMemo(() => {
@@ -123,7 +128,7 @@ const Cart = (): React.JSX.Element => {
 
   // Calculate order total (subtotal + shipping)
   const orderTotal = useMemo(() => {
-    if (!userCart) return 0;
+    if (!userCart) return "0.00";
     return (parseFloat(userCart.total) + totalShippingFee).toFixed(2);
   }, [userCart, totalShippingFee]);
 
@@ -131,11 +136,7 @@ const Cart = (): React.JSX.Element => {
   const cartItems = useMemo(() => {
     if (!userCart) return [];
 
-    const items = Array.isArray(userCart.items.item)
-      ? userCart.items.item
-      : [userCart.items.item];
-
-    return items.map((item) => (
+    return cartItemsArray.map((item) => (
       <CartItem
         key={item.productId}
         {...item}
@@ -145,7 +146,14 @@ const Cart = (): React.JSX.Element => {
         onShippingChange={handleShippingChange}
       />
     ));
-  }, [userCart]);
+  }, [
+    userCart,
+    cartItemsArray,
+    handleIncreaseQuantity,
+    handleDecreaseQuantity,
+    handleDeleteItem,
+    handleShippingChange,
+  ]);
 
   return (
     <>
@@ -162,7 +170,7 @@ const Cart = (): React.JSX.Element => {
           </div>
         ) : (
           <>
-            <div className="flex flex-col gap-3 border border-base-300 p-5  h-fit md:flex-1/4">
+            <div className="flex flex-col gap-3 border border-base-300 p-5 h-fit md:flex-1/4">
               <h2 className="text-2xl">Order Summary</h2>
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row justify-between">

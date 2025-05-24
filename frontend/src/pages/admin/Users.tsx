@@ -120,10 +120,11 @@ const Users = (): React.JSX.Element => {
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className={`p-2 rounded ${currentPage === 1
-            ? "text-gray-400 cursor-not-allowed"
-            : "hover:bg-gray-200"
-            }`}
+          className={`p-2 rounded ${
+            currentPage === 1
+              ? "text-gray-400 cursor-not-allowed"
+              : "hover:bg-gray-200"
+          }`}
         >
           <ChevronLeft />
         </button>
@@ -133,10 +134,11 @@ const Users = (): React.JSX.Element => {
         <button
           onClick={nextPage}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded ${currentPage === totalPages
-            ? "text-gray-400 cursor-not-allowed"
-            : "hover:bg-gray-200"
-            }`}
+          className={`p-2 rounded ${
+            currentPage === totalPages
+              ? "text-gray-400 cursor-not-allowed"
+              : "hover:bg-gray-200"
+          }`}
         >
           <ChevronRight />
         </button>

@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import AdminHeader from "../components/admin/AdminHeader";
-import type React from "react";
+import React from "react";
 
-const AdminLayout = (): React.JSX.Element => {
+const AdminLayout = React.memo((): React.JSX.Element => {
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -15,6 +15,6 @@ const AdminLayout = (): React.JSX.Element => {
       </div>
     </>
   );
-};
+});
 
 export default AdminLayout;

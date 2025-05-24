@@ -142,7 +142,7 @@ const CartItem = (props: Item): React.JSX.Element => {
 
       <div className="flex flex-col gap-2 flex-1 min-w-fit">
         <p className="font-semibold">{cartProduct.productName}</p>
-        <p>{props.subTotal}</p>
+        <p>₱{props.subTotal}</p>
         <div className="h-7">
           <button
             onClick={() =>

@@ -2,13 +2,13 @@ import React from "react";
 import { logout } from "../../config/firebase";
 import { Link, useNavigate } from "react-router-dom";
 
-const AdminHeader = (): React.JSX.Element => {
+const AdminHeader = React.memo((): React.JSX.Element => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = React.useCallback(() => {
     logout();
     navigate("/login");
-  };
+  }, [navigate]);
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -50,6 +50,6 @@ const AdminHeader = (): React.JSX.Element => {
       </div>
     </div>
   );
-};
+});
 
 export default AdminHeader;

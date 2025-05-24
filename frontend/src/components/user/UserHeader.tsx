@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../config/firebase";
 import { useCart } from "../../context/context";
 import { generateRandomDiceBearThumbUrl } from "../../utils/dicebear";
 
-const UserHeader = (): React.JSX.Element => {
+const UserHeader = React.memo((): React.JSX.Element => {
+  const [pfp, setPfp] = React.useState<string>("");
   const { userCart } = useCart();
+
+  // Memoize the cart count to prevent unnecessary re-renders
+  const cartItemCount = useMemo(() => {
+    if (!userCart?.itemCount) return 0;
+    return parseInt(userCart.itemCount, 10);
+  }, [userCart?.itemCount]);
 
   const handleLogout = () => {
     logout();
   };
+
+  useEffect(() => {
+    const pfp = generateRandomDiceBearThumbUrl();
+    setPfp(pfp);
+    console.log(pfp);
+  }, []);
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -51,7 +64,7 @@ const UserHeader = (): React.JSX.Element => {
                 />
               </svg>
               <span className="badge badge-sm indicator-item">
-                {userCart?.itemCount ?? 0}
+                {cartItemCount}
               </span>
             </div>
           </div>
@@ -60,9 +73,7 @@ const UserHeader = (): React.JSX.Element => {
             className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
           >
             <div className="card-body">
-              <span className="text-lg font-bold">
-                {userCart?.itemCount ?? 0} Items
-              </span>
+              <span className="text-lg font-bold">{cartItemCount} Items</span>
               <span className="text-info">
                 Subtotal: {userCart?.total ?? 0.0}
               </span>
@@ -82,7 +93,7 @@ const UserHeader = (): React.JSX.Element => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img src={generateRandomDiceBearThumbUrl()} alt="Profile" />
+              <img src={pfp || "https://placehold.co/64x64"} alt="Profile" />
             </div>
           </div>
           <ul
@@ -97,6 +108,6 @@ const UserHeader = (): React.JSX.Element => {
       </div>
     </div>
   );
-};
+});
 
 export default UserHeader;

@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import UserHeader from "../components/user/UserHeader";
-import type React from "react";
+import React from "react";
 
-const UserLayout = (): React.JSX.Element => {
+const UserLayout = React.memo((): React.JSX.Element => {
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -15,6 +15,6 @@ const UserLayout = (): React.JSX.Element => {
       </div>
     </>
   );
-};
+});
 
 export default UserLayout;

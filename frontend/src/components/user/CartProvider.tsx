@@ -18,56 +18,41 @@ export const CartProvider = ({
     }
 
     try {
-      // Fetch from cart.xml
       const response = await axiosInstance.get<{ cart: Cart | Cart[] }>(
         "/cart"
       );
       const carts = response.data.cart;
 
-      // Handle case when there are no carts
       if (!carts) {
         setUserCart(null);
         return;
       }
 
-      // Save current user cart
-      const userCarts = (Array.isArray(carts) ? carts : [carts]).filter(
-        (cart) => cart && cart.userId === user.uid
-      );
+      const cart = Array.isArray(carts)
+        ? carts.find((c) => c.userId === user.uid)
+        : carts;
 
-      // If user has no cart, set to null
-      if (!userCarts.length) {
+      if (!cart) {
         setUserCart(null);
         return;
       }
 
-      const userCart = userCarts[0];
-
-      // Handle case where cart exists but has no items
-      if (!userCart.items || !userCart.items.item) {
-        setUserCart({
-          ...userCart,
-          total: "0.00",
-          itemCount: "0",
-        });
-        return;
-      }
-
-      // Save the total amount of cart
-      const items = Array.isArray(userCart.items.item)
-        ? userCart.items.item
-        : [userCart.items.item];
+      const items = Array.isArray(cart.items.item)
+        ? cart.items.item
+        : [cart.items.item];
 
       const cartTotal = items.reduce(
         (sum, item) => sum + Number(item.subTotal ?? 0),
         0
       );
 
-      setUserCart({
-        ...userCart,
+      const updatedCart = {
+        ...cart,
         total: cartTotal.toFixed(2),
         itemCount: String(items.length),
-      });
+      };
+
+      setUserCart(updatedCart);
     } catch (error) {
       setUserCart(null);
       console.error("Failed to fetch cart items:", error);
@@ -78,10 +63,18 @@ export const CartProvider = ({
     fetchCartItems();
   }, [fetchCartItems]);
 
+  // Memoize the context value to prevent unnecessary re-renders
+  const contextValue = React.useMemo(
+    () => ({
+      userCart,
+      setUserCart,
+      fetchCartItems,
+    }),
+    [userCart, fetchCartItems]
+  );
+
   return (
-    <CartContext.Provider value={{ userCart, setUserCart, fetchCartItems }}>
-      {children}
-    </CartContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
 };
 
