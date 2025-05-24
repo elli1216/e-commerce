@@ -87,7 +87,7 @@ const Login = (): React.JSX.Element => {
         className="flex flex-col gap-4 max-w-sm w-full p-8 bg-base-100 rounded-lg shadow-lg"
       >
         <motion.h1
-          className="text-5xl pb-5 text-center font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+          className="text-5xl pb-5 text-center font-bold"
           variants={fadeIn}
           transition={transition}
         >

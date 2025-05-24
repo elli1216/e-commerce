@@ -94,82 +94,81 @@ const Signup = (): React.JSX.Element => {
         transition={transition}
         className="flex flex-col gap-4 max-w-sm w-full p-8 bg-base-100 rounded-lg shadow-lg"
       >
-        <motion.h1 
-          className="text-5xl pb-5 text-center font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+        <motion.h1
+          className="text-5xl pb-5 text-center font-bold"
           variants={fadeIn}
           transition={transition}
         >
           Create Account
         </motion.h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <motion.div
+            variants={fadeIn}
+            transition={{ delay: 0.1, ...transition }}
+          >
+            <label className="floating-label">
+              <span>Full name</span>
+              <input
+                onChange={handleChange}
+                required
+                type="text"
+                name="fullName"
+                placeholder="Full name"
+                className="input w-full"
+              />
+            </label>
+          </motion.div>
 
-        <motion.div
-          variants={fadeIn}
-          transition={{ delay: 0.1, ...transition }}
-        >
-          <label className="floating-label">
-            <span>Full name</span>
-            <input
-              onChange={handleChange}
-              required
-              type="text"
-              name="fullName"
-              placeholder="Full name"
-              className="input w-full"
-            />
-          </label>
-        </motion.div>
+          <motion.div
+            variants={fadeIn}
+            transition={{ delay: 0.15, ...transition }}
+          >
+            <label className="floating-label">
+              <span>Email</span>
+              <input
+                onChange={handleChange}
+                required
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="input w-full"
+              />
+            </label>
+          </motion.div>
 
-        <motion.div
-          variants={fadeIn}
-          transition={{ delay: 0.15, ...transition }}
-        >
-          <label className="floating-label">
-            <span>Email</span>
-            <input
-              onChange={handleChange}
-              required
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="input w-full"
-            />
-          </label>
-        </motion.div>
+          <motion.div
+            variants={fadeIn}
+            transition={{ delay: 0.2, ...transition }}
+          >
+            <label className="floating-label">
+              <span>Password</span>
+              <input
+                onChange={handleChange}
+                required
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="input w-full"
+              />
+            </label>
+          </motion.div>
 
-        <motion.div
-          variants={fadeIn}
-          transition={{ delay: 0.2, ...transition }}
-        >
-          <label className="floating-label">
-            <span>Password</span>
-            <input
-              onChange={handleChange}
-              required
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="input w-full"
-            />
-          </label>
-        </motion.div>
-
-        <motion.div
-          variants={fadeIn}
-          transition={{ delay: 0.25, ...transition }}
-        >
-          <label className="floating-label">
-            <span>Confirm password</span>
-            <input
-              onChange={handleChange}
-              required
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm password"
-              className="input w-full"
-            />
-          </label>
-        </motion.div>
+          <motion.div
+            variants={fadeIn}
+            transition={{ delay: 0.25, ...transition }}
+          >
+            <label className="floating-label">
+              <span>Confirm password</span>
+              <input
+                onChange={handleChange}
+                required
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                className="input w-full"
+              />
+            </label>
+          </motion.div>
 
           <motion.button
             type="submit"
@@ -189,14 +188,14 @@ const Signup = (): React.JSX.Element => {
             )}
           </motion.button>
 
-          <motion.p 
+          <motion.p
             className="text-center mt-4"
             variants={fadeIn}
             transition={{ delay: 0.3, ...transition }}
           >
             Already have an account?{" "}
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="text-blue-500 hover:underline transition-colors duration-200"
             >
               Sign in
