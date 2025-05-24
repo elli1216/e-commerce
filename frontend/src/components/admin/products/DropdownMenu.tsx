@@ -29,6 +29,11 @@ const DropdownMenu = React.memo(
     }, [navigate, product.id]);
 
     const handleDelete = useCallback((): void => {
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this product?"
+      );
+      if (!confirmDelete) return;
+
       const deleteProduct = async (): Promise<void> => {
         try {
           await axiosInstance.delete(`/delete-product/${product.id}`);
