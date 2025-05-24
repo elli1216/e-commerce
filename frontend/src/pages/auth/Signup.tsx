@@ -6,6 +6,9 @@ import { Link, Navigate } from "react-router-dom";
 import { isValidEmail } from "../../utils/index";
 import { axiosInstance } from "../../config/axios";
 import { useNavigate } from "react-router-dom";
+import { PageTransition } from "../../components/common/PageTransition";
+import { motion } from "framer-motion";
+import { fadeIn, buttonHoverTap, transition } from "../../utils/animations";
 
 interface FormData {
   id: string;
@@ -83,83 +86,125 @@ const Signup = (): React.JSX.Element => {
   if (user) return <Navigate to="/home" replace />;
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 max-w-xs w-full"
+    <PageTransition className="w-screen h-screen flex flex-col items-center justify-center bg-base-200">
+      <motion.div
+        variants={fadeIn}
+        initial="initial"
+        animate="animate"
+        transition={transition}
+        className="flex flex-col gap-4 max-w-sm w-full p-8 bg-base-100 rounded-lg shadow-lg"
       >
-        <h1 className="text-5xl mb-5">Signup</h1>
-
-        <label className={`floating-label`}>
-          <span>Full name</span>
-          <input
-            onChange={handleChange}
-            required
-            type="text"
-            name="fullName"
-            placeholder="Full name"
-            className="input w-full"
-          />
-        </label>
-
-        <label className="floating-label">
-          <span>Email</span>
-          <input
-            onChange={handleChange}
-            required
-            type="text"
-            name="email"
-            placeholder="Email"
-            className="input w-full"
-          />
-        </label>
-
-        <label className="floating-label">
-          <span>Password</span>
-          <input
-            onChange={handleChange}
-            required
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="input w-full"
-          />
-        </label>
-
-        <label className="floating-label">
-          <span>Confirm password</span>
-          <input
-            onChange={handleChange}
-            required
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm password"
-            className="input w-full"
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={isSigningUp}
+        <motion.h1 
+          className="text-5xl pb-5 text-center font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+          variants={fadeIn}
+          transition={transition}
         >
-          {isSigningUp ? (
-            <>
-              <span className="loading loading-spinner loading-xs"></span>
-              Signing up...
-            </>
-          ) : (
-            "Signup"
-          )}
-        </button>
-        <h1>
-          Already have an account?{" "}
-          <Link to="/login" className="text-primary underline">
-            Login here
-          </Link>
-        </h1>
-      </form>
-    </div>
+          Create Account
+        </motion.h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+        <motion.div
+          variants={fadeIn}
+          transition={{ delay: 0.1, ...transition }}
+        >
+          <label className="floating-label">
+            <span>Full name</span>
+            <input
+              onChange={handleChange}
+              required
+              type="text"
+              name="fullName"
+              placeholder="Full name"
+              className="input w-full"
+            />
+          </label>
+        </motion.div>
+
+        <motion.div
+          variants={fadeIn}
+          transition={{ delay: 0.15, ...transition }}
+        >
+          <label className="floating-label">
+            <span>Email</span>
+            <input
+              onChange={handleChange}
+              required
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="input w-full"
+            />
+          </label>
+        </motion.div>
+
+        <motion.div
+          variants={fadeIn}
+          transition={{ delay: 0.2, ...transition }}
+        >
+          <label className="floating-label">
+            <span>Password</span>
+            <input
+              onChange={handleChange}
+              required
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="input w-full"
+            />
+          </label>
+        </motion.div>
+
+        <motion.div
+          variants={fadeIn}
+          transition={{ delay: 0.25, ...transition }}
+        >
+          <label className="floating-label">
+            <span>Confirm password</span>
+            <input
+              onChange={handleChange}
+              required
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              className="input w-full"
+            />
+          </label>
+        </motion.div>
+
+          <motion.button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={isSigningUp}
+            variants={buttonHoverTap}
+            whileHover="hover"
+            whileTap="tap"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, ...transition }}
+          >
+            {isSigningUp ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Create Account"
+            )}
+          </motion.button>
+
+          <motion.p 
+            className="text-center mt-4"
+            variants={fadeIn}
+            transition={{ delay: 0.3, ...transition }}
+          >
+            Already have an account?{" "}
+            <Link 
+              to="/login" 
+              className="text-blue-500 hover:underline transition-colors duration-200"
+            >
+              Sign in
+            </Link>
+          </motion.p>
+        </form>
+      </motion.div>
+    </PageTransition>
   );
 };
 

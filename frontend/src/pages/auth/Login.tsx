@@ -6,6 +6,9 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
 import { isValidEmail } from "../../utils";
 import ReCAPTCHA from "react-google-recaptcha";
+import { PageTransition } from "../../components/common/PageTransition";
+import { motion } from "framer-motion";
+import { fadeIn, buttonHoverTap, transition } from "../../utils/animations";
 
 interface FormData {
   email: string;
@@ -75,12 +78,21 @@ const Login = (): React.JSX.Element => {
   if (user) return <Navigate to="/home" replace />;
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 max-w-xs w-full"
+    <PageTransition className="w-screen h-screen flex flex-col items-center justify-center bg-base-200">
+      <motion.div
+        variants={fadeIn}
+        initial="initial"
+        animate="animate"
+        transition={transition}
+        className="flex flex-col gap-4 max-w-sm w-full p-8 bg-base-100 rounded-lg shadow-lg"
       >
-        <h1 className="text-5xl mb-5">Login</h1>
+        <motion.h1
+          className="text-5xl pb-5 text-center font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+          variants={fadeIn}
+          transition={transition}
+        >
+          Login
+        </motion.h1>
 
         <label className="floating-label">
           <span>Email</span>
@@ -113,28 +125,40 @@ const Login = (): React.JSX.Element => {
           className="self-center"
         />
 
-        <button
+        <motion.button
           type="submit"
+          className="btn btn-primary w-full"
           disabled={isLoggingIn || !isRecaptchaVerified}
-          className="btn btn-primary"
+          variants={buttonHoverTap}
+          whileHover="hover"
+          whileTap="tap"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, ...transition }}
+          onClick={handleSubmit}
         >
           {isLoggingIn ? (
-            <>
-              <span className="loading loading-spinner loading-xs"></span>
-              Loading...
-            </>
+            <span className="loading loading-spinner loading-sm"></span>
           ) : (
             "Login"
           )}
-        </button>
-        <h1>
+        </motion.button>
+
+        <motion.p
+          className="text-center mt-4"
+          variants={fadeIn}
+          transition={{ delay: 0.3, ...transition }}
+        >
           Don't have an account?{" "}
-          <Link to="/register" className="text-primary underline">
-            Register here
+          <Link
+            to="/register"
+            className="text-blue-500 hover:underline transition-colors duration-200"
+          >
+            Create an account
           </Link>
-        </h1>
-      </form>
-    </div>
+        </motion.p>
+      </motion.div>
+    </PageTransition>
   );
 };
 

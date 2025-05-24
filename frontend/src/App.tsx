@@ -7,7 +7,7 @@ import AdminProtectedRoute from "./routes/AdminProtectedRoute";
 import { Navigate } from "react-router-dom";
 import PublicRoute from "./routes/PublicRoute";
 import CartProvider from "./components/user/CartProvider";
-import Loading from "./components/Loading";
+import Loading from "./components/common/Loading";
 
 // Lazy load all page components
 const Signup = lazy(() => import("./pages/auth/Signup"));
