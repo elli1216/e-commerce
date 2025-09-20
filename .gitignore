@@ -36,4 +36,6 @@ dist/
 # Temporary files
 tmp/
 temp/
-backend/src/xml/users.xml
+backend/src/xml/
+backend/src/images/
+
